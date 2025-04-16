@@ -51,6 +51,9 @@ Sol.prototype.movement = function() {
 
     if (this.velocity.x !== 0 || this.velocity.y !== 0) {
         this.animation.gotoAndPlay("walk");
+        if (this.velocity.y == -1) {
+            this.animation.gotoAndPlay("backwards");
+        }
     } else {
         this.animation.gotoAndPlay("idle");
     }

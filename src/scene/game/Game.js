@@ -84,6 +84,14 @@ projektkurs2.scene.Game.prototype.initWaterdropplet = function () {
     })
 
 
+    this.timers.create({
+        duration: 8000,
+        repeat: Infinity,
+        onTick: function () {
+        this.waterdropplet.dispose();
+        }
+    })
+
 
 };
 
