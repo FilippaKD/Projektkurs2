@@ -1,9 +1,9 @@
 
 function Fairy(name, keyboard, x, y) {
-    Entity.call(this, name, x, y, 32, 32);
+    Entity.call(this, name, x, y, 20, 20);
     this.keyboard = keyboard;
 
-    this.hitbox.set(8, 10, 15, 15);
+    this.hitbox.set(5, 5, 10, 10);
     
     this.makeAnimations(); 
    

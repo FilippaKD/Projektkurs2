@@ -59,18 +59,26 @@ projektkurs2.scene.Game.prototype.init = function () {
 
     this.initWaterdropplet();
 
+    
+
 };
+
 
 projektkurs2.scene.Game.prototype.initWaterdropplet = function () {
 
-    var waterTimer = new rune.timer.Timer(5000, Infinity);
-
-    waterTimer.onTick(function () {
-        this.waterdropplet = new Waterdropplet();
-        this.stage.addChild(this.waterdropplet);
+    var waterdropplets = [];
+    
+    this.timers.create({
+        duration: 5000,
+        repeat: Infinity,
+        onTick: function () {
+        var waterdropplet = new Waterdropplet();
+        this.stage.addChild(waterdropplet);
+        waterdropplets.push(waterdropplet);
+        }
     })
 
-    waterTimer.start();
+
 
 };
 

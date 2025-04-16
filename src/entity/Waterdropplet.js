@@ -3,15 +3,10 @@ function Waterdropplet() {
     this.screenWidth = this.application.screen.width;
     this.screenHeight = this.application.screen.height;
 
-    console.log(this.screenWidth)
 
+    var x = Math.floor(Math.random() * (this.screenWidth - 20));
+    var y = Math.floor(Math.random() * (this.screenHeight - 20));
 
-
-    this.x = new Math.randomInt()
-
-
-    var x = 100;
-    var y = 100;
 
     Entity.call(this, "Waterdropplet", x, y, 20, 20);
     this.makeAnimations();
