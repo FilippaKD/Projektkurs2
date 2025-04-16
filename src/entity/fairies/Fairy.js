@@ -4,6 +4,8 @@ function Fairy(name, keyboard, x, y) {
     this.keyboard = keyboard;
 
     this.hitbox.set(5, 5, 10, 10);
+
+
     
     this.makeAnimations(); 
    
