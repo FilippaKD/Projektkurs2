@@ -50,14 +50,20 @@ projektkurs2.scene.Game.prototype.init = function () {
     this.stage.addChild(bg);
 
     this.sol = new Sol(this.keyboard);
-    this.filippa = new Filippa(this.keyboard);
+    this.filippa = new Filippa(this.gamepads);
     this.stage.addChild(this.sol);
     this.stage.addChild(this.filippa);
 
     this.pixieEmitter = new MyEmitter(this.stage, this.sol, "sparkles");
     this.pixieEmitter2 = new MyEmitter(this.stage, this.filippa, "sparkles");
 
+    this.flower = new Flower();
+    this.stage.addChild(this.flower);
+
     this.initWaterdropplet();
+
+    //var thorns = new Thorn();
+    //this.stage.addChild(thorns);
 
     
 
@@ -67,6 +73,7 @@ projektkurs2.scene.Game.prototype.init = function () {
 projektkurs2.scene.Game.prototype.initWaterdropplet = function () {
 
     var waterdropplets = [];
+    
     
     this.timers.create({
         duration: 5000,
