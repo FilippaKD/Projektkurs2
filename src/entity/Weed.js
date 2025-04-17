@@ -1,7 +1,9 @@
 
-function Weed(x, y) {
+function Weed(name, keyboard, x, y) {
     Entity.call(this, "smallweed", x, y, 20, 20);
     
+    this.keyboard = keyboard;
+
     this.hitbox.set(5, 5, 10, 10);
 
 }
