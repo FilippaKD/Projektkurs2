@@ -67,6 +67,7 @@ Filippa.prototype.movement = function() {
 
 
 
+
 // -------------Styrning med kontroll-----------
 
 Filippa.prototype.movement = function() {

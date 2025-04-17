@@ -57,14 +57,19 @@ projektkurs2.scene.Game.prototype.init = function () {
     bg.autoSize = true;
     bgContainer.addChild(bg);
 
+
     this.sol = new Sol();
     this.filippa = new Filippa();
+
     this.stage.addChild(this.sol);
     this.stage.addChild(this.filippa);
 
     bgContainer.addChild(this.sol.emitter);
     bgContainer.addChild(this.filippa.emitter);
 
+
+    this.flower = new Flower();
+    this.stage.addChild(this.flower);
 
     this.initWaterdropplet();
 
@@ -73,6 +78,11 @@ projektkurs2.scene.Game.prototype.init = function () {
     this.spawnTimer = 0;
 
     this.score = 0;
+
+    //var thorns = new Thorn();
+    //this.stage.addChild(thorns);
+
+    
 
 };
 
