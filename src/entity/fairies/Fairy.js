@@ -5,11 +5,8 @@ function Fairy(name, keyboard, x, y) {
 
     this.hitbox.set(5, 5, 10, 10);
 
-
-    
     this.makeAnimations(); 
    
-    
 }
 
 Fairy.prototype = Object.create(Entity.prototype);
