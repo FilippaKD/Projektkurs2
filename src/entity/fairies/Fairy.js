@@ -4,6 +4,8 @@ function Fairy(name, keyboard, x, y) {
     this.keyboard = keyboard;
 
     this.hitbox.set(5, 5, 10, 10);
+
+
     
     this.makeAnimations(); 
    
@@ -16,6 +18,7 @@ Fairy.prototype.constructor = Fairy;
 Fairy.prototype.makeAnimations = function() {
     this.animation.create("walk", [0, 1, 2, 3, 4, 3, 2, 1, 0], 6, true);
     this.animation.create("idle", [0, 1, 2, 3, 2, 1, 0], 6, true);
+    this.animation.create("backwards", [5, 6, 7, 8, 7, 6, 5], 6, true);
 };
 
 

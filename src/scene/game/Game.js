@@ -45,17 +45,22 @@ projektkurs2.scene.Game.prototype.constructor = projektkurs2.scene.Game;
 projektkurs2.scene.Game.prototype.init = function () {
     rune.scene.Scene.prototype.init.call(this);
 
-    var bg = new rune.display.Graphic(0, 0, 800, 600, "bg");
+
+    var bgContainer = new rune.display.DisplayObjectContainer(0, 0, 400, 225);
+    this.stage.addChild(bgContainer);
+
+    var bg = new rune.display.Graphic(0, 0, 400, 225, "bg");
     bg.autoSize = true;
-    this.stage.addChild(bg);
+    bgContainer.addChild(bg);
 
     this.sol = new Sol(this.keyboard);
     this.filippa = new Filippa(this.gamepads);
     this.stage.addChild(this.sol);
     this.stage.addChild(this.filippa);
 
-    this.pixieEmitter = new MyEmitter(this.stage, this.sol, "sparkles");
-    this.pixieEmitter2 = new MyEmitter(this.stage, this.filippa, "sparkles");
+    bgContainer.addChild(this.sol.emitter);
+    bgContainer.addChild(this.filippa.emitter);
+
 
     this.flower = new Flower();
     this.stage.addChild(this.flower);
@@ -86,6 +91,14 @@ projektkurs2.scene.Game.prototype.initWaterdropplet = function () {
     })
 
 
+    this.timers.create({
+        duration: 8000,
+        repeat: Infinity,
+        onTick: function () {
+        this.waterdropplet.dispose();
+        }
+    })
+
 
 };
 
@@ -104,8 +117,6 @@ projektkurs2.scene.Game.prototype.update = function (step) {
     this.sol.movement();
     this.filippa.movement();
 
-    this.pixieEmitter.update(step);
-    this.pixieEmitter2.update(step);
 
     rune.physics.Space.separate(this.sol, this.filippa);
 
