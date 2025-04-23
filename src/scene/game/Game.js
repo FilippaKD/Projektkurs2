@@ -61,6 +61,9 @@ projektkurs2.scene.Game.prototype.init = function () {
     this.sol = new Sol();
     this.filippa = new Filippa();
 
+    this.fairies = []; // Alla älvor
+    this.fairies.push(this.sol, this.filippa);
+
     this.stage.addChild(this.sol);
     this.stage.addChild(this.filippa);
 
@@ -79,8 +82,9 @@ projektkurs2.scene.Game.prototype.init = function () {
 
     this.score = 0;
 
-    //var thorns = new Thorn();
-    //this.stage.addChild(thorns);
+    console.log(this.groups)
+
+    this.initThorns();
 
     
 
@@ -114,6 +118,7 @@ projektkurs2.scene.Game.prototype.initWaterdropplet = function () {
 };
 
 
+
 projektkurs2.scene.Game.prototype.spawnWeed = function () {
     const screenWidth = 400;
     const screenHeight = 225;
@@ -126,6 +131,42 @@ projektkurs2.scene.Game.prototype.spawnWeed = function () {
     this.weeds.push(weed);
 };
 
+
+projektkurs2.scene.Game.prototype.initThorns = function () {
+
+    this.allThorns = new rune.display.DisplayGroup(this.stage);
+ 
+     this.timers.create({
+         duration: 2000,
+         repeat: Infinity,
+         onTick: function () {
+             this.thorn = new Thorn();
+             this.allThorns.addMember(this.thorn);
+             this.stage.addChild(this.thorn);
+         }
+     });
+ 
+ 
+ };
+
+
+projektkurs2.scene.Game.prototype.handleThorns = function () {
+
+    for (var i = 0; i < this.fairies.length; i++) {
+
+        var fairy = this.fairies[i];
+
+        if (fairy.hitTestGroup(this.allThorns)) {
+            console.log("yas");
+            fairy.isStuck = true;
+
+
+        }
+
+        
+    }
+
+};
 
 
 
@@ -188,6 +229,9 @@ projektkurs2.scene.Game.prototype.update = function (step) {
         this.stage.addChild(ball.ball);
         this.lightballs.push(ball);
     }
+
+    this.handleThorns();
+
     /*
         for (let i = this.lightballs.length - 1; i >= 0; i--) {
             const ball = this.lightballs[i];

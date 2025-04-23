@@ -1,4 +1,4 @@
-var LightBall = function (x, y, direction) {
+function LightBall (x, y, direction) {
     this.ball = new rune.display.Sprite(x, y, 8, 8, "sparkles");
     this.ball.velocity.x = direction.x * 4;
     this.ball.velocity.y = direction.y * 4;

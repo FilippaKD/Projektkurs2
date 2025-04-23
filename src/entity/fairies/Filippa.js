@@ -8,7 +8,7 @@ function Filippa() {
         capacity: 150,
         accelerationY: 0.00005,
         accelerationX: 0.00005,
-       maxRotation: 10,
+        maxRotation: 10,
         dragY: 0.2,
           
          maxVelocityX: 0.06,
@@ -24,9 +24,15 @@ function Filippa() {
 Filippa.prototype = Object.create(Fairy.prototype);
 Filippa.prototype.constructor = Filippa;
 
-/*
+
 // --------------Styrning med tangentbord----------------
 Filippa.prototype.movement = function() {
+
+    if (this.isStuck) {
+        this.velocity.x = 0;
+        this.velocity.y = 0;
+        return;
+    }
 
     this.emitter.emit(2);
 
@@ -41,7 +47,7 @@ Filippa.prototype.movement = function() {
         this.velocity.x = 1;
         this.flippedX = true;
     }
-    if (this.keyboard.pressed("w")) {
+    if (this.keyboard.pressed("q")) {
         this.velocity.y = -1;
     }
     if (this.keyboard.pressed("s")) {
@@ -63,13 +69,13 @@ Filippa.prototype.movement = function() {
         this.animation.gotoAndPlay("idle");
     }
 };
-*/
+
 
 
 
 
 // -------------Styrning med kontroll-----------
-
+/*
 Filippa.prototype.movement = function() {
     this.emitter.emit(2);
 
@@ -106,7 +112,7 @@ Filippa.prototype.movement = function() {
         this.animation.gotoAndPlay("idle");
     }
 };
-
+*/
 
 // Skjutning 
 
