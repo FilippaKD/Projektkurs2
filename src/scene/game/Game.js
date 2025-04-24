@@ -137,7 +137,7 @@ projektkurs2.scene.Game.prototype.initThorns = function () {
     this.allThorns = new rune.display.DisplayGroup(this.stage);
  
      this.timers.create({
-         duration: 2000,
+         duration: 5000,
          repeat: Infinity,
          onTick: function () {
              this.thorn = new Thorn();
@@ -147,7 +147,7 @@ projektkurs2.scene.Game.prototype.initThorns = function () {
      });
  
  
- };
+};
 
 
 projektkurs2.scene.Game.prototype.handleThorns = function () {
@@ -159,8 +159,6 @@ projektkurs2.scene.Game.prototype.handleThorns = function () {
         if (fairy.hitTestGroup(this.allThorns)) {
             console.log("yas");
             fairy.isStuck = true;
-
-
         }
 
         
@@ -201,9 +199,38 @@ projektkurs2.scene.Game.prototype.update = function (step) {
     }
 
     for (let i = this.lightballs.length - 1; i >= 0; i--) {
+
         const ball = this.lightballs[i];
         ball.update(step);
 
+
+        // Såhär gör man om man använder display group för att at bort går inte med vanlig array
+        this.allThorns.forEachMember(function(thorn) {
+            if (ball.ball.hitTestObject(thorn)) {
+                this.stage.removeChild(thorn);
+                this.allThorns.removeMember(thorn);
+                this.stage.removeChild(ball.ball);
+                this.lightballs.splice(i, 1);
+                return false;
+            }
+        }.bind(this));
+
+
+        /*
+        const thornHit = ball.ball.hitTestObject(this.allThorns);
+
+        if (thornHit) {
+            console.log("Träffade thorn:", thornHit);
+            this.stage.removeChild(thornHit);
+            this.allThorns.removeMember(thornHit);
+
+            this.stage.removeChild(ball.ball);
+            this.lightballs.splice(i, 1);
+        }
+*/
+
+    
+    
        
         for (let j = this.weeds.length - 1; j >= 0; j--) {
             const weed = this.weeds[j];
@@ -219,6 +246,8 @@ projektkurs2.scene.Game.prototype.update = function (step) {
                 console.log(this.score);
                 break;
             }
+
+
         }
     }
 
