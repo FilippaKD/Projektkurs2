@@ -25,7 +25,6 @@ Flower.prototype.update = function(step) {
     Entity.prototype.update.call(this, step);
 
     var frame = 10 - this.flowerLifeBar;
-    console.log(this.flowerLifeBar)
 
     this.animation.current.gotoAndStop(frame); 
     

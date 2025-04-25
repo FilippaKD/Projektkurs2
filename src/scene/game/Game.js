@@ -231,6 +231,7 @@ projektkurs2.scene.Game.prototype.update = function (step) {
     this.filippa.movement();
 
     this.flower.update();
+    this.allThorns.update();
 
 
     rune.physics.Space.separate(this.sol, this.filippa);
