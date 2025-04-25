@@ -53,9 +53,14 @@ projektkurs2.scene.Game.prototype.init = function () {
     var bgContainer = new rune.display.DisplayObjectContainer(0, 0, 400, 225);
     this.stage.addChild(bgContainer);
 
-    var bg = new rune.display.Graphic(0, 0, 400, 225, "bg");
-    bg.autoSize = true;
-    bgContainer.addChild(bg);
+    this.bg = new rune.display.Graphic(0, 0, 400, 225, "bg");
+    this.bg.autoSize = true;
+    bgContainer.addChild(this.bg);
+
+
+
+
+
 
 
     this.sol = new Sol();
@@ -82,7 +87,17 @@ projektkurs2.scene.Game.prototype.init = function () {
     //var thorns = new Thorn();
     //this.stage.addChild(thorns);
 
-    
+
+
+};
+
+/**
+ * @inheritDoc
+ */
+projektkurs2.scene.Game.prototype.m_initCamera = function (step) {
+    var camera = new Camera();
+    this.cameras.addCamera(camera);
+
 
 };
 
@@ -102,30 +117,20 @@ projektkurs2.scene.Game.prototype.initWaterdropplet = function () {
     });
 
 
-    this.timers.create({
-        duration: 8000,
-        repeat: Infinity,
-        //  onTick: function () {
-        // this.waterdropplet.dispose();
-        //   }
-    })
-
 
 };
 
 
 projektkurs2.scene.Game.prototype.spawnWeed = function () {
-    const screenWidth = 400;
-    const screenHeight = 225;
+   
+    const directions = ["north", "south", "east", "west"];
+    const direction = directions[Math.floor(Math.random() * directions.length)];
+    
 
-    const x = Math.random() * (screenWidth - 40);
-    const y = Math.random() * 40;
-
-    const weed = new Weed("Weed", this.keyboard, x, y);
+    const weed = new Weed(direction, this.keyboard);
     this.stage.addChild(weed);
     this.weeds.push(weed);
 };
-
 
 
 
@@ -144,30 +149,87 @@ projektkurs2.scene.Game.prototype.update = function (step) {
     this.sol.movement();
     this.filippa.movement();
 
+   
+
+    //Svampeffekt test
+    if (this.keyboard.justPressed("T")) {
+        var cam = this.cameras.getCameraAt(0);
+        cam.wavy = !cam.wavy;
+
+        cam.tint = new rune.camera.CameraTint();
+        cam.tint.color = new rune.color.Color24();
+        cam.tint.opacity = 0.25;
+
+        let colors = [
+            { r: 255, g: 105, b: 180 },
+            { r: 255, g: 0, b: 0 },
+            { r: 255, g: 128, b: 0 },
+            { r: 255, g: 255, b: 0 },
+            { r: 0, g: 255, b: 0 },
+            { r: 128, g: 0, b: 255 }
+        ];
+
+        let index = 0;
+
+        let fadeTimer = this.timers.create({
+            duration: 250,
+            repeat: 24,
+            onTick: () => {
+                let c = colors[index];
+                cam.tint.color.setRGB(c.r, c.g, c.b);
+                index++;
+                if (index >= colors.length) {
+                    index = 0;
+                }
+            }
+        });
+
+
+        this.timers.create({
+            duration: 7000,
+            onComplete: function () {
+                this.timers.remove(fadeTimer);
+                cam.tint.opacity = 0;
+                cam.wavy = !cam.wavy;
+            }
+        });
+    }
+
+
+
+    //---------------------------------------------
 
     rune.physics.Space.separate(this.sol, this.filippa);
 
     // Grästid
     this.spawnTimer += step;
 
-    if (this.spawnTimer >= 5000) {
+    if (this.spawnTimer >= 3000) {
         this.spawnWeed();
+      
         this.spawnTimer = 0;
     }
 
+    
+
+
     for (let i = this.weeds.length - 1; i >= 0; i--) {
         this.weeds[i].update(step);
+        rune.physics.Space.separate(this.flower, this.weeds[i])
     }
 
     for (let i = this.lightballs.length - 1; i >= 0; i--) {
         const ball = this.lightballs[i];
         ball.update(step);
+        if (ball.isDead) {
+            this.stage.removeChild(ball, true);
+            this.lightballs.splice(i, 1);
+        }
 
-       
         for (let j = this.weeds.length - 1; j >= 0; j--) {
             const weed = this.weeds[j];
             if (ball.ball.hitTestObject(weed)) {
-          
+
                 this.stage.removeChild(weed);
                 this.weeds.splice(j, 1);
 
@@ -182,21 +244,33 @@ projektkurs2.scene.Game.prototype.update = function (step) {
     }
 
 
-    // Skottlogik (tilläggning på scen och borttagning från scen)
-    if (this.keyboard.justPressed("W")) {
+    // Skottlogik (tilläggning på scen)
+    if (this.gamepads.get(0).justPressed(2)) {
         const ball = this.filippa.shoot();
         this.stage.addChild(ball.ball);
         this.lightballs.push(ball);
     }
-    /*
-        for (let i = this.lightballs.length - 1; i >= 0; i--) {
-            const ball = this.lightballs[i];
-            ball.update(step);
-            if (ball.isDead) {
-                this.stage.removeChild(ball, true);
-                this.lightballs.splice(i, 1);
-            }
-        }*/
+
+    if (this.gamepads.get(1).justPressed(2)) { // knapp 7 är RT
+        const ball = this.sol.shoot();
+        this.stage.addChild(ball.ball);
+        this.lightballs.push(ball);
+    }
+
+    // Med tangentbord
+    if (this.keyboard.justPressed("SPACE")) {
+        const ball = this.filippa.shoot();
+        this.stage.addChild(ball.ball);
+        this.lightballs.push(ball);
+    }
+
+    if (this.keyboard.justPressed("SPACE")) {
+        const ball = this.sol.shoot();
+        this.stage.addChild(ball.ball);
+        this.lightballs.push(ball);
+    }
+
+
 };
 
 /**

@@ -20,7 +20,7 @@ function Sol() {
 Sol.prototype = Object.create(Fairy.prototype);
 Sol.prototype.constructor = Sol;
 
-/*
+
 // -----------Styrning med tangentbord--------------------
 Sol.prototype.movement = function () {
 
@@ -52,6 +52,8 @@ Sol.prototype.movement = function () {
 
     if (this.velocity.x !== 0 || this.velocity.y !== 0) {
         this.animation.gotoAndPlay("walk");
+        this.lastVX = this.velocity.x;
+        this.lastVY = this.velocity.y;
         if (this.velocity.y == -1) {
             this.animation.gotoAndPlay("backwards");
         }
@@ -60,11 +62,12 @@ Sol.prototype.movement = function () {
     }
 };
 
-*/
+
 
 
 
 // --------------Styrning med kontroll---------------------
+/*
 Sol.prototype.movement = function() {
     this.emitter.emit(2);
 
@@ -73,14 +76,8 @@ Sol.prototype.movement = function() {
 
     var stick = gamepad.stickLeft;
    
-    var deadzone = 0.00004;
-   
-
-    var inputX = Math.abs(stick.x) > deadzone ? stick.x : 0;
-    var inputY = Math.abs(stick.y) > deadzone ? stick.y : 0;
-
-    this.velocity.x = inputX * this.speed;
-    this.velocity.y = inputY * this.speed;
+    this.velocity.x = stick.x * this.speed;
+    this.velocity.y = stick.y * this.speed;
 
     this.x += this.velocity.x;
     this.y += this.velocity.y;
@@ -90,14 +87,34 @@ Sol.prototype.movement = function() {
     this.emitter.y = this.y + this.height * 0.3;
 
     if (this.velocity.x !== 0 || this.velocity.y !== 0) {
+     this.lastVX = this.velocity.x;
+        this.lastVY = this.velocity.y;
         if (this.velocity.y < 0) {
             this.animation.gotoAndPlay("backwards");
         } else {
             this.animation.gotoAndPlay("walk");
+            
         }
 
         this.flippedX = this.velocity.x > 0;
     } else {
         this.animation.gotoAndPlay("idle");
     }
+};
+*/
+
+
+Sol.prototype.shoot = function () {
+
+    let dir;
+
+    dir = new rune.geom.Vector2D(this.lastVX, this.lastVY).normalize();
+
+    const ball = new LightBall(
+        this.x + this.width / 2,
+        this.y + this.height / 2,
+        dir
+    );
+
+    return ball;
 };

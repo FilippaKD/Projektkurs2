@@ -56,6 +56,8 @@ Filippa.prototype.movement = function() {
     
     if (this.velocity.x !== 0 || this.velocity.y !== 0) {
         this.animation.gotoAndPlay("walk");
+        this.lastVX = this.velocity.x;
+        this.lastVY = this.velocity.y;
         if (this.velocity.y == -1) {
             this.animation.gotoAndPlay("backwards");
         }
@@ -63,8 +65,8 @@ Filippa.prototype.movement = function() {
         this.animation.gotoAndPlay("idle");
     }
 };
-*/
 
+*/
 
 
 
@@ -72,19 +74,15 @@ Filippa.prototype.movement = function() {
 
 Filippa.prototype.movement = function() {
     this.emitter.emit(2);
-
+ 
 
     // Dosa 1
     var gamepad = this.gamepads.get(0); 
     var stick = gamepad.stickLeft;
    
-    var deadzone = 0.00004;
 
-    var inputX = Math.abs(stick.x) > deadzone ? stick.x : 0;
-    var inputY = Math.abs(stick.y) > deadzone ? stick.y : 0;
-
-    this.velocity.x = inputX * this.speed;
-    this.velocity.y = inputY * this.speed;
+    this.velocity.x = stick.x * 0.8;
+    this.velocity.y = stick.y * 0.8;
 
     this.x += this.velocity.x;
     this.y += this.velocity.y;
@@ -95,6 +93,8 @@ Filippa.prototype.movement = function() {
     this.emitter.y = this.y + this.height * 0.3;
 
     if (this.velocity.x !== 0 || this.velocity.y !== 0) {
+        this.lastVX = this.velocity.x;
+        this.lastVY = this.velocity.y;
         if (this.velocity.y < 0) {
             this.animation.gotoAndPlay("backwards");
         } else {
@@ -111,17 +111,11 @@ Filippa.prototype.movement = function() {
 // Skjutning 
 
 Filippa.prototype.shoot = function() {
-    const vx = this.velocity.x;
-    const vy = this.velocity.y;
-
+   
     let dir;
 
-    if (vx === 0 && vy === 0) {
-        dir = new rune.geom.Vector2D(0, 1).normalize(); 
-    } else {
-        dir = new rune.geom.Vector2D(vx, vy).normalize(); 
-    }
-
+    dir = new rune.geom.Vector2D(this.lastVX, this.lastVY).normalize(); 
+    
     const ball = new LightBall(
         this.x + this.width / 2,
         this.y + this.height / 2,

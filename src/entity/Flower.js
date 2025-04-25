@@ -1,9 +1,8 @@
 function Flower() {
 
-
-
     Entity.call(this, "Flower", 185, 100, 32, 32);
     //this.makeAnimations();
+    this.hitPoints = 100;
 
     this.hitbox.set(5, 8, 15, 20);
     
