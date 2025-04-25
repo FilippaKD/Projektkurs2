@@ -214,21 +214,6 @@ projektkurs2.scene.Game.prototype.update = function (step) {
                 return false;
             }
         }.bind(this));
-
-
-        /*
-        const thornHit = ball.ball.hitTestObject(this.allThorns);
-
-        if (thornHit) {
-            console.log("Träffade thorn:", thornHit);
-            this.stage.removeChild(thornHit);
-            this.allThorns.removeMember(thornHit);
-
-            this.stage.removeChild(ball.ball);
-            this.lightballs.splice(i, 1);
-        }
-*/
-
     
     
        
