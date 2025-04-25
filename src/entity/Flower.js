@@ -1,9 +1,9 @@
+
 function Flower() {
 
     Entity.call(this, "Flower", 185, 100, 32, 32);
-    //this.makeAnimations();
-    this.hitPoints = 100;
-
+    this.flowerLifeBar = 10;
+    this.makeAnimations();
     this.hitbox.set(5, 8, 15, 20);
     
 }
@@ -11,8 +11,34 @@ function Flower() {
 Flower.prototype = Object.create(Entity.prototype);
 Flower.prototype.constructor = Flower;
 
+
 Flower.prototype.makeAnimations = function() {
 
-   this.animation.create("idle", [0, 1, 2, 1, 0], 6, true);
-   this.animation.gotoAndPlay("idle");
+   this.animation.create("wilting", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 6, true);
+   this.animation.gotoAndPlay("wilting");
 };
+
+
+Flower.prototype.update = function() {
+
+    var frame = this.flowerLifeBar;
+    console.log(frame)
+
+   this.animation.gotoAndStop("wilting", frame); 
+    //this.animation.goto(frame);
+    //this.animation.stop();
+};
+
+
+Flower.prototype.flowerDamage = function(amount) {
+
+    console.log(amount);
+    
+    this.flowerLifeBar -= amount;
+    if (this.flowerLifeBar < 0) {
+        this.flowerLifeBar = 0;
+    }
+    console.log(this.flowerLifeBar)
+
+
+}
