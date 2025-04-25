@@ -29,19 +29,22 @@ Thorn.prototype.makeAnimations = function() {
 
 Thorn.prototype.attackMode = function() {
 
+    console.log("sdfghj")
      this.animation.create("idle", [20, 19, 18, 17, 16, 15, 14, 13, 12], 6, true);
      this.animation.gotoAndPlay("idle");
 
 
 }
 
-/*
-Thorn.prototype.update = function() {
-    Entity.prototype.update.call(this);
 
-    if (this.animation.name === "grow" && !this.animation.isPlaying && this.animation.frameIndex === this.animation.length - 1) {
+Thorn.prototype.update = function(step) {
+    Entity.prototype.update.call(this, step);
+
+    var current = this.animation.current
+
+    if (current.name == "grow" && !current.isPlaying && current.frameIndex == current.lenght - 1) {
         console.log("ghjk")
         this.attackMode();
     }
 };
-*/
+

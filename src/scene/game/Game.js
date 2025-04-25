@@ -190,7 +190,7 @@ projektkurs2.scene.Game.prototype.initFlower = function () {
  
     
      this.timers.create({
-         duration: 3000,
+         duration: 10000,
          repeat: Infinity,
          onTick: function () {
            this.flower.flowerDamage(1);
@@ -223,6 +223,9 @@ projektkurs2.scene.Game.prototype.handleWaterdropplets = function () {
 
         this.waterdropplets.forEachMember(function(dropplet) {
             if (fairy.hitTestObject(dropplet)) {
+                
+                this.flower.flowerHeal(1);
+
                 this.stage.removeChild(dropplet);
                 this.waterdropplets.removeMember(dropplet);
                 
@@ -301,6 +304,7 @@ projektkurs2.scene.Game.prototype.update = function (step) {
 
     //---------------------------------------------
     this.flower.update();
+    this.allThorns.update();
 
 
     rune.physics.Space.separate(this.sol, this.filippa);
