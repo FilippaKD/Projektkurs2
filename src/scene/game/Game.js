@@ -70,9 +70,12 @@ projektkurs2.scene.Game.prototype.init = function () {
     bgContainer.addChild(this.sol.emitter);
     bgContainer.addChild(this.filippa.emitter);
 
-
+    /*
     this.flower = new Flower();
     this.stage.addChild(this.flower);
+    */
+    
+    this.initFlower();
 
     this.initWaterdropplet();
 
@@ -156,6 +159,23 @@ projektkurs2.scene.Game.prototype.initThorns = function () {
  
 };
 
+projektkurs2.scene.Game.prototype.initFlower = function () {
+
+    this.flower = new Flower();
+    this.stage.addChild(this.flower);
+ 
+    
+     this.timers.create({
+         duration: 3000,
+         repeat: Infinity,
+         onTick: function () {
+           this.flower.flowerDamage(1);
+         }.bind(this)
+     });
+ 
+ 
+};
+
 
 projektkurs2.scene.Game.prototype.handleThorns = function () {
 
@@ -206,6 +226,8 @@ projektkurs2.scene.Game.prototype.update = function (step) {
     rune.scene.Scene.prototype.update.call(this, step);
     this.sol.movement();
     this.filippa.movement();
+
+    this.flower.update();
 
 
     rune.physics.Space.separate(this.sol, this.filippa);
