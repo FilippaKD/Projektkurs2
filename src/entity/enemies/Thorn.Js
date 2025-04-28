@@ -8,10 +8,10 @@ function Thorn() {
     var x = Math.floor(Math.random() * (this.screenWidth - 20));
     var y = Math.floor(Math.random() * (this.screenHeight - 20));
 
-    Entity.call(this, "bigthorns", x, y, 25, 25);
+    Entity.call(this, "thorns", x, y, 17, 20);
     this.makeAnimations();
 
-    this.hitbox.set(5, 10, 10, 12);
+    this.hitbox.set(2, 6, 8, 10);
     
 }
 
@@ -22,7 +22,7 @@ Thorn.prototype.constructor = Thorn;
 
 Thorn.prototype.makeAnimations = function() {
 
-   this.animation.create("grow", [20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0], 6, false);
+   this.animation.create("grow", [21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1], 6, false);
    this.animation.gotoAndPlay("grow");
 
 };
@@ -30,7 +30,7 @@ Thorn.prototype.makeAnimations = function() {
 Thorn.prototype.attackMode = function() {
 
     console.log("sdfghj")
-     this.animation.create("idle", [20, 19, 18, 17, 16, 15, 14, 13, 12], 6, true);
+     this.animation.create("idle", [1, 0], 2, true);
      this.animation.gotoAndPlay("idle");
 
 
@@ -42,7 +42,7 @@ Thorn.prototype.update = function(step) {
 
     var current = this.animation.current
 
-    if (current.name == "grow" && !current.isPlaying && current.frameIndex == current.lenght - 1) {
+    if (current.name == "grow" && current.frameIndex == (current.frames.length - 1)) {
         console.log("ghjk")
         this.attackMode();
     }

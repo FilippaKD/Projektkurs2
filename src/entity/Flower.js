@@ -1,12 +1,12 @@
 
 function Flower() {
 
-    Entity.call(this, "Flower", 185, 100, 32, 32);
+    Entity.call(this, "flowerandbar", 185, 100, 30, 40);
     this.flowerLifeBar = 10;
     this.immovable = true;
     console.log(this.flowerLifeBar)
     this.makeAnimations();
-    this.hitbox.set(5, 8, 15, 20);
+    this.hitbox.set(7, 10, 15, 25);
     
 }
 

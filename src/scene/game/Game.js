@@ -164,14 +164,17 @@ projektkurs2.scene.Game.prototype.initFlower = function () {
 
     this.flower = new Flower();
     this.stage.addChild(this.flower);
-
-    this.timers.create({
-        duration: 10000,
-        repeat: Infinity,
-        onTick: function () {
-            this.flower.flowerDamage(1);
-        }.bind(this)
-    });
+ 
+    
+     this.timers.create({
+         duration: 3000,
+         repeat: Infinity,
+         onTick: function () {
+           this.flower.flowerDamage(1);
+         }.bind(this)
+     });
+ 
+ 
 };
 
 
