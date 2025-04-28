@@ -1,4 +1,4 @@
-function Waterdropplet() {
+function Waterdroplet() {
 
     this.screenWidth = this.application.screen.width;
     this.screenHeight = this.application.screen.height;
@@ -15,10 +15,10 @@ function Waterdropplet() {
     
 }
 
-Waterdropplet.prototype = Object.create(Entity.prototype);
-Waterdropplet.prototype.constructor = Waterdropplet;
+Waterdroplet.prototype = Object.create(Entity.prototype);
+Waterdroplet.prototype.constructor = Waterdroplet;
 
-Waterdropplet.prototype.makeAnimations = function() {
+Waterdroplet.prototype.makeAnimations = function() {
 
    this.animation.create("idle", [0, 1, 2, 1, 0], 6, true);
    this.animation.gotoAndPlay("idle");

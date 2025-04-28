@@ -102,7 +102,7 @@ projektkurs2.scene.Game.prototype.initWaterdropplet = function () {
         duration: 5000,
         repeat: Infinity,
         onTick: function () {
-            this.waterdropplet = new Waterdropplet();
+            this.waterdropplet = new Waterdroplet();
             this.stage.addChild(this.waterdropplet);
             this.waterdropplets.addMember(this.waterdropplet);
         }.bind(this)
