@@ -190,7 +190,7 @@ projektkurs2.scene.Game.prototype.initFlower = function () {
  
     
      this.timers.create({
-         duration: 10000,
+         duration: 3000,
          repeat: Infinity,
          onTick: function () {
            this.flower.flowerDamage(1);

@@ -1,7 +1,7 @@
 
 function Flower() {
 
-    Entity.call(this, "Flower", 185, 100, 32, 32);
+    Entity.call(this, "flowerandbar", 185, 100, 30, 40);
     this.flowerLifeBar = 10;
     console.log(this.flowerLifeBar)
     this.makeAnimations();
