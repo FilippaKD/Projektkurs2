@@ -1,14 +1,14 @@
 
 function Weed(direction, keyboard) {
-    Entity.call(this, "smallweed", 20, 20);
-
+    Entity.call(this, "weedsmall", this.x, this.y, 16, 16);
+    this.animation.create("walk", [0, 1, 2, 3, 4, 5], 6, true);
     this.keyboard = keyboard;
 
     this.hitbox.set(5, 5, 10, 10);
 
-    const canvasWidth = 400;  
-    const canvasHeight = 225;
-    
+    var canvasWidth = 400;
+    var canvasHeight = 225;
+
     if (direction === "north") {
         this.x = Math.random() * canvasWidth;
         this.y = 0;
@@ -23,29 +23,36 @@ function Weed(direction, keyboard) {
         this.y = Math.random() * canvasHeight;
     }
 
+
+
 }
 
 Weed.prototype = Object.create(Entity.prototype);
 Weed.prototype.constructor = Weed;
 
 
-
 Weed.prototype.update = function (step) {
-   
-    const centerX = 400 / 2;
-    const centerY = 225 / 2;
+    Entity.prototype.update.call(this, step);
+    var centerX = 400 / 2;
+    var centerY = 225 / 2;
 
-    const dx = centerX - this.x;
-    const dy = centerY - this.y;
-    
-    const dist = Math.sqrt(dx * dx + dy * dy);
+    var dx = centerX - this.x;
+    var dy = centerY - this.y;
+
+    var dist = Math.sqrt(dx * dx + dy * dy);
 
     if (dist > 0) {
-        this.x += (dx / dist) * (step / 70);
-        this.y += (dy / dist) * (step / 70);
+        this.x += (dx / dist) * (step / 130);
+        this.y += (dy / dist) * (step / 130);
     }
+    this.animation.gotoAndPlay("walk");
 
 };
+
+
+
+
+
 
 
 
