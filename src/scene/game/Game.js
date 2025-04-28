@@ -45,8 +45,9 @@ projektkurs2.scene.Game.prototype.constructor = projektkurs2.scene.Game;
 projektkurs2.scene.Game.prototype.init = function () {
     rune.scene.Scene.prototype.init.call(this);
 
-
     this.lightballs = [];
+
+
     // kolla om gamepads är connected
     console.log(this.gamepads.numGamepads)
 
@@ -156,11 +157,11 @@ projektkurs2.scene.Game.prototype.initWaterdropplet = function () {
 
 projektkurs2.scene.Game.prototype.spawnWeed = function () {
    
-    const directions = ["north", "south", "east", "west"];
-    const direction = directions[Math.floor(Math.random() * directions.length)];
+    var directions = ["north", "south", "east", "west"];
+    var direction = directions[Math.floor(Math.random() * directions.length)];
     
 
-    const weed = new Weed(direction, this.keyboard);
+    var weed = new Weed(direction, this.keyboard);
     this.stage.addChild(weed);
     this.weeds.push(weed);
 };
@@ -263,7 +264,7 @@ projektkurs2.scene.Game.prototype.update = function (step) {
 
         cam.tint = new rune.camera.CameraTint();
         cam.tint.color = new rune.color.Color24();
-        cam.tint.opacity = 0.25;
+        cam.tint.opacity = 0.3;
 
         let colors = [
             { r: 255, g: 105, b: 180 },

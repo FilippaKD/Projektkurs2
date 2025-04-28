@@ -3,6 +3,7 @@ function Flower() {
 
     Entity.call(this, "Flower", 185, 100, 32, 32);
     this.flowerLifeBar = 10;
+    this.immovable = true;
     console.log(this.flowerLifeBar)
     this.makeAnimations();
     this.hitbox.set(5, 8, 15, 20);
