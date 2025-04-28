@@ -1,5 +1,5 @@
 function LightBall (x, y, direction) {
-    this.ball = new rune.display.Sprite(x, y, 8, 8, "sparkles");
+    this.ball = new rune.display.Sprite(x, y, 8, 8, "image_sparkle");
     this.ball.velocity.x = direction.x * 3;
     this.ball.velocity.y = direction.y * 3;
     this.ball.hitbox.set(0, 0, 8, 8);

@@ -1,6 +1,6 @@
 
 function Weed(direction, keyboard) {
-    Entity.call(this, "weedsmall", this.x, this.y, 16, 16);
+    Entity.call(this, "image_game_weed", this.x, this.y, 16, 16);
     this.animation.create("walk", [0, 1, 2, 3, 4, 5], 6, true);
     this.keyboard = keyboard;
 

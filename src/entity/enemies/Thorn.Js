@@ -8,7 +8,7 @@ function Thorn() {
     var x = Math.floor(Math.random() * (this.screenWidth - 20));
     var y = Math.floor(Math.random() * (this.screenHeight - 20));
 
-    Entity.call(this, "thorns", x, y, 17, 20);
+    Entity.call(this, "image_game_thorns", x, y, 17, 20);
     this.makeAnimations();
 
     this.hitbox.set(2, 6, 8, 10);

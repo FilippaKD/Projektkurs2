@@ -51,7 +51,7 @@ projektkurs2.scene.Game.prototype.init = function () {
     var bgContainer = new rune.display.DisplayObjectContainer(0, 0, 400, 225);
     this.stage.addChild(bgContainer);
 
-    this.bg = new rune.display.Graphic(0, 0, 400, 225, "bg");
+    this.bg = new rune.display.Graphic(0, 0, 400, 225, "image_game_background");
     this.bg.autoSize = true;
     bgContainer.addChild(this.bg);
 
