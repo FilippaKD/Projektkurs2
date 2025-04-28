@@ -96,15 +96,15 @@ projektkurs2.scene.Game.prototype.m_initCamera = function (step) {
 
 projektkurs2.scene.Game.prototype.initWaterdropplet = function () {
 
-    this.waterdropplets = new rune.display.DisplayGroup(this.stage);
+    this.waterdroplets = new rune.display.DisplayGroup(this.stage);
 
     this.timers.create({
         duration: 5000,
         repeat: Infinity,
         onTick: function () {
-            this.waterdropplet = new Waterdroplet();
-            this.stage.addChild(this.waterdropplet);
-            this.waterdropplets.addMember(this.waterdropplet);
+            this.waterdroplet = new Waterdroplet();
+            this.stage.addChild(this.waterdroplet);
+            this.waterdroplets.addMember(this.waterdroplet);
         }.bind(this)
     });
 
@@ -113,12 +113,12 @@ projektkurs2.scene.Game.prototype.initWaterdropplet = function () {
         duration: 9000,
         repeat: Infinity,
         onTick: function () {
-            var members = this.waterdropplets.getMembers();
+            var members = this.waterdroplets.getMembers();
             if (members.length > 0) {
                 var randomI = Math.floor(Math.random() * members.length);
                 var toBeRemoved = members[randomI];
                 this.stage.removeChild(toBeRemoved);
-                this.waterdropplets.removeMember(toBeRemoved);
+                this.waterdroplets.removeMember(toBeRemoved);
             }
         }.bind(this)
     })
@@ -191,17 +191,17 @@ projektkurs2.scene.Game.prototype.handleThorns = function () {
 
 };
 
-projektkurs2.scene.Game.prototype.handleWaterdropplets = function () {
+projektkurs2.scene.Game.prototype.handleWaterdroplets = function () {
 
     for (var i = 0; i < this.fairies.length; i++) {
 
         var fairy = this.fairies[i];
 
-        this.waterdropplets.forEachMember(function (dropplet) {
+        this.waterdroplets.forEachMember(function (dropplet) {
             if (fairy.hitTestObject(dropplet)) {
                 this.flower.flowerHeal(1);
                 this.stage.removeChild(dropplet);
-                this.waterdropplets.removeMember(dropplet);
+                this.waterdroplets.removeMember(dropplet);
                 return false;
             }
         }.bind(this));
@@ -347,7 +347,7 @@ projektkurs2.scene.Game.prototype.update = function (step) {
     }
 
     this.handleThorns();
-    this.handleWaterdropplets();
+    this.handleWaterdroplets();
 
 };
 
