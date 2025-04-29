@@ -132,7 +132,7 @@ projektkurs2.scene.Game.prototype.initWeeds = function () {
     var directions = ["north", "south", "east", "west"];
     var direction = directions[Math.floor(Math.random() * directions.length)];
 
-    var spawnInterval = 3000;
+    var spawnInterval = 2000;
 
     this.timers.create({
         duration: spawnInterval,
@@ -191,7 +191,7 @@ projektkurs2.scene.Game.prototype.initFlower = function () {
          duration: 5000,
          repeat: Infinity,
          onTick: function () {
-           this.flower.flowerDamage(2);
+           this.flower.flowerDamage(50);
          }.bind(this)
      });
  
@@ -232,6 +232,26 @@ projektkurs2.scene.Game.prototype.handleWaterdroplets = function () {
 };
 
 
+projektkurs2.scene.Game.prototype.gameOver = function () {
+
+    if (this.flower.flowerLifeBar == 0) {
+        console.log("gameover");
+
+        var cam = this.cameras.getCameraAt(0);
+
+        //cam.target = this.flower;
+        console.log(cam.target);
+       //cam.viewport.zoom = 2.0;
+
+       //cam.centerX = this.flower.x + this.flower.width / 2;
+       //cam.centerY = this.flower.y + this.flower.height / 2;
+
+       //this.application.scenes.load(projektkurs2.scene.GameOver);
+    
+    }
+};
+
+
 
 
 /**
@@ -247,6 +267,8 @@ projektkurs2.scene.Game.prototype.update = function (step) {
     rune.scene.Scene.prototype.update.call(this, step);
     this.sol.movement();
     this.filippa.movement();
+
+    this.gameOver();
 
 
 
