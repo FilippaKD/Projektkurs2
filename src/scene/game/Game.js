@@ -58,8 +58,10 @@ projektkurs2.scene.Game.prototype.init = function () {
     this.sol = new Sol();
     this.filippa = new Filippa();
 
-    this.fairies = []; // Alla älvor
-    this.fairies.push(this.sol, this.filippa);
+    this.fairies = new rune.display.DisplayGroup(this.stage);
+
+    this.fairies.addMember(this.sol)
+    this.fairies.addMember(this.filippa)
 
     this.stage.addChild(this.sol);
     this.stage.addChild(this.filippa);
@@ -68,7 +70,7 @@ projektkurs2.scene.Game.prototype.init = function () {
     bgContainer.addChild(this.filippa.emitter);
 
     this.initFlower();
-    this.initWaterdropplet();
+    this.initWaterdroplet();
 
     this.lightballs = [];
 
@@ -78,6 +80,7 @@ projektkurs2.scene.Game.prototype.init = function () {
 
     this.initThorns();
     this.initWeeds();
+    this.initMushrooms();
 
 
 
@@ -92,19 +95,33 @@ projektkurs2.scene.Game.prototype.m_initCamera = function (step) {
 
 
 };
+projektkurs2.scene.Game.prototype.initMushrooms = function () {
 
-
-projektkurs2.scene.Game.prototype.initWaterdropplet = function () {
-
-    this.waterdropplets = new rune.display.DisplayGroup(this.stage);
+    this.mushrooms = new rune.display.DisplayGroup(this.stage);
 
     this.timers.create({
         duration: 5000,
         repeat: Infinity,
         onTick: function () {
-            this.waterdropplet = new Waterdroplet();
-            this.stage.addChild(this.waterdropplet);
-            this.waterdropplets.addMember(this.waterdropplet);
+            var mushroom = new Mushroom(this.cameras);
+            this.stage.addChild(mushroom);
+            this.mushrooms.addMember(mushroom);
+        }.bind(this)
+    });
+}
+
+
+projektkurs2.scene.Game.prototype.initWaterdroplet = function () {
+
+    this.waterdroplets = new rune.display.DisplayGroup(this.stage);
+
+    this.timers.create({
+        duration: 5000,
+        repeat: Infinity,
+        onTick: function () {
+            this.waterdroplet = new Waterdroplet();
+            this.stage.addChild(this.waterdroplet);
+            this.waterdroplets.addMember(this.waterdroplet);
         }.bind(this)
     });
 
@@ -113,12 +130,12 @@ projektkurs2.scene.Game.prototype.initWaterdropplet = function () {
         duration: 9000,
         repeat: Infinity,
         onTick: function () {
-            var members = this.waterdropplets.getMembers();
+            var members = this.waterdroplets.getMembers();
             if (members.length > 0) {
                 var randomI = Math.floor(Math.random() * members.length);
                 var toBeRemoved = members[randomI];
                 this.stage.removeChild(toBeRemoved);
-                this.waterdropplets.removeMember(toBeRemoved);
+                this.waterdroplets.removeMember(toBeRemoved);
             }
         }.bind(this)
     })
@@ -136,9 +153,9 @@ projektkurs2.scene.Game.prototype.initWeeds = function () {
         duration: 3000,
         repeat: Infinity,
         onTick: function () {
-            this.weed = new Weed(direction, this.keyboard);
-            this.weeds.addMember(this.weed);
-            this.stage.addChild(this.weed);
+            var weed = new Weed(direction, this.keyboard);
+            this.weeds.addMember(weed);
+            this.stage.addChild(weed);
         }
     });
 
@@ -164,49 +181,41 @@ projektkurs2.scene.Game.prototype.initFlower = function () {
 
     this.flower = new Flower();
     this.stage.addChild(this.flower);
- 
-    
-     this.timers.create({
-         duration: 3000,
-         repeat: Infinity,
-         onTick: function () {
-           this.flower.flowerDamage(1);
-         }.bind(this)
-     });
- 
- 
+
+
+    this.timers.create({
+        duration: 3000,
+        repeat: Infinity,
+        onTick: function () {
+            this.flower.flowerDamage(1);
+        }.bind(this)
+    });
+
+
 };
 
 
 projektkurs2.scene.Game.prototype.handleThorns = function () {
 
-    for (var i = 0; i < this.fairies.length; i++) {
-        var fairy = this.fairies[i];
-
+    this.fairies.forEachMember(function (fairy) {
         if (fairy.hitTestGroup(this.allThorns)) {
             console.log("yas");
-            fairy.isStuck = true;
+           fairy.isStuck = true;
         }
-    }
+    }.bind(this));
 
 };
 
-projektkurs2.scene.Game.prototype.handleWaterdropplets = function () {
+projektkurs2.scene.Game.prototype.handleWaterdroplets = function () {
 
-    for (var i = 0; i < this.fairies.length; i++) {
-
-        var fairy = this.fairies[i];
-
-        this.waterdropplets.forEachMember(function (dropplet) {
-            if (fairy.hitTestObject(dropplet)) {
+        this.waterdroplets.forEachMember(function (droplet) {
+            if (droplet.hitTestGroup(this.fairies)) {
                 this.flower.flowerHeal(1);
-                this.stage.removeChild(dropplet);
-                this.waterdropplets.removeMember(dropplet);
+                this.stage.removeChild(droplet);
+                this.waterdroplets.removeMember(droplet);
                 return false;
             }
         }.bind(this));
-
-    }
 
 };
 
@@ -227,55 +236,68 @@ projektkurs2.scene.Game.prototype.update = function (step) {
     this.sol.movement();
     this.filippa.movement();
 
+    // HEJ GOOP
+    var cam = this.cameras.getCameraAt(0);
+    this.mushrooms.forEachMember(function (mushroom) {
+        var filippaDistance = this.filippa.distance(mushroom);
+        var solDistance = this.sol.distance(mushroom);
 
+        if (filippaDistance < solDistance) {
+            var nearestPlayer = this.filippa;
+        } else {
+            var nearestPlayer = this.sol;
+        }
 
-    //Svampeffekt test
-    if (this.keyboard.justPressed("T")) {
-        var cam = this.cameras.getCameraAt(0);
-        cam.wavy = !cam.wavy;
+        if (mushroom.hitTestGroup(this.fairies)) {
+            
+            this.stage.removeChild(mushroom);
+            this.mushrooms.removeMember(mushroom);
+            cam.wavy = true;
 
-        cam.tint = new rune.camera.CameraTint();
-        cam.tint.color = new rune.color.Color24();
-        cam.tint.opacity = 0.3;
+            cam.tint = new rune.camera.CameraTint();
+            cam.tint.color = new rune.color.Color24();
+            cam.tint.opacity = 0.3;
 
-        // Färger för svampeffekten
-        let colors = [
-            { r: 255, g: 105, b: 180 },
-            { r: 255, g: 0, b: 0 },
-            { r: 255, g: 128, b: 0 },
-            { r: 255, g: 255, b: 0 },
-            { r: 0, g: 255, b: 0 },
-            { r: 128, g: 0, b: 255 }
-        ];
+            // Färger för svampeffekten
+            let colors = [
+                { r: 255, g: 105, b: 180 },
+                { r: 255, g: 0, b: 0 },
+                { r: 255, g: 128, b: 0 },
+                { r: 255, g: 255, b: 0 },
+                { r: 0, g: 255, b: 0 },
+                { r: 128, g: 0, b: 255 }
+            ];
 
-        let index = 0;
+            let index = 0;
 
-        // Fadetimer för färgerna på svampeffekten
-        let fadeTimer = this.timers.create({
-            duration: 250,
-            repeat: 24,
-            onTick: () => {
-                let c = colors[index];
-                cam.tint.color.setRGB(c.r, c.g, c.b);
-                index++;
-                if (index >= colors.length) {
-                    index = 0;
+            // Fadetimer för färgerna på svampeffekten
+            let fadeTimer = this.timers.create({
+                duration: 250,
+                repeat: 24,
+                onTick: () => {
+                    let c = colors[index];
+                    cam.tint.color.setRGB(c.r, c.g, c.b);
+                    index++;
+                    if (index >= colors.length) {
+                        index = 0; console.log("inne i timer??")
+                    }
                 }
-            }
-        });
+            });
 
-        // Svamptimer hur länge den ska hålla på
-        this.timers.create({
-            duration: 7000,
-            onComplete: function () {
-                this.timers.remove(fadeTimer);
-                cam.tint.opacity = 0;
-                cam.wavy = !cam.wavy;
-            }
-        });
-    }
+            // Svamptimer hur länge den ska hålla på
+            this.timers.create({
+                duration: 7000,
+                onComplete: function () {
+                    this.timers.remove(fadeTimer);
+                    cam.tint.opacity = 0;
+                    cam.wavy = false;
+                }
+            });
+        }
+        mushroom.update(nearestPlayer, step);
+        rune.physics.Space.separate(this.flower, mushroom);
+    }.bind(this));
 
-    //---------------------------------------------
     this.flower.update();
     this.allThorns.update();
 
@@ -319,6 +341,8 @@ projektkurs2.scene.Game.prototype.update = function (step) {
     }
 
 
+
+
     // Skottlogik (tilläggning på scen)
     if (this.gamepads.get(0).justPressed(2)) {
         const ball = this.filippa.shoot();
@@ -347,7 +371,7 @@ projektkurs2.scene.Game.prototype.update = function (step) {
     }
 
     this.handleThorns();
-    this.handleWaterdropplets();
+    this.handleWaterdroplets();
 
 };
 
