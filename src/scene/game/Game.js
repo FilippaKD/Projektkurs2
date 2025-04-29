@@ -82,7 +82,7 @@ projektkurs2.scene.Game.prototype.init = function () {
     this.initWeeds();
     this.initMushrooms();
 
-
+    
 
 };
 
@@ -114,6 +114,7 @@ projektkurs2.scene.Game.prototype.initMushrooms = function () {
 projektkurs2.scene.Game.prototype.initWaterdroplet = function () {
 
     this.waterdroplets = new rune.display.DisplayGroup(this.stage);
+    this.waterdroplets = new rune.display.DisplayGroup(this.stage);
 
     this.timers.create({
         duration: 5000,
@@ -122,19 +123,24 @@ projektkurs2.scene.Game.prototype.initWaterdroplet = function () {
             this.waterdroplet = new Waterdroplet();
             this.stage.addChild(this.waterdroplet);
             this.waterdroplets.addMember(this.waterdroplet);
+            this.waterdroplet = new Waterdroplet();
+            this.stage.addChild(this.waterdroplet);
+            this.waterdroplets.addMember(this.waterdroplet);
         }.bind(this)
     });
 
 
     this.timers.create({
-        duration: 9000,
+        duration: 10000,
         repeat: Infinity,
         onTick: function () {
+            var members = this.waterdroplets.getMembers();
             var members = this.waterdroplets.getMembers();
             if (members.length > 0) {
                 var randomI = Math.floor(Math.random() * members.length);
                 var toBeRemoved = members[randomI];
                 this.stage.removeChild(toBeRemoved);
+                this.waterdroplets.removeMember(toBeRemoved);
                 this.waterdroplets.removeMember(toBeRemoved);
             }
         }.bind(this)
@@ -166,8 +172,10 @@ projektkurs2.scene.Game.prototype.initThorns = function () {
 
     this.allThorns = new rune.display.DisplayGroup(this.stage);
 
+    var spawnInterval = 3000;
+
     this.timers.create({
-        duration: 5000,
+        duration: spawnInterval,
         repeat: Infinity,
         onTick: function () {
             this.thorn = new Thorn();
@@ -175,7 +183,17 @@ projektkurs2.scene.Game.prototype.initThorns = function () {
             this.stage.addChild(this.thorn);
         }
     });
+
+    this.timers.create({
+        duration: 8000,
+        repeat: Infinity,
+        onTick: function () {
+            spawnInterval = Math.max(1000, spawnInterval - 200);
+        }
+    });
+    
 };
+
 
 projektkurs2.scene.Game.prototype.initFlower = function () {
 
@@ -304,6 +322,20 @@ projektkurs2.scene.Game.prototype.update = function (step) {
     this.weeds.forEachMember(function (weed) {
         weed.update(step);
         rune.physics.Space.separate(this.flower, weed);
+            if (this.flower.hitTestObject(weed) && weed.canHit) {
+                this.flower.flowerDamage(2);
+                weed.canHit = false;
+                console.log("hej")
+
+                this.timers.create({
+                    duration: 2000,
+                    onTick: function () {
+                        weed.canHit = true;
+                    }
+                })
+
+               
+            }
     }.bind(this));
 
 
@@ -371,6 +403,7 @@ projektkurs2.scene.Game.prototype.update = function (step) {
     }
 
     this.handleThorns();
+    this.handleWaterdroplets();
     this.handleWaterdroplets();
 
 };

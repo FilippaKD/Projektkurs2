@@ -29,11 +29,8 @@ Thorn.prototype.makeAnimations = function() {
 
 Thorn.prototype.attackMode = function() {
 
-    console.log("sdfghj")
      this.animation.create("idle", [1, 0], 2, true);
      this.animation.gotoAndPlay("idle");
-
-
 }
 
 
@@ -43,7 +40,6 @@ Thorn.prototype.update = function(step) {
     var current = this.animation.current
 
     if (current.name == "grow" && current.frameIndex == (current.frames.length - 1)) {
-        console.log("ghjk")
         this.attackMode();
     }
 };

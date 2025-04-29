@@ -4,7 +4,10 @@ function Weed(direction, keyboard) {
     this.animation.create("walk", [0, 1, 2, 3, 4, 5], 6, true);
     this.keyboard = keyboard;
 
+    this.canHit = true;
+
     this.hitbox.set(5, 5, 10, 10);
+
 
     var canvasWidth = 400;
     var canvasHeight = 225;

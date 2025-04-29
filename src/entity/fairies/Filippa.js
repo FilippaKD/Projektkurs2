@@ -24,7 +24,7 @@ function Filippa() {
 Filippa.prototype = Object.create(Fairy.prototype);
 Filippa.prototype.constructor = Filippa;
 
-
+/*
 // --------------Styrning med tangentbord----------------
 Filippa.prototype.movement = function() {
 
@@ -71,13 +71,13 @@ Filippa.prototype.movement = function() {
         this.animation.gotoAndPlay("idle");
     }
 };
-
+*/
 
 
 
 
 // -------------Styrning med kontroll-----------
-/*
+
 Filippa.prototype.movement = function() {
     this.emitter.emit(2);
  
@@ -112,7 +112,7 @@ Filippa.prototype.movement = function() {
         this.animation.gotoAndPlay("idle");
     }
 };
-*/
+
 
 // Skjutning 
 
