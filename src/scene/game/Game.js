@@ -254,7 +254,7 @@ projektkurs2.scene.Game.prototype.update = function (step) {
     this.sol.movement();
     this.filippa.movement();
 
-    // HEJ GOOP
+    // HEJ GOOPh
     var cam = this.cameras.getCameraAt(0);
     this.mushrooms.forEachMember(function (mushroom) {
         var filippaDistance = this.filippa.distance(mushroom);
