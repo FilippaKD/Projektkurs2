@@ -45,8 +45,8 @@ Weed.prototype.update = function (step) {
     var dist = Math.sqrt(dx * dx + dy * dy);
 
     if (dist > 0) {
-        this.x += (dx / dist) * (step / 130);
-        this.y += (dy / dist) * (step / 130);
+        this.x += (dx / dist) * (step / 100);
+        this.y += (dy / dist) * (step / 100);
     }
     this.animation.gotoAndPlay("walk");
 
