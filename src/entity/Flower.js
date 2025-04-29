@@ -2,7 +2,9 @@
 function Flower() {
 
     Entity.call(this, "image_game_flower", 185, 100, 30, 40);
-    this.flowerLifeBar = 10;
+
+    this.flowerLifeBar = 100;
+
     this.immovable = true;
     console.log(this.flowerLifeBar)
     this.makeAnimations();
@@ -25,7 +27,9 @@ Flower.prototype.update = function(step) {
 
     Entity.prototype.update.call(this, step);
 
-    var frame = 10 - this.flowerLifeBar;
+    var totalFrames = 10;
+    var percent = (0, this.flowerLifeBar / 100);
+    var frame = Math.floor((1 - percent) * (totalFrames - 1));
 
     this.animation.current.gotoAndStop(frame); 
     
@@ -35,6 +39,7 @@ Flower.prototype.update = function(step) {
 Flower.prototype.flowerDamage = function(amount) {
     
     this.flowerLifeBar -= amount;
+    console.log(this.flowerLifeBar);
    
 }
 
@@ -42,7 +47,7 @@ Flower.prototype.flowerHeal = function(amount) {
     
     this.flowerLifeBar += amount;
     
-    if (this.flowerLifeBar > 10) {
-        this.flowerLifeBar = 10;
+    if (this.flowerLifeBar > 100) {
+        this.flowerLifeBar = 100;
     }
 }

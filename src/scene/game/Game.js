@@ -79,7 +79,7 @@ projektkurs2.scene.Game.prototype.init = function () {
     this.initThorns();
     this.initWeeds();
 
-
+    
 
 };
 
@@ -99,7 +99,7 @@ projektkurs2.scene.Game.prototype.initWaterdropplet = function () {
     this.waterdroplets = new rune.display.DisplayGroup(this.stage);
 
     this.timers.create({
-        duration: 5000,
+        duration: 3000,
         repeat: Infinity,
         onTick: function () {
             this.waterdroplet = new Waterdroplet();
@@ -110,7 +110,7 @@ projektkurs2.scene.Game.prototype.initWaterdropplet = function () {
 
 
     this.timers.create({
-        duration: 9000,
+        duration: 10000,
         repeat: Infinity,
         onTick: function () {
             var members = this.waterdroplets.getMembers();
@@ -132,13 +132,23 @@ projektkurs2.scene.Game.prototype.initWeeds = function () {
     var directions = ["north", "south", "east", "west"];
     var direction = directions[Math.floor(Math.random() * directions.length)];
 
+    var spawnInterval = 3000;
+
     this.timers.create({
-        duration: 3000,
+        duration: spawnInterval,
         repeat: Infinity,
         onTick: function () {
             this.weed = new Weed(direction, this.keyboard);
             this.weeds.addMember(this.weed);
             this.stage.addChild(this.weed);
+        }
+    });
+
+    this.timers.create({
+        duration: 2000,
+        repeat: Infinity,
+        onTick: function () {
+            spawnInterval = Math.max(1000, spawnInterval - 200);
         }
     });
 
@@ -149,8 +159,10 @@ projektkurs2.scene.Game.prototype.initThorns = function () {
 
     this.allThorns = new rune.display.DisplayGroup(this.stage);
 
+    var spawnInterval = 3000;
+
     this.timers.create({
-        duration: 5000,
+        duration: spawnInterval,
         repeat: Infinity,
         onTick: function () {
             this.thorn = new Thorn();
@@ -158,19 +170,28 @@ projektkurs2.scene.Game.prototype.initThorns = function () {
             this.stage.addChild(this.thorn);
         }
     });
+
+    this.timers.create({
+        duration: 8000,
+        repeat: Infinity,
+        onTick: function () {
+            spawnInterval = Math.max(1000, spawnInterval - 200);
+        }
+    });
+    
 };
+
 
 projektkurs2.scene.Game.prototype.initFlower = function () {
 
     this.flower = new Flower();
     this.stage.addChild(this.flower);
  
-    
-     this.timers.create({
-         duration: 3000,
+    this.timers.create({
+         duration: 5000,
          repeat: Infinity,
          onTick: function () {
-           this.flower.flowerDamage(1);
+           this.flower.flowerDamage(2);
          }.bind(this)
      });
  
@@ -199,7 +220,7 @@ projektkurs2.scene.Game.prototype.handleWaterdroplets = function () {
 
         this.waterdroplets.forEachMember(function (dropplet) {
             if (fairy.hitTestObject(dropplet)) {
-                this.flower.flowerHeal(1);
+                this.flower.flowerHeal(5);
                 this.stage.removeChild(dropplet);
                 this.waterdroplets.removeMember(dropplet);
                 return false;
@@ -282,6 +303,20 @@ projektkurs2.scene.Game.prototype.update = function (step) {
     this.weeds.forEachMember(function (weed) {
         weed.update(step);
         rune.physics.Space.separate(this.flower, weed);
+            if (this.flower.hitTestObject(weed) && weed.canHit) {
+                this.flower.flowerDamage(2);
+                weed.canHit = false;
+                console.log("hej")
+
+                this.timers.create({
+                    duration: 2000,
+                    onTick: function () {
+                        weed.canHit = true;
+                    }
+                })
+
+               
+            }
     }.bind(this));
 
 
