@@ -280,10 +280,22 @@ projektkurs2.scene.Game.prototype.update = function (step) {
 
 
 
-    //Svampeffekt test
-    if (this.keyboard.justPressed("T")) {
-        var cam = this.cameras.getCameraAt(0);
-        cam.wavy = !cam.wavy;
+    var cam = this.cameras.getCameraAt(0);
+    this.mushrooms.forEachMember(function (mushroom) {
+        var filippaDistance = this.filippa.distance(mushroom);
+        var solDistance = this.sol.distance(mushroom);
+
+        if (filippaDistance < solDistance) {
+            var nearestPlayer = this.filippa;
+        } else {
+            var nearestPlayer = this.sol;
+        }
+
+        if (mushroom.hitTestGroup(this.fairies)) {
+            
+            this.stage.removeChild(mushroom);
+            this.mushrooms.removeMember(mushroom);
+            cam.wavy = true;
 
             cam.tint = new rune.camera.CameraTint();
             cam.tint.color = new rune.color.Color24();
