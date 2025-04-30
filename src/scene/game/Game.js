@@ -82,7 +82,7 @@ projektkurs2.scene.Game.prototype.init = function () {
     this.initWeeds();
     this.initMushrooms();
 
-    
+
 
 };
 
@@ -99,15 +99,31 @@ projektkurs2.scene.Game.prototype.initMushrooms = function () {
 
     this.mushrooms = new rune.display.DisplayGroup(this.stage);
 
+    
+
     this.timers.create({
-        duration: 5000,
+        duration: 1000,
         repeat: Infinity,
         onTick: function () {
-            var mushroom = new Mushroom(this.cameras);
+            var directions = ["north", "south", "east", "west"];
+            var direction = directions[Math.floor(Math.random() * directions.length)];
+            console.log("svamp skapad")
+            var mushroom = new Mushroom(direction);
             this.stage.addChild(mushroom);
             this.mushrooms.addMember(mushroom);
         }.bind(this)
     });
+    
+   /* this.mushrooms.forEachMember(function (mushroom) {
+        var filippaDistance = this.filippa.distance(mushroom);
+        var solDistance = this.sol.distance(mushroom);
+
+        if (filippaDistance < solDistance) {
+            var nearestPlayer = this.filippa;
+        } else {
+            var nearestPlayer = this.sol;
+        }
+    }.bind(this));*/
 }
 
 
@@ -152,16 +168,13 @@ projektkurs2.scene.Game.prototype.initWeeds = function () {
 
     this.weeds = new rune.display.DisplayGroup(this.stage);
 
-    var directions = ["north", "south", "east", "west"];
-    var direction = directions[Math.floor(Math.random() * directions.length)];
-
-    var spawnInterval = 2000;
-
     this.timers.create({
         duration: 3000,
         repeat: Infinity,
         onTick: function () {
-            var weed = new Weed(direction, this.keyboard);
+            var directions = ["north", "south", "east", "west"];
+            var direction = directions[Math.floor(Math.random() * directions.length)];
+            var weed = new Weed(direction);
             this.weeds.addMember(weed);
             this.stage.addChild(weed);
         }
@@ -193,7 +206,7 @@ projektkurs2.scene.Game.prototype.initThorns = function () {
             spawnInterval = Math.max(1000, spawnInterval - 200);
         }
     });
-    
+
 };
 
 
@@ -204,14 +217,14 @@ projektkurs2.scene.Game.prototype.initFlower = function () {
 
 
     this.timers.create({
-         duration: 5000,
-         repeat: Infinity,
-         onTick: function () {
-           this.flower.flowerDamage(50);
-         }.bind(this)
-     });
- 
- 
+        duration: 5000,
+        repeat: Infinity,
+        onTick: function () {
+            this.flower.flowerDamage(50);
+        }.bind(this)
+    });
+
+
 };
 
 
@@ -220,7 +233,7 @@ projektkurs2.scene.Game.prototype.handleThorns = function () {
     this.fairies.forEachMember(function (fairy) {
         if (fairy.hitTestGroup(this.allThorns)) {
             console.log("yas");
-           fairy.isStuck = true;
+            fairy.isStuck = true;
         }
     }.bind(this));
 
@@ -228,14 +241,14 @@ projektkurs2.scene.Game.prototype.handleThorns = function () {
 
 projektkurs2.scene.Game.prototype.handleWaterdroplets = function () {
 
-        this.waterdroplets.forEachMember(function (droplet) {
-            if (droplet.hitTestGroup(this.fairies)) {
-                this.flower.flowerHeal(1);
-                this.stage.removeChild(droplet);
-                this.waterdroplets.removeMember(droplet);
-                return false;
-            }
-        }.bind(this));
+    this.waterdroplets.forEachMember(function (droplet) {
+        if (droplet.hitTestGroup(this.fairies)) {
+            this.flower.flowerHeal(1);
+            this.stage.removeChild(droplet);
+            this.waterdroplets.removeMember(droplet);
+            return false;
+        }
+    }.bind(this));
 
 };
 
@@ -249,13 +262,13 @@ projektkurs2.scene.Game.prototype.gameOver = function () {
 
         //cam.target = this.flower;
         console.log(cam.target);
-       //cam.viewport.zoom = 2.0;
+        //cam.viewport.zoom = 2.0;
 
-       //cam.centerX = this.flower.x + this.flower.width / 2;
-       //cam.centerY = this.flower.y + this.flower.height / 2;
+        //cam.centerX = this.flower.x + this.flower.width / 2;
+        //cam.centerY = this.flower.y + this.flower.height / 2;
 
-       //this.application.scenes.load(projektkurs2.scene.GameOver);
-    
+        //this.application.scenes.load(projektkurs2.scene.GameOver);
+
     }
 };
 
@@ -278,8 +291,6 @@ projektkurs2.scene.Game.prototype.update = function (step) {
 
     this.gameOver();
 
-
-
     // HEJ GOOPh
     var cam = this.cameras.getCameraAt(0);
     this.mushrooms.forEachMember(function (mushroom) {
@@ -292,8 +303,10 @@ projektkurs2.scene.Game.prototype.update = function (step) {
             var nearestPlayer = this.sol;
         }
 
+        mushroom.getDistanceOfPlayers(nearestPlayer);
+
         if (mushroom.hitTestGroup(this.fairies)) {
-            
+
             this.stage.removeChild(mushroom);
             this.mushrooms.removeMember(mushroom);
             cam.wavy = true;
@@ -328,6 +341,7 @@ projektkurs2.scene.Game.prototype.update = function (step) {
                 }
             });
 
+
             // Svamptimer hur länge den ska hålla på
             this.timers.create({
                 duration: 7000,
@@ -338,36 +352,31 @@ projektkurs2.scene.Game.prototype.update = function (step) {
                 }
             });
         }
-        mushroom.update(nearestPlayer, step);
         rune.physics.Space.separate(this.flower, mushroom);
     }.bind(this));
 
-    this.flower.update();
-    this.allThorns.update();
 
     this.weeds.forEachMember(function (weed) {
-        weed.update(step);
         rune.physics.Space.separate(this.flower, weed);
-            if (this.flower.hitTestObject(weed) && weed.canHit) {
-                this.flower.flowerDamage(2);
-                weed.canHit = false;
-                console.log("hej")
+        if (this.flower.hitTestObject(weed) && weed.canHit) {
+            this.flower.flowerDamage(2);
+            weed.canHit = false;
+            console.log("hej")
 
-                this.timers.create({
-                    duration: 2000,
-                    onTick: function () {
-                        weed.canHit = true;
-                    }
-                })
+            this.timers.create({
+                duration: 2000,
+                onTick: function () {
+                    weed.canHit = true;
+                }
+            })
 
-               
-            }
+
+        }
     }.bind(this));
 
 
     for (let i = this.lightballs.length - 1; i >= 0; i--) {
         const ball = this.lightballs[i];
-        ball.update(step);
         if (ball.isDead) {
             this.stage.removeChild(ball, true);
             this.lightballs.splice(i, 1);
