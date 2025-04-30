@@ -19,6 +19,10 @@ function Filippa() {
        // maxVelocityY: 0.4,  
         maxLifespan: 800
     });
+
+    this.waterCollection = 0;
+    console.log(this.waterCollection);
+
 }
 
 Filippa.prototype = Object.create(Fairy.prototype);
@@ -80,6 +84,12 @@ Filippa.prototype.movement = function() {
 
 Filippa.prototype.movement = function() {
     this.emitter.emit(2);
+
+    if (this.isStuck) {
+        this.velocity.x = 0;
+        this.velocity.y = 0;
+        return;
+    }
  
 
     // Dosa 1
@@ -131,4 +141,11 @@ Filippa.prototype.shoot = function() {
     return ball;
 };
 
-
+Filippa.prototype.addDrop = function(amount) {
+    
+    this.waterCollection += amount;
+    
+    if (this.flowerLifeBar > 3) {
+        this.flowerLifeBar = 3;
+    }
+}
