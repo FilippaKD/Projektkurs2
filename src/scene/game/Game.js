@@ -76,8 +76,6 @@ projektkurs2.scene.Game.prototype.init = function () {
 
     this.score = 0;
 
-    console.log(this.groups)
-
     this.initThorns();
     this.initWeeds();
     this.initMushrooms();
@@ -217,14 +215,14 @@ projektkurs2.scene.Game.prototype.initFlower = function () {
 
 
     this.timers.create({
-        duration: 5000,
-        repeat: Infinity,
-        onTick: function () {
-            this.flower.flowerDamage(50);
-        }.bind(this)
-    });
-
-
+         duration: 5000,
+         repeat: Infinity,
+         onTick: function () {
+           this.flower.flowerDamage(5);
+         }.bind(this)
+     });
+ 
+ 
 };
 
 
@@ -241,14 +239,17 @@ projektkurs2.scene.Game.prototype.handleThorns = function () {
 
 projektkurs2.scene.Game.prototype.handleWaterdroplets = function () {
 
-    this.waterdroplets.forEachMember(function (droplet) {
-        if (droplet.hitTestGroup(this.fairies)) {
-            this.flower.flowerHeal(1);
-            this.stage.removeChild(droplet);
-            this.waterdroplets.removeMember(droplet);
-            return false;
-        }
-    }.bind(this));
+        this.waterdroplets.forEachMember(function (droplet) {
+            if (droplet.hitTestGroup(this.fairies)) {
+                //this.fairies.forEachMember(function (fairy) {
+                //fairy.addDrop(1);
+                this.flower.flowerHeal(1);
+                this.stage.removeChild(droplet);
+                this.waterdroplets.removeMember(droplet);
+                return false;
+                //})
+            }
+        }.bind(this));
 
 };
 
@@ -336,7 +337,7 @@ projektkurs2.scene.Game.prototype.update = function (step) {
                     cam.tint.color.setRGB(c.r, c.g, c.b);
                     index++;
                     if (index >= colors.length) {
-                        index = 0; console.log("inne i timer??")
+                        index = 0; 
                     }
                 }
             });
@@ -390,7 +391,17 @@ projektkurs2.scene.Game.prototype.update = function (step) {
                 this.allThorns.removeMember(thorn);
                 this.stage.removeChild(ball.ball);
                 this.lightballs.splice(i, 1);
+
+                this.fairies.forEachMember(function (fairy) {
+                    if (fairy.isStuck = true) {
+                       
+                       fairy.isStuck = false;
+                    }
+                });
+        
+
                 return false;
+
             }
         }.bind(this));
 

@@ -24,6 +24,12 @@ Sol.prototype.constructor = Sol;
 // -----------Styrning med tangentbord--------------------
 Sol.prototype.movement = function () {
 
+    if (this.isStuck) {
+        this.velocity.x = 0;
+        this.velocity.y = 0;
+        return;
+    }
+
     this.emitter.emit(2)
 
     this.velocity.x = 0;
@@ -70,6 +76,12 @@ Sol.prototype.movement = function () {
 /*
 Sol.prototype.movement = function() {
     this.emitter.emit(2);
+
+     if (this.isStuck) {
+        this.velocity.x = 0;
+        this.velocity.y = 0;
+        return;
+    }
 
    // Dosa 2
     var gamepad = this.gamepads.get(1); 
