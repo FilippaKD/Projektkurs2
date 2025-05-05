@@ -97,10 +97,9 @@ projektkurs2.scene.Game.prototype.initMushrooms = function () {
 
     this.mushrooms = new rune.display.DisplayGroup(this.stage);
 
-    
 
     this.timers.create({
-        duration: 1000,
+        duration: 6000,
         repeat: Infinity,
         onTick: function () {
             var directions = ["north", "south", "east", "west"];
@@ -243,7 +242,7 @@ projektkurs2.scene.Game.prototype.handleWaterdroplets = function () {
             if (droplet.hitTestGroup(this.fairies)) {
                 //this.fairies.forEachMember(function (fairy) {
                 //fairy.addDrop(1);
-                this.flower.flowerHeal(1);
+                this.flower.flowerHeal(2);
                 this.stage.removeChild(droplet);
                 this.waterdroplets.removeMember(droplet);
                 return false;
@@ -416,6 +415,17 @@ projektkurs2.scene.Game.prototype.update = function (step) {
                 console.log(this.score);
             }
         }.bind(this));
+
+        this.mushrooms.forEachMember(function (mushroom) {
+            if (ball.ball.hitTestObject(mushroom)) {
+                this.stage.removeChild(mushroom);
+                this.allThorns.removeMember(mushroom);
+                this.stage.removeChild(ball.ball);
+                this.lightballs.splice(i, 1);
+                this.score++
+                console.log(this.score);
+            }
+        }.bind(this));
     }
 
 
@@ -435,12 +445,13 @@ projektkurs2.scene.Game.prototype.update = function (step) {
     }
 
     // Med tangentbord
+    /*
     if (this.keyboard.justPressed("SPACE")) {
         const ball = this.filippa.shoot();
         this.stage.addChild(ball.ball);
         this.lightballs.push(ball);
     }
-
+*/
 
     if (this.keyboard.justPressed("SPACE")) {
         const ball = this.sol.shoot();
