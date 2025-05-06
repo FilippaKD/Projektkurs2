@@ -214,10 +214,10 @@ projektkurs2.scene.Game.prototype.initFlower = function () {
 
 
     this.timers.create({
-         duration: 5000,
+         duration: 1000,
          repeat: Infinity,
          onTick: function () {
-           this.flower.flowerDamage(5);
+           this.flower.flowerDamage(50);
          }.bind(this)
      });
  
@@ -267,7 +267,9 @@ projektkurs2.scene.Game.prototype.gameOver = function () {
         //cam.centerX = this.flower.x + this.flower.width / 2;
         //cam.centerY = this.flower.y + this.flower.height / 2;
 
-        //this.application.scenes.load(projektkurs2.scene.GameOver);
+        this.application.scenes.load([
+            new projektkurs2.scene.GameOver()
+        ]);
 
     }
 };
