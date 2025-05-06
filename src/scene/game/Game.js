@@ -412,14 +412,14 @@ projektkurs2.scene.Game.prototype.update = function (step) {
         if (this.filippa.isStuck == false) {
         const ball = this.filippa.shoot();
         console.log(ball);
-        this.lightballs.addMember(ball);
+        this.lightballs.addMember(ball);}
 
     }
 
     if (this.gamepads.get(1).justPressed(2)) { 
         if (this.sol.isStuck == false) {
         const ball = this.sol.shoot();
-        this.lightballs.addMember(ball);
+        this.lightballs.addMember(ball);}
         
         
     }
