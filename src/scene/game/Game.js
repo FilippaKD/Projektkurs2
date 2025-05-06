@@ -75,14 +75,33 @@ projektkurs2.scene.Game.prototype.init = function () {
     this.lightballs = [];
 
     this.score = 0;
+    //this.scoreCounter = 0;
 
     this.initThorns();
     this.initWeeds();
     this.initMushrooms();
 
+};
 
+projektkurs2.scene.Game.prototype.initHud = function (step) {
+
+   
+
+    this.scoreCounter = "";
+
+    this.scoreCounter += this.score;
+    console.log(this.scoreCounter);
+
+    var displayCounter = new rune.text.BitmapField();
+    displayCounter.text = this.score.toString();
+    
+    displayCounter.autoSize = true;
+    displayCounter.center = this.application.screen.center;
+    displayCounter.color = "#FFFFFF"; 
+    this.stage.addChild(displayCounter);
 
 };
+
 
 /**
  * @inheritDoc
@@ -214,10 +233,10 @@ projektkurs2.scene.Game.prototype.initFlower = function () {
 
 
     this.timers.create({
-         duration: 1000,
+         duration: 8000,
          repeat: Infinity,
          onTick: function () {
-           this.flower.flowerDamage(50);
+           this.flower.flowerDamage(5);
          }.bind(this)
      });
  
@@ -263,13 +282,16 @@ projektkurs2.scene.Game.prototype.gameOver = function () {
         //cam.target = this.flower;
         console.log(cam.target);
         //cam.viewport.zoom = 2.0;
+        //cam.center = this.application.screen.center;
 
         //cam.centerX = this.flower.x + this.flower.width / 2;
         //cam.centerY = this.flower.y + this.flower.height / 2;
 
+        
         this.application.scenes.load([
             new projektkurs2.scene.GameOver()
         ]);
+        
 
     }
 };
@@ -292,6 +314,7 @@ projektkurs2.scene.Game.prototype.update = function (step) {
     this.filippa.movement();
 
     this.gameOver();
+    this.initHud();
 
     // HEJ GOOPh
     var cam = this.cameras.getCameraAt(0);
