@@ -45,11 +45,13 @@ projektkurs2.scene.GameOver.prototype.constructor = projektkurs2.scene.GameOver;
 projektkurs2.scene.GameOver.prototype.init = function () {
     rune.scene.Scene.prototype.init.call(this);
 
+    console.log("bytt scen")
     this.backgroundColor = "#000000";
 
-    var text = new rune.text.BitmapField("GAME OVER");
-    text.x = this.stage.centerX - text.width / 2;
-    text.y = this.stage.centerY - text.height / 2;
+    var text = new rune.text.BitmapField("GAME OVER", rune.text.BitmapFormat.FONT_MEDIUM);
+    
+    text.autoSize = true;
+    text.center = this.application.screen.center;
     text.color = "#FFFFFF"; 
     this.stage.addChild(text);
 

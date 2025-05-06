@@ -202,10 +202,10 @@ projektkurs2.scene.Game.prototype.initFlower = function () {
 
 
     this.timers.create({
-         duration: 5000,
+         duration: 1000,
          repeat: Infinity,
          onTick: function () {
-           this.flower.flowerDamage(5);
+           this.flower.flowerDamage(50);
          }.bind(this)
      });
  
@@ -254,7 +254,9 @@ projektkurs2.scene.Game.prototype.gameOver = function () {
         //cam.centerX = this.flower.x + this.flower.width / 2;
         //cam.centerY = this.flower.y + this.flower.height / 2;
 
-        //this.application.scenes.load(projektkurs2.scene.GameOver);
+        this.application.scenes.load([
+            new projektkurs2.scene.GameOver()
+        ]);
 
     }
 };
@@ -370,10 +372,13 @@ projektkurs2.scene.Game.prototype.update = function (step) {
                 this.allThorns.removeMember(thorn);
                 this.lightballs.removeMember(ball);
                 this.fairies.forEachMember(function (fairy) {
-                    if (fairy.isStuck = true) {
+                    if (fairy.isStuck == true && fairy.hitTestObject(thorn)) {
+                       
                        fairy.isStuck = false;
                     }
                 });
+        
+
                 return false;
             }
         }.bind(this));
@@ -404,6 +409,7 @@ projektkurs2.scene.Game.prototype.update = function (step) {
 
     // Skottlogik (tilläggning på scen)
     if (this.gamepads.get(0).justPressed(2)) {
+        if (this.filippa.isStuck == false) {
         const ball = this.filippa.shoot();
         console.log(ball);
         this.lightballs.addMember(ball);
@@ -411,8 +417,10 @@ projektkurs2.scene.Game.prototype.update = function (step) {
     }
 
     if (this.gamepads.get(1).justPressed(2)) { 
+        if (this.sol.isStuck == false) {
         const ball = this.sol.shoot();
-        console.log(this.lightballs.addMember(ball));
+        this.lightballs.addMember(ball);
+        
         
     }
 
