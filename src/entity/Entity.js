@@ -18,7 +18,7 @@ Entity.prototype.constructor = Entity;
 
 Entity.prototype.initHitboxes = function() {
 
-    //this.hitbox.debug = true;
-   // this.hitbox.debugColor = rune.util.Palette.RED;
+    this.hitbox.debug = true;
+   this.hitbox.debugColor = rune.util.Palette.RED;
 
 }
