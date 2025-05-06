@@ -1,20 +1,25 @@
 function LightBall (x, y, direction) {
-    this.ball = new rune.display.Sprite(x, y, 8, 8, "image_sparkle");
-    this.ball.velocity.x = direction.x * 3;
-    this.ball.velocity.y = direction.y * 3;
-    this.ball.hitbox.set(0, 0, 8, 8);
+    Entity.call(this, "image_sparkle", x, y, 8, 8);
+
+    this.velocity.x = direction.x * 3;
+    this.velocity.y = direction.y * 3;
+    this.hitbox.set(0, 0, 8, 8);
     this.isDead = false;
     
 };
 
+LightBall.prototype = Object.create(Entity.prototype);
+LightBall.prototype.constructor = LightBall;
+
+
 LightBall.prototype.update = function () {
 
-    this.ball.x += this.ball.velocity.x;
-    this.ball.y += this.ball.velocity.y;
+    this.x += this.velocity.x;
+    this.y += this.velocity.y;
 
     if (
-        this.ball.x < -this.ball.width || this.ball.x > 400 + this.ball.width ||
-        this.ball.y < -this.ball.height || this.ball.y > 225 + this.ball.height
+        this.x < -this.width || this.x > 400 + this.width ||
+        this.y < -this.height || this.y > 225 + this.height
     )  { 
         this.isDead = true;
     }

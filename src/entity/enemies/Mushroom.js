@@ -39,7 +39,7 @@ function Mushroom(direction) {
     console.log("ny svamp")
 
 
-    this.hitbox.set(-5, -5, 10, 10);
+    this.hitbox.set(0, 1, 12, 12);
 
     var canvasWidth = 400;
     var canvasHeight = 225;

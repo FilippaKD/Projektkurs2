@@ -63,8 +63,6 @@ projektkurs2.scene.Game.prototype.init = function () {
     this.fairies.addMember(this.sol)
     this.fairies.addMember(this.filippa)
 
-    this.stage.addChild(this.sol);
-    this.stage.addChild(this.filippa);
 
     bgContainer.addChild(this.sol.emitter);
     bgContainer.addChild(this.filippa.emitter);
@@ -72,7 +70,7 @@ projektkurs2.scene.Game.prototype.init = function () {
     this.initFlower();
     this.initWaterdroplet();
 
-    this.lightballs = [];
+    this.lightballs = new rune.display.DisplayGroup(this.stage);
 
     this.score = 0;
     //this.scoreCounter = 0;
@@ -125,7 +123,6 @@ projektkurs2.scene.Game.prototype.initMushrooms = function () {
             var direction = directions[Math.floor(Math.random() * directions.length)];
             console.log("svamp skapad")
             var mushroom = new Mushroom(direction);
-            this.stage.addChild(mushroom);
             this.mushrooms.addMember(mushroom);
         }.bind(this)
     });
@@ -146,17 +143,12 @@ projektkurs2.scene.Game.prototype.initMushrooms = function () {
 projektkurs2.scene.Game.prototype.initWaterdroplet = function () {
 
     this.waterdroplets = new rune.display.DisplayGroup(this.stage);
-    this.waterdroplets = new rune.display.DisplayGroup(this.stage);
 
     this.timers.create({
         duration: 5000,
         repeat: Infinity,
         onTick: function () {
             this.waterdroplet = new Waterdroplet();
-            this.stage.addChild(this.waterdroplet);
-            this.waterdroplets.addMember(this.waterdroplet);
-            this.waterdroplet = new Waterdroplet();
-            this.stage.addChild(this.waterdroplet);
             this.waterdroplets.addMember(this.waterdroplet);
         }.bind(this)
     });
@@ -167,12 +159,10 @@ projektkurs2.scene.Game.prototype.initWaterdroplet = function () {
         repeat: Infinity,
         onTick: function () {
             var members = this.waterdroplets.getMembers();
-            var members = this.waterdroplets.getMembers();
             if (members.length > 0) {
                 var randomI = Math.floor(Math.random() * members.length);
                 var toBeRemoved = members[randomI];
                 this.stage.removeChild(toBeRemoved);
-                this.waterdroplets.removeMember(toBeRemoved);
                 this.waterdroplets.removeMember(toBeRemoved);
             }
         }.bind(this)
@@ -185,14 +175,13 @@ projektkurs2.scene.Game.prototype.initWeeds = function () {
     this.weeds = new rune.display.DisplayGroup(this.stage);
 
     this.timers.create({
-        duration: 3000,
+        duration: 2000,
         repeat: Infinity,
         onTick: function () {
             var directions = ["north", "south", "east", "west"];
             var direction = directions[Math.floor(Math.random() * directions.length)];
             var weed = new Weed(direction);
             this.weeds.addMember(weed);
-            this.stage.addChild(weed);
         }
     });
 
@@ -211,7 +200,6 @@ projektkurs2.scene.Game.prototype.initThorns = function () {
         onTick: function () {
             this.thorn = new Thorn();
             this.allThorns.addMember(this.thorn);
-            this.stage.addChild(this.thorn);
         }
     });
 
@@ -262,7 +250,6 @@ projektkurs2.scene.Game.prototype.handleWaterdroplets = function () {
                 //this.fairies.forEachMember(function (fairy) {
                 //fairy.addDrop(1);
                 this.flower.flowerHeal(2);
-                this.stage.removeChild(droplet);
                 this.waterdroplets.removeMember(droplet);
                 return false;
                 //})
@@ -387,70 +374,58 @@ projektkurs2.scene.Game.prototype.update = function (step) {
             this.flower.flowerDamage(2);
             weed.canHit = false;
             console.log("hej")
-
             this.timers.create({
                 duration: 2000,
                 onTick: function () {
                     weed.canHit = true;
                 }
             })
-
-
         }
     }.bind(this));
 
 
-    for (let i = this.lightballs.length - 1; i >= 0; i--) {
-        const ball = this.lightballs[i];
+    this.lightballs.forEachMember(function (ball) {
         if (ball.isDead) {
-            this.stage.removeChild(ball, true);
-            this.lightballs.splice(i, 1);
+            this.lightballs.removeMember(ball);
         }
-
 
         // Såhär gör man om man använder display group för att at bort går inte med vanlig array
         this.allThorns.forEachMember(function (thorn) {
-            if (ball.ball.hitTestObject(thorn)) {
-                this.stage.removeChild(thorn);
+            if (ball.hitTestObject(thorn)) {
                 this.allThorns.removeMember(thorn);
-                this.stage.removeChild(ball.ball);
-                this.lightballs.splice(i, 1);
-
+                this.lightballs.removeMember(ball);
                 this.fairies.forEachMember(function (fairy) {
                     if (fairy.isStuck == true && fairy.hitTestObject(thorn)) {
                        
                        fairy.isStuck = false;
                     }
                 });
+        
 
                 return false;
-
             }
         }.bind(this));
 
 
         this.weeds.forEachMember(function (weed) {
-            if (ball.ball.hitTestObject(weed)) {
-                this.stage.removeChild(weed);
-                this.allThorns.removeMember(weed);
-                this.stage.removeChild(ball.ball);
-                this.lightballs.splice(i, 1);
+            if (ball.hitTestObject(weed)) {
+                this.weeds.removeMember(weed);
+                this.lightballs.removeMember(ball);
                 this.score++
                 console.log(this.score);
             }
         }.bind(this));
 
         this.mushrooms.forEachMember(function (mushroom) {
-            if (ball.ball.hitTestObject(mushroom)) {
-                this.stage.removeChild(mushroom);
-                this.allThorns.removeMember(mushroom);
-                this.stage.removeChild(ball.ball);
-                this.lightballs.splice(i, 1);
-                this.score++
+            if (ball.hitTestObject(mushroom)) {
+                this.mushrooms.removeMember(mushroom);
+                this.lightballs.removeMember(ball);
+                this.score++;
                 console.log(this.score);
             }
         }.bind(this));
-    }
+
+    }.bind(this));
 
 
 
@@ -459,17 +434,17 @@ projektkurs2.scene.Game.prototype.update = function (step) {
     if (this.gamepads.get(0).justPressed(2)) {
         if (this.filippa.isStuck == false) {
         const ball = this.filippa.shoot();
-        this.stage.addChild(ball.ball);
-        this.lightballs.push(ball);
-        }
+        console.log(ball);
+        this.lightballs.addMember(ball);}
+
     }
 
-    if (this.gamepads.get(1).justPressed(2)) { // knapp 7 är RT
+    if (this.gamepads.get(1).justPressed(2)) { 
         if (this.sol.isStuck == false) {
         const ball = this.sol.shoot();
-        this.stage.addChild(ball.ball);
-        this.lightballs.push(ball);
-        }
+        this.lightballs.addMember(ball);}
+        
+        
     }
 
     // Med tangentbord
@@ -479,14 +454,13 @@ projektkurs2.scene.Game.prototype.update = function (step) {
         this.stage.addChild(ball.ball);
         this.lightballs.push(ball);
     }
-*/
 
     if (this.keyboard.justPressed("SPACE")) {
         const ball = this.sol.shoot();
         this.stage.addChild(ball.ball);
         this.lightballs.push(ball);
     }
-
+*/
     this.handleThorns();
     this.handleWaterdroplets();
     this.handleWaterdroplets();

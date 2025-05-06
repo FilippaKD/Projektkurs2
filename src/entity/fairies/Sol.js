@@ -20,7 +20,7 @@ function Sol() {
 Sol.prototype = Object.create(Fairy.prototype);
 Sol.prototype.constructor = Sol;
 
-
+/*
 // -----------Styrning med tangentbord--------------------
 Sol.prototype.movement = function () {
 
@@ -68,52 +68,57 @@ Sol.prototype.movement = function () {
     }
 };
 
-
+*/
 
 
 
 // --------------Styrning med kontroll---------------------
-/*
-Sol.prototype.movement = function() {
+
+Sol.prototype.movement = function () {
     this.emitter.emit(2);
 
-     if (this.isStuck) {
+    if (this.isStuck) {
         this.velocity.x = 0;
         this.velocity.y = 0;
         return;
     }
 
-   // Dosa 2
-    var gamepad = this.gamepads.get(1); 
-
+    // Dosa 2
+    var gamepad = this.gamepads.get(1);
     var stick = gamepad.stickLeft;
-   
-    this.velocity.x = stick.x * this.speed;
-    this.velocity.y = stick.y * this.speed;
+
+    if (gamepad.pressed(6)) {
+        this.velocity.x = 0;
+        this.velocity.y = 0;
+    } else {
+        this.velocity.x = stick.x * this.speed;
+        this.velocity.y = stick.y * this.speed;
+    }
+
 
     this.x += this.velocity.x;
     this.y += this.velocity.y;
 
-   
+
+
     this.emitter.x = this.centerX;
     this.emitter.y = this.y + this.height * 0.3;
 
-    if (this.velocity.x !== 0 || this.velocity.y !== 0) {
-     this.lastVX = this.velocity.x;
-        this.lastVY = this.velocity.y;
-        if (this.velocity.y < 0) {
+    if (stick.x !== 0 || stick.y !== 0) {
+        this.lastVX = stick.x;
+        this.lastVY = stick.y;
+        if (stick.y < 0) {
             this.animation.gotoAndPlay("backwards");
         } else {
             this.animation.gotoAndPlay("walk");
-            
         }
 
-        this.flippedX = this.velocity.x > 0;
+        this.flippedX = stick.x > 0;
     } else {
         this.animation.gotoAndPlay("idle");
     }
 };
-*/
+
 
 
 Sol.prototype.shoot = function () {
