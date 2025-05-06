@@ -392,12 +392,11 @@ projektkurs2.scene.Game.prototype.update = function (step) {
                 this.lightballs.splice(i, 1);
 
                 this.fairies.forEachMember(function (fairy) {
-                    if (fairy.isStuck = true) {
+                    if (fairy.isStuck == true && fairy.hitTestObject(thorn)) {
                        
                        fairy.isStuck = false;
                     }
                 });
-        
 
                 return false;
 
@@ -433,15 +432,19 @@ projektkurs2.scene.Game.prototype.update = function (step) {
 
     // Skottlogik (tilläggning på scen)
     if (this.gamepads.get(0).justPressed(2)) {
+        if (this.filippa.isStuck == false) {
         const ball = this.filippa.shoot();
         this.stage.addChild(ball.ball);
         this.lightballs.push(ball);
+        }
     }
 
     if (this.gamepads.get(1).justPressed(2)) { // knapp 7 är RT
+        if (this.sol.isStuck == false) {
         const ball = this.sol.shoot();
         this.stage.addChild(ball.ball);
         this.lightballs.push(ball);
+        }
     }
 
     // Med tangentbord
