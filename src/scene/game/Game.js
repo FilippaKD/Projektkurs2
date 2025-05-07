@@ -107,12 +107,17 @@ projektkurs2.scene.Game.prototype.initHud = function () {
     this.displayPlayer1.color = "#FFFFFF"; 
     //this.displayPlayer1.y = 100;
     this.stage.addChild(this.displayPlayer1);
+    this.watercan1 = new Watercan;
+    this.stage.addChild(this.watercan1);
+
     
 
     this.displayPlayer2 = new rune.text.BitmapField();
     this.displayPlayer2.color = "#FFFFFF"; 
     this.displayPlayer2.x = 300;
     this.stage.addChild(this.displayPlayer2);
+    this.watercan2 = new Watercan(375, 0);
+    this.stage.addChild(this.watercan2);
 
 
 };
@@ -249,20 +254,17 @@ projektkurs2.scene.Game.prototype.handleThorns = function () {
 
 projektkurs2.scene.Game.prototype.handleWaterdroplets = function () {
 
-        this.waterdroplets.forEachMember(function (droplet) {
-            if (droplet.hitTestGroup(this.fairies)) {
-                this.fairies.forEachMember(function (fairy) {
-                if (fairy.waterCollection == 3) {
-                    return
-                } else {
+    this.waterdroplets.forEachMember(function (droplet) {
+        var collected = false;
+    
+        this.fairies.forEachMember(function (fairy) {
+            if (droplet.hitTestObject(fairy) && fairy.waterCollection < 3 && !collected) {
                 fairy.addDrop(1);
-                
                 this.waterdroplets.removeMember(droplet);
-                return false;
-                }
-                }.bind(this))
+                collected = true;
             }
         }.bind(this));
+    }.bind(this)); 
 
 
         this.waterZone = new rune.display.Graphic(
@@ -335,9 +337,11 @@ projektkurs2.scene.Game.prototype.update = function (step) {
 
    this.displayPlayer1.text = "";
    this.displayPlayer1.text = "Player 1 " + this.sol.waterCollection.toString() + "/3";
+   this.watercan1.updatePicture(this.sol.waterCollection);
 
    this.displayPlayer2.text = "";
    this.displayPlayer2.text = "Player 2 " + this.filippa.waterCollection.toString() + "/3";
+   this.watercan2.updatePicture(this.filippa.waterCollection);
 
 
 
