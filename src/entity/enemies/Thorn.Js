@@ -37,7 +37,7 @@ Thorn.prototype.attackMode = function() {
 Thorn.prototype.update = function(step) {
     Entity.prototype.update.call(this, step);
 
-    var current = this.animation.current
+    var current = this.animation.current;
 
     if (current.name == "grow" && current.frameIndex == (current.frames.length - 1)) {
         this.attackMode();

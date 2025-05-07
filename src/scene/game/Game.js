@@ -277,9 +277,15 @@ projektkurs2.scene.Game.prototype.handleWaterdroplets = function () {
         this.stage.addChild(this.waterZone);
 
         this.fairies.forEachMember(function (fairy) {
-            if (fairy.hitTestObject(this.waterZone) && this.gamepads.get(0).justPressed(7)) {
+            if (fairy.hitTestObject(this.waterZone) && this.gamepads.get(0).justPressed(7) && fairy.waterCollection > 0) {
                 this.flower.flowerHeal(fairy.waterCollection);
+                var droppedWater = new Waterdroplet;
+                droppedWater.x = fairy.x;
+                droppedWater.y = fairy.y;
+                droppedWater.dropWater();
+                this.stage.addChild(droppedWater);
                 fairy.waterCollection = 0;
+            
               
             }
         }.bind(this))
