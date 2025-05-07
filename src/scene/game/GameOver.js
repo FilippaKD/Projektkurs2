@@ -13,7 +13,7 @@
  * 
  * Game scene.
  */
-projektkurs2.scene.GameOver = function () {
+projektkurs2.scene.GameOver = function (score) {
 
     //--------------------------------------------------------------------------
     // Super call
@@ -22,6 +22,7 @@ projektkurs2.scene.GameOver = function () {
     /**
      * Calls the constructor method of the super class.
      */
+    this.score = score;
     rune.scene.Scene.call(this);
 };
 
@@ -54,6 +55,15 @@ projektkurs2.scene.GameOver.prototype.init = function () {
     text.center = this.application.screen.center;
     text.color = "#FFFFFF"; 
     this.stage.addChild(text);
+
+    var score = new rune.text.BitmapField(this.score.toString(), rune.text.BitmapFormat.FONT_MEDIUM);
+    
+    score.autoSize = true;
+    score.center = this.application.screen.center;
+    score.y = 120;
+    score.color = "#FFFFFF"; 
+    this.stage.addChild(score);
+
 
    
 

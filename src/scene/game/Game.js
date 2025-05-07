@@ -76,7 +76,9 @@ projektkurs2.scene.Game.prototype.init = function () {
     this.displayCounter = new rune.text.BitmapField();
     this.displayCounter.autoSize = true;
     this.displayCounter.center = this.application.screen.center;
-    this.displayCounter.color = "#FFFFFF";
+    this.displayCounter.y = 5;
+    this.displayCounter.backgroundColor = "#000000"
+    this.displayCounter.color = "#FFFFFF"; 
     this.stage.addChild(this.displayCounter);
 
     this.initThorns();
@@ -261,9 +263,10 @@ projektkurs2.scene.Game.prototype.gameOver = function () {
         //cam.centerX = this.flower.x + this.flower.width / 2;
         //cam.centerY = this.flower.y + this.flower.height / 2;
 
-
+        var score = this.score;
+        
         this.application.scenes.load([
-            new projektkurs2.scene.GameOver()
+            new projektkurs2.scene.GameOver(score)
         ]);
 
 
@@ -288,9 +291,8 @@ projektkurs2.scene.Game.prototype.update = function (step) {
     this.filippa.movement();
 
     this.gameOver();
-    // this.initHud();
-    this.displayCounter.text = "";
-    this.displayCounter.text = this.score.toString();
+   this.displayCounter.text = "";
+   this.displayCounter.text = this.score.toString();
 
     // HEJ GOOPh
     var cam = this.cameras.getCameraAt(0);
