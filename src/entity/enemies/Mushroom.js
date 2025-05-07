@@ -36,8 +36,6 @@ Mushroom.prototype.update = function (player, step) {
 function Mushroom(direction) {
     Entity.call(this, "image_game_mushroom", this.x, this.y, 15, 13);
     this.animation.create("walk", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 6, true);
-    console.log("ny svamp")
-
 
     this.hitbox.set(0, 1, 12, 12);
 

@@ -64,9 +64,6 @@ projektkurs2.scene.GameOver.prototype.init = function () {
     score.color = "#FFFFFF"; 
     this.stage.addChild(score);
 
-
-   
-
 };
 
 

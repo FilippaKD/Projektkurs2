@@ -110,7 +110,6 @@ projektkurs2.scene.Game.prototype.initMushrooms = function () {
         onTick: function () {
             var directions = ["north", "south", "east", "west"];
             var direction = directions[Math.floor(Math.random() * directions.length)];
-            console.log("svamp skapad")
             var mushroom = new Mushroom(direction);
             this.mushrooms.addMember(mushroom);
         }.bind(this)
@@ -225,7 +224,6 @@ projektkurs2.scene.Game.prototype.handleThorns = function () {
 
     this.fairies.forEachMember(function (fairy) {
         if (fairy.hitTestGroup(this.allThorns)) {
-            console.log("yas");
             fairy.isStuck = true;
         }
     }.bind(this));
@@ -237,6 +235,7 @@ projektkurs2.scene.Game.prototype.handleWaterdroplets = function () {
         this.waterdroplets.forEachMember(function (droplet) {
             if (droplet.hitTestGroup(this.fairies)) {
                 //this.fairies.forEachMember(function (fairy) {
+                console.log(this.fairies);
                 //fairy.addDrop(1);
                 this.flower.flowerHeal(2);
                 this.waterdroplets.removeMember(droplet);
@@ -255,19 +254,22 @@ projektkurs2.scene.Game.prototype.gameOver = function () {
 
         var cam = this.cameras.getCameraAt(0);
 
-        //cam.target = this.flower;
+        cam.target = this.flower;
         console.log(cam.target);
-        //cam.viewport.zoom = 2.0;
+        
         //cam.center = this.application.screen.center;
+        cam.viewport.zoom = 2.0;
 
         //cam.centerX = this.flower.x + this.flower.width / 2;
         //cam.centerY = this.flower.y + this.flower.height / 2;
 
         var score = this.score;
         
+        /*
         this.application.scenes.load([
             new projektkurs2.scene.GameOver(score)
         ]);
+        */
         
 
     }
@@ -364,7 +366,6 @@ projektkurs2.scene.Game.prototype.update = function (step) {
         if (this.flower.hitTestObject(weed) && weed.canHit) {
             this.flower.flowerDamage(2);
             weed.canHit = false;
-            console.log("hej")
             this.timers.create({
                 duration: 2000,
                 onTick: function () {

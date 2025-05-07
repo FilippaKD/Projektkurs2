@@ -20,7 +20,6 @@ function Filippa() {
     });
 
     this.waterCollection = 0;
-    console.log(this.waterCollection);
 
 }
 
@@ -149,8 +148,7 @@ Filippa.prototype.shoot = function () {
 Filippa.prototype.addDrop = function (amount) {
 
     this.waterCollection += amount;
+    console.log("Filippa vatten" + this.waterCollection);
 
-    if (this.flowerLifeBar > 3) {
-        this.flowerLifeBar = 3;
-    }
+   
 }

@@ -6,7 +6,6 @@ function Flower() {
     this.flowerLifeBar = 100;
 
     this.immovable = true;
-    console.log(this.flowerLifeBar)
     this.makeAnimations();
     this.hitbox.set(7, 10, 15, 25);
     
@@ -39,7 +38,6 @@ Flower.prototype.update = function(step) {
 Flower.prototype.flowerDamage = function(amount) {
     
     this.flowerLifeBar -= amount;
-    console.log(this.flowerLifeBar);
    
 }
 
