@@ -72,18 +72,10 @@ projektkurs2.scene.Game.prototype.init = function () {
 
     this.lightballs = new rune.display.DisplayGroup(this.stage);
 
-    this.score = 0;
-    this.displayCounter = new rune.text.BitmapField();
-    this.displayCounter.autoSize = true;
-    this.displayCounter.center = this.application.screen.center;
-    this.displayCounter.y = 5;
-    this.displayCounter.backgroundColor = "#000000"
-    this.displayCounter.color = "#FFFFFF"; 
-    this.stage.addChild(this.displayCounter);
-
     this.initThorns();
     this.initWeeds();
     this.initMushrooms();
+    this.initHud();
 
 };
 
@@ -96,6 +88,31 @@ projektkurs2.scene.Game.prototype.init = function () {
 projektkurs2.scene.Game.prototype.m_initCamera = function (step) {
     var camera = new Camera();
     this.cameras.addCamera(camera);
+
+
+};
+
+projektkurs2.scene.Game.prototype.initHud = function () {
+    
+    this.score = 0;
+    this.displayCounter = new rune.text.BitmapField();
+    this.displayCounter.autoSize = true;
+    this.displayCounter.center = this.application.screen.center;
+    this.displayCounter.y = 5;
+    this.displayCounter.backgroundColor = "#000000"
+    this.displayCounter.color = "#FFFFFF"; 
+    this.stage.addChild(this.displayCounter);
+
+    this.displayPlayer1 = new rune.text.BitmapField();
+    this.displayPlayer1.color = "#FFFFFF"; 
+    //this.displayPlayer1.y = 100;
+    this.stage.addChild(this.displayPlayer1);
+    
+
+    this.displayPlayer2 = new rune.text.BitmapField();
+    this.displayPlayer2.color = "#FFFFFF"; 
+    this.displayPlayer2.x = 300;
+    this.stage.addChild(this.displayPlayer2);
 
 
 };
@@ -234,15 +251,36 @@ projektkurs2.scene.Game.prototype.handleWaterdroplets = function () {
 
         this.waterdroplets.forEachMember(function (droplet) {
             if (droplet.hitTestGroup(this.fairies)) {
-                //this.fairies.forEachMember(function (fairy) {
-                console.log(this.fairies);
-                //fairy.addDrop(1);
-                this.flower.flowerHeal(2);
+                this.fairies.forEachMember(function (fairy) {
+                if (fairy.waterCollection == 3) {
+                    return
+                } else {
+                fairy.addDrop(1);
+                
                 this.waterdroplets.removeMember(droplet);
                 return false;
-                //})
+                }
+                }.bind(this))
             }
         }.bind(this));
+
+
+        this.waterZone = new rune.display.Graphic(
+            this.flower.x - 25,
+            this.flower.y - 25,
+            this.flower.width + 50,
+            this.flower.height + 50
+        );
+
+        this.stage.addChild(this.waterZone);
+
+        this.fairies.forEachMember(function (fairy) {
+            if (fairy.hitTestObject(this.waterZone) && this.gamepads.get(0).justPressed(7)) {
+                this.flower.flowerHeal(fairy.waterCollection);
+                fairy.waterCollection = 0;
+              
+            }
+        }.bind(this))
 
 };
 
@@ -294,6 +332,14 @@ projektkurs2.scene.Game.prototype.update = function (step) {
     this.gameOver();
    this.displayCounter.text = "";
    this.displayCounter.text = this.score.toString();
+
+   this.displayPlayer1.text = "";
+   this.displayPlayer1.text = "Player 1 " + this.sol.waterCollection.toString() + "/3";
+
+   this.displayPlayer2.text = "";
+   this.displayPlayer2.text = "Player 2 " + this.filippa.waterCollection.toString() + "/3";
+
+
 
     // HEJ GOOPh
     var cam = this.cameras.getCameraAt(0);

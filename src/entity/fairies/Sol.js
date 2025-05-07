@@ -15,6 +15,8 @@ function Sol() {
         maxVelocityY: 0.15,
         maxLifespan: 1000
     });
+
+    this.waterCollection = 0;
 }
 
 Sol.prototype = Object.create(Fairy.prototype);
@@ -135,3 +137,11 @@ Sol.prototype.shoot = function () {
 
     return ball;
 };
+
+Sol.prototype.addDrop = function (amount) {
+
+    this.waterCollection += amount;
+    console.log("Sol vatten" + this.waterCollection);
+
+   
+}
