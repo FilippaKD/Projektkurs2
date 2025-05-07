@@ -114,17 +114,17 @@ projektkurs2.scene.Game.prototype.initMushrooms = function () {
             this.mushrooms.addMember(mushroom);
         }.bind(this)
     });
-    
-   /* this.mushrooms.forEachMember(function (mushroom) {
-        var filippaDistance = this.filippa.distance(mushroom);
-        var solDistance = this.sol.distance(mushroom);
 
-        if (filippaDistance < solDistance) {
-            var nearestPlayer = this.filippa;
-        } else {
-            var nearestPlayer = this.sol;
-        }
-    }.bind(this));*/
+    /* this.mushrooms.forEachMember(function (mushroom) {
+         var filippaDistance = this.filippa.distance(mushroom);
+         var solDistance = this.sol.distance(mushroom);
+ 
+         if (filippaDistance < solDistance) {
+             var nearestPlayer = this.filippa;
+         } else {
+             var nearestPlayer = this.sol;
+         }
+     }.bind(this));*/
 }
 
 
@@ -209,14 +209,14 @@ projektkurs2.scene.Game.prototype.initFlower = function () {
 
 
     this.timers.create({
-         duration: 8000,
-         repeat: Infinity,
-         onTick: function () {
-           this.flower.flowerDamage(5);
-         }.bind(this)
-     });
- 
- 
+        duration: 8000,
+        repeat: Infinity,
+        onTick: function () {
+            this.flower.flowerDamage(5);
+        }.bind(this)
+    });
+
+
 };
 
 
@@ -269,8 +269,7 @@ projektkurs2.scene.Game.prototype.gameOver = function () {
         this.application.scenes.load([
             new projektkurs2.scene.GameOver(score)
         ]);
-        */
-        
+
 
     }
 };
@@ -318,7 +317,7 @@ projektkurs2.scene.Game.prototype.update = function (step) {
 
             cam.tint = new rune.camera.CameraTint();
             cam.tint.color = new rune.color.Color24();
-            cam.tint.opacity = 0.3;
+            cam.tint.opacity = 0.4;
 
             // Färger för svampeffekten
             let colors = [
@@ -341,7 +340,7 @@ projektkurs2.scene.Game.prototype.update = function (step) {
                     cam.tint.color.setRGB(c.r, c.g, c.b);
                     index++;
                     if (index >= colors.length) {
-                        index = 0; 
+                        index = 0;
                     }
                 }
             });
@@ -388,11 +387,11 @@ projektkurs2.scene.Game.prototype.update = function (step) {
                 this.lightballs.removeMember(ball);
                 this.fairies.forEachMember(function (fairy) {
                     if (fairy.isStuck == true && fairy.hitTestObject(thorn)) {
-                       
-                       fairy.isStuck = false;
+
+                        fairy.isStuck = false;
                     }
                 });
-        
+
 
                 return false;
             }
@@ -401,6 +400,24 @@ projektkurs2.scene.Game.prototype.update = function (step) {
 
         this.weeds.forEachMember(function (weed) {
             if (ball.hitTestObject(weed)) {
+
+                // Glitter när ett ogräs dör
+                var emitY = weed.y + weed.height * 0.3;
+                var weedEmitter = new rune.particle.Emitter(weed.centerX, emitY, 6, 8, {
+                    particles: [Glitter],
+                    capacity: 150,
+                    accelerationY: 0.0005,
+                    accelerationX: 0.0005,
+                    maxRotation: 10,
+                    dragY: 0.2,
+                    maxVelocityX: 0.06,
+                    minVelocityX: -0.06,
+                    maxVelocityY: 0.15,
+                    maxLifespan: 800
+                });
+                this.stage.addChild(weedEmitter);
+                weedEmitter.emit(30);
+
                 this.weeds.removeMember(weed);
                 this.lightballs.removeMember(ball);
                 this.score++
@@ -420,23 +437,26 @@ projektkurs2.scene.Game.prototype.update = function (step) {
     }.bind(this));
 
 
+    console.log(this.lightballs.numMembers)
 
 
     // Skottlogik (tilläggning på scen)
     if (this.gamepads.get(0).justPressed(2)) {
         if (this.filippa.isStuck == false) {
-        const ball = this.filippa.shoot();
-        console.log(ball);
-        this.lightballs.addMember(ball);}
+            const ball = this.filippa.shoot();
+            console.log(ball);
+            this.lightballs.addMember(ball);
+        }
 
     }
 
-    if (this.gamepads.get(1).justPressed(2)) { 
+    if (this.gamepads.get(1).justPressed(2)) {
         if (this.sol.isStuck == false) {
-        const ball = this.sol.shoot();
-        this.lightballs.addMember(ball);}
-        
-        
+            const ball = this.sol.shoot();
+            this.lightballs.addMember(ball);
+        }
+
+
     }
 
     // Med tangentbord
