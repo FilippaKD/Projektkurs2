@@ -1,8 +1,9 @@
 
-function Weed(direction, keyboard) {
+function Weed(direction) {
     Entity.call(this, "image_game_weed", this.x, this.y, 16, 16);
     this.animation.create("walk", [0, 1, 2, 3, 4, 5], 6, true);
-    this.keyboard = keyboard;
+
+    
 
     this.canHit = true;
 
@@ -25,8 +26,6 @@ function Weed(direction, keyboard) {
         this.x = canvasWidth;
         this.y = Math.random() * canvasHeight;
     }
-
-
 
 }
 
