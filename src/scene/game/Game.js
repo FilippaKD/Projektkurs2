@@ -265,7 +265,7 @@ projektkurs2.scene.Game.prototype.gameOver = function () {
 
         var score = this.score;
         
-        /*
+        
         this.application.scenes.load([
             new projektkurs2.scene.GameOver(score)
         ]);
