@@ -120,9 +120,9 @@ Camera.prototype.m_renderWaves = function() {
     var h = this.m_viewport.height;
     
     for (var y = 0; y < h; y++) {
-        var lx1 = this.x1 + this.o1.current(y * 0.2) * 10; // 8
-        var lx2 = this.x2 + this.o2.current(y * 0.2) * 10; // 5
-        var lx3 = this.x3 + this.o3.current(y * 0.2) * 10; // 8
+        var lx1 = this.x1 + this.o1.current(y * 0.2) * 8; // 8
+        var lx2 = this.x2 + this.o2.current(y * 0.2) * 5; // 5
+        var lx3 = this.x3 + this.o3.current(y * 0.2) * 8; // 8
         var w0  = lx1;
         var w1  = lx2 - lx1;
         var w2  = lx3 - lx2;
