@@ -56,7 +56,7 @@ projektkurs2.scene.Credits.prototype.init = function () {
 
     this.initFairies();
 
-    this.text = new rune.text.BitmapField("Programmers and designers");
+    this.text = new rune.text.BitmapField("This game was made by");
 
     this.text.autoSize = true;
     this.text.center = this.application.screen.center;
