@@ -428,6 +428,21 @@ projektkurs2.scene.Game.prototype.update = function (step) {
                 }
             })
         }
+
+        this.fairies.forEachMember(function (fairy) {
+            if (fairy.hitTestObject(weed)) {
+  
+                fairy.isStuck = true;
+    
+                this.timers.create({
+                    duration: 2000,
+                    onComplete: function () {
+                        fairy.isStuck = false;
+                    }
+                });
+
+            }
+        }.bind(this))
     }.bind(this));
 
 
@@ -479,6 +494,7 @@ projektkurs2.scene.Game.prototype.update = function (step) {
                 this.score++
                 console.log(this.score);
             }
+            
         }.bind(this));
 
         this.mushrooms.forEachMember(function (mushroom) {
