@@ -437,6 +437,7 @@ projektkurs2.scene.Game.prototype.update = function (step) {
             })
         }
 
+        //HÄR LIGGER DET
         this.fairies.forEachMember(function (fairy) {
             if (fairy.hitTestObject(weed)) {
   
