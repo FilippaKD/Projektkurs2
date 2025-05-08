@@ -63,7 +63,6 @@ projektkurs2.scene.Game.prototype.init = function () {
     this.fairies.addMember(this.sol)
     this.fairies.addMember(this.filippa)
 
-
     bgContainer.addChild(this.sol.emitter);
     bgContainer.addChild(this.filippa.emitter);
 
@@ -76,6 +75,15 @@ projektkurs2.scene.Game.prototype.init = function () {
     this.initWeeds();
     this.initMushrooms();
     this.initHud();
+
+    this.waterZone = new rune.display.Graphic(
+        this.flower.x - 25,
+        this.flower.y - 25,
+        this.flower.width + 50,
+        this.flower.height + 50
+    );
+
+    this.stage.addChild(this.waterZone);
 
 };
 
@@ -93,27 +101,27 @@ projektkurs2.scene.Game.prototype.m_initCamera = function (step) {
 };
 
 projektkurs2.scene.Game.prototype.initHud = function () {
-    
+
     this.score = 0;
     this.displayCounter = new rune.text.BitmapField();
     this.displayCounter.autoSize = true;
     this.displayCounter.center = this.application.screen.center;
     this.displayCounter.y = 5;
     this.displayCounter.backgroundColor = "#000000"
-    this.displayCounter.color = "#FFFFFF"; 
+    this.displayCounter.color = "#FFFFFF";
     this.stage.addChild(this.displayCounter);
 
     this.displayPlayer1 = new rune.text.BitmapField();
-    this.displayPlayer1.color = "#FFFFFF"; 
+    this.displayPlayer1.color = "#FFFFFF";
     //this.displayPlayer1.y = 100;
     this.stage.addChild(this.displayPlayer1);
     this.watercan1 = new Watercan;
     this.stage.addChild(this.watercan1);
 
-    
+
 
     this.displayPlayer2 = new rune.text.BitmapField();
-    this.displayPlayer2.color = "#FFFFFF"; 
+    this.displayPlayer2.color = "#FFFFFF";
     this.displayPlayer2.x = 300;
     this.stage.addChild(this.displayPlayer2);
     this.watercan2 = new Watercan(375, 0);
@@ -256,7 +264,7 @@ projektkurs2.scene.Game.prototype.handleWaterdroplets = function () {
 
     this.waterdroplets.forEachMember(function (droplet) {
         var collected = false;
-    
+
         this.fairies.forEachMember(function (fairy) {
             if (droplet.hitTestObject(fairy) && fairy.waterCollection < 3 && !collected) {
                 fairy.addDrop(1);
@@ -264,31 +272,31 @@ projektkurs2.scene.Game.prototype.handleWaterdroplets = function () {
                 collected = true;
             }
         }.bind(this));
-    }.bind(this)); 
+    }.bind(this));
 
 
-        this.waterZone = new rune.display.Graphic(
-            this.flower.x - 25,
-            this.flower.y - 25,
-            this.flower.width + 50,
-            this.flower.height + 50
-        );
+    if (this.filippa.hitTestObject(this.waterZone) && this.gamepads.get(0).justPressed(7) && this.filippa.waterCollection > 0) {
+        this.flower.flowerHeal(this.filippa.waterCollection);
+        var droppedWater = new Waterdroplet;
+        droppedWater.x = this.filippa.x;
+        droppedWater.y = this.filippa.y;
+        droppedWater.dropWater();
+        this.stage.addChild(droppedWater);
+        this.filippa.waterCollection = 0;
 
-        this.stage.addChild(this.waterZone);
 
-        this.fairies.forEachMember(function (fairy) {
-            if (fairy.hitTestObject(this.waterZone) && this.gamepads.get(0).justPressed(7) && fairy.waterCollection > 0) {
-                this.flower.flowerHeal(fairy.waterCollection);
-                var droppedWater = new Waterdroplet;
-                droppedWater.x = fairy.x;
-                droppedWater.y = fairy.y;
-                droppedWater.dropWater();
-                this.stage.addChild(droppedWater);
-                fairy.waterCollection = 0;
-            
-              
-            }
-        }.bind(this))
+    }
+
+    if (this.sol.hitTestObject(this.waterZone) && this.gamepads.get(1).justPressed(7) && this.sol.waterCollection > 0) {
+        this.flower.flowerHeal(this.sol.waterCollection);
+        var droppedWater = new Waterdroplet;
+        droppedWater.x = this.sol.x;
+        droppedWater.y = this.sol.y;
+        droppedWater.dropWater();
+        this.stage.addChild(droppedWater);
+        this.sol.waterCollection = 0;
+    }
+
 
 };
 
@@ -302,7 +310,7 @@ projektkurs2.scene.Game.prototype.gameOver = function () {
 
         cam.target = this.flower;
         console.log(cam.target);
-        
+
         //cam.center = this.application.screen.center;
         cam.viewport.zoom = 2.0;
 
@@ -310,8 +318,8 @@ projektkurs2.scene.Game.prototype.gameOver = function () {
         //cam.centerY = this.flower.y + this.flower.height / 2;
 
         var score = this.score;
-        
-        
+
+
         this.application.scenes.load([
             new projektkurs2.scene.GameOver(score)
         ]);
@@ -338,17 +346,17 @@ projektkurs2.scene.Game.prototype.update = function (step) {
     this.filippa.movement();
 
     this.gameOver();
-   this.displayCounter.text = "";
-   this.displayCounter.text = this.score.toString();
-
-   this.displayPlayer1.text = "";
-   this.displayPlayer1.text = "Player 1 " + this.sol.waterCollection.toString() + "/3";
-   this.watercan1.updatePicture(this.sol.waterCollection);
-
-   this.displayPlayer2.text = "";
-   this.displayPlayer2.text = "Player 2 " + this.filippa.waterCollection.toString() + "/3";
-   this.watercan2.updatePicture(this.filippa.waterCollection);
-
+    this.displayCounter.text = "";
+    this.displayCounter.text = this.score.toString();
+    
+       this.displayPlayer1.text = "";
+       this.displayPlayer1.text = "Player 1 " + this.sol.waterCollection.toString() + "/3";
+       this.watercan1.updatePicture(this.sol.waterCollection);
+    
+       this.displayPlayer2.text = "";
+       this.displayPlayer2.text = "Player 2 " + this.filippa.waterCollection.toString() + "/3";
+       this.watercan2.updatePicture(this.filippa.waterCollection);
+    
 
 
     // HEJ GOOPh
@@ -473,21 +481,9 @@ projektkurs2.scene.Game.prototype.update = function (step) {
             if (ball.hitTestObject(weed)) {
 
                 // Glitter när ett ogräs dör
-                var emitY = weed.y + weed.height * 0.3;
-                var weedEmitter = new rune.particle.Emitter(weed.centerX, emitY, 6, 8, {
-                    particles: [Glitter],
-                    capacity: 150,
-                    accelerationY: 0.0005,
-                    accelerationX: 0.0005,
-                    maxRotation: 10,
-                    dragY: 0.2,
-                    maxVelocityX: 0.06,
-                    minVelocityX: -0.06,
-                    maxVelocityY: 0.15,
-                    maxLifespan: 800
-                });
-                this.stage.addChild(weedEmitter);
-                weedEmitter.emit(30);
+
+                this.stage.addChild(weed.emitter);
+                weed.emitter.emit(30);
 
                 this.weeds.removeMember(weed);
                 this.lightballs.removeMember(ball);
@@ -547,7 +543,7 @@ projektkurs2.scene.Game.prototype.update = function (step) {
 */
     this.handleThorns();
     this.handleWaterdroplets();
-    this.handleWaterdroplets();
+
 
 };
 
