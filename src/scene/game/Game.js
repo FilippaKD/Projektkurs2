@@ -522,8 +522,16 @@ projektkurs2.scene.Game.prototype.update = function (step) {
 
                 this.lightballs.removeMember(ball);
                 bossWeed.hp--;
-                // Lägg in röd färg här på bossen
-                console.log(this.score);
+
+                var originalColor = rune.color.Color24.fromHex("4b692f"); 
+                var hitColor = rune.color.Color24.fromHex("ac2828"); 
+                bossWeed.texture.replaceColor(originalColor, hitColor);
+                this.timers.create({
+                    duration: 200,
+                    onTick: function () {
+                        bossWeed.texture.replaceColor(hitColor, originalColor);
+                    }
+                });
             }
         }.bind(this));
 
