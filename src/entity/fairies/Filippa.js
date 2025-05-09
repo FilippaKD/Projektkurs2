@@ -107,8 +107,7 @@ Filippa.prototype.movement = function () {
     this.x += this.velocity.x;
     this.y += this.velocity.y;
 
-
-
+    
     this.emitter.x = this.centerX;
     this.emitter.y = this.y + this.height * 0.3;
 
