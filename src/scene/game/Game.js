@@ -78,10 +78,10 @@ projektkurs2.scene.Game.prototype.init = function () {
     this.initBossWeeds();
 
     this.waterZone = new rune.display.Graphic(
-        this.flower.x - 25,
-        this.flower.y - 25,
-        this.flower.width + 50,
-        this.flower.height + 50
+        this.flower.x,
+        this.flower.y,
+        this.flower.width,
+        this.flower.height + 10
     );
 
     this.stage.addChild(this.waterZone);
