@@ -33,27 +33,33 @@ Mushroom.prototype.update = function (player, step) {
 */
 
 
-function Mushroom(direction) {
+function Mushroom() {
     Entity.call(this, "image_game_mushroom", this.x, this.y, 15, 13);
     this.animation.create("walk", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 6, true);
 
     this.hitbox.set(0, 1, 12, 12);
 
     var canvasWidth = 400;
-    var canvasHeight = 225;
 
-    if (direction === "north") {
-        this.x = Math.random() * canvasWidth;
-        this.y = 0;
-    } else if (direction === "south") {
-        this.x = Math.random() * canvasWidth;
-        this.y = canvasHeight;
-    } else if (direction === "west") {
-        this.x = 0;
-        this.y = Math.random() * canvasHeight;
-    } else if (direction === "east") {
-        this.x = canvasWidth;
-        this.y = Math.random() * canvasHeight;
+    var spawnEdge = Math.floor(Math.random() * 4); 
+
+    switch (spawnEdge) {
+        case 0: 
+            this.x = Math.random() * canvasWidth;
+            this.y = -16;
+            break;
+        case 1: 
+            this.x = canvasWidth + 16;
+            this.y = Math.random() * 225;
+            break;
+        case 2: 
+            this.x = Math.random() * canvasWidth;
+            this.y = 225 + 16;
+            break;
+        case 3:
+            this.x = -16;
+            this.y = Math.random() * 225;
+            break;
     }
 }
 

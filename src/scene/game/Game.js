@@ -75,6 +75,7 @@ projektkurs2.scene.Game.prototype.init = function () {
     this.initWeeds();
     this.initMushrooms();
     this.initHud();
+    this.initBossWeeds();
 
     this.waterZone = new rune.display.Graphic(
         this.flower.x - 25,
@@ -138,9 +139,7 @@ projektkurs2.scene.Game.prototype.initMushrooms = function () {
         duration: 6000,
         repeat: Infinity,
         onTick: function () {
-            var directions = ["north", "south", "east", "west"];
-            var direction = directions[Math.floor(Math.random() * directions.length)];
-            var mushroom = new Mushroom(direction);
+            var mushroom = new Mushroom();
             this.mushrooms.addMember(mushroom);
         }.bind(this)
     });
@@ -196,13 +195,25 @@ projektkurs2.scene.Game.prototype.initWeeds = function () {
         duration: 2000,
         repeat: Infinity,
         onTick: function () {
-            var directions = ["north", "south", "east", "west"];
-            var direction = directions[Math.floor(Math.random() * directions.length)];
-            var weed = new Weed(direction);
+            var weed = new Weed();
             this.weeds.addMember(weed);
         }
     });
 
+}
+
+projektkurs2.scene.Game.prototype.initBossWeeds = function () { 
+    this.bossWeeds = new rune.display.DisplayGroup(this.stage);
+
+
+    this.timers.create({
+        duration: 6000,
+        repeat: Infinity,
+        onTick: function () {
+            var bossWeed = new BossWeed();
+            this.bossWeeds.addMember(bossWeed);
+        }
+    });
 }
 
 // Taggbuskar initiering
@@ -348,7 +359,8 @@ projektkurs2.scene.Game.prototype.update = function (step) {
     this.gameOver();
     this.displayCounter.text = "";
     this.displayCounter.text = this.score.toString();
-    
+
+    /* Flytta på detta
        this.displayPlayer1.text = "";
        this.displayPlayer1.text = "Player 1 " + this.sol.waterCollection.toString() + "/3";
        this.watercan1.updatePicture(this.sol.waterCollection);
@@ -356,7 +368,7 @@ projektkurs2.scene.Game.prototype.update = function (step) {
        this.displayPlayer2.text = "";
        this.displayPlayer2.text = "Player 2 " + this.filippa.waterCollection.toString() + "/3";
        this.watercan2.updatePicture(this.filippa.waterCollection);
-    
+    */
 
 
     // HEJ GOOPh
@@ -482,8 +494,36 @@ projektkurs2.scene.Game.prototype.update = function (step) {
                 this.mushrooms.removeMember(mushroom);
                 this.lightballs.removeMember(ball);
                 this.score++;
+                
                 console.log(this.score);
             }
+        }.bind(this));
+
+        // bigboss
+        this.bossWeeds.forEachMember(function (bossWeed) {
+            if (ball.hitTestObject(bossWeed)) {
+
+                this.lightballs.removeMember(ball);
+                bossWeed.hp--;
+                // Lägg in röd färg här på bossen
+                console.log(this.score);
+            }
+        }.bind(this));
+
+        this.bossWeeds.forEachMember(function (bossWeed){ 
+
+            if (bossWeed.hp == 0) { 
+                var weed1 = new Weed(bossWeed.x, bossWeed.y);
+                var weed2 = new Weed(bossWeed.x + 10, bossWeed.y + 10);
+            
+                this.weeds.addMember(weed1);
+                this.weeds.addMember(weed2);
+
+                this.bossWeeds.removeMember(bossWeed);
+                
+                this.score++;
+            }
+
         }.bind(this));
 
     }.bind(this));
