@@ -70,28 +70,65 @@ projektkurs2.scene.Start.prototype.initChoices = function () {
     title.color = "#FFFFFF";
     this.stage.addChild(title);
 
+    this.selected = [];
+    this.backgrounds = [];
 
-    var start = new rune.text.BitmapField("Start");
-    start.x = 20;
-    start.y = 70;
-    start.color = "#FFFFFF";
-    this.stage.addChild(start);
+    var texts = ["Start", "Controls", "Credits"];
+    var startY = 70;
 
-    var controls = new rune.text.BitmapField("Controls");
-    controls.x = 20;
-    controls.y = 100;
-    controls.color = "#FFFFFF";
-    this.stage.addChild(controls);
+    for (var i = 0; i < texts.length; i++) {
 
-    var credits = new rune.text.BitmapField("Credits");
-    credits.x = 20;
-    credits.y = 130;
-    credits.color = "#FFFFFF";
-    this.stage.addChild(credits);
+        var text = new rune.text.BitmapField(texts[i]);
+        text.x = 20;
+        text.y = startY + i * 30;
+        text.color = "#FFFFFF";
+        this.stage.addChild(text);
+        this.selected.push(text);
 
+        
+    }
+
+    this.selectedI = 0;
+    this.updateHighlight();
+
+   
+
+};
+
+
+projektkurs2.scene.Start.prototype.updateHighlight = function () {
+    
+    for (var i = 0; i < this.selected.length; i++) {
+        console.log("ghjkl")
+        this.selected[i].backgroundColor = (i == this.selectedI) ; 
+    }
+
+};
+
+
+projektkurs2.scene.Start.prototype.startSelected = function () {
+    
+   switch (this.selectedI) {
+    case 0:
+         this.application.scenes.load([
+            new projektkurs2.scene.Game()
+        ]);
+        break;
+    case 1:
+         this.application.scenes.load([
+            new projektkurs2.scene.Controls()
+        ]);
+        break;
+    case 2:
+         this.application.scenes.load([
+            new projektkurs2.scene.Credits()
+        ]);
+        break;    
+   }
 
 
 };
+
 
 
 
@@ -106,6 +143,20 @@ projektkurs2.scene.Start.prototype.initChoices = function () {
 projektkurs2.scene.Start.prototype.update = function (step) {
 
     rune.scene.Scene.prototype.update.call(this, step);
+
+    var gamepad = this.gamepads.get(0);
+
+    if (gamepad.stickLeftJustDown) {
+        this.selectedI = (this.selectedI + 1) % this.selected.length;
+        this.updateHighlight();
+    } else if(gamepad.stickLeftJustUp) {
+        this.selectedI = (this.selectedI - 1 + this.selected.length) % this.selected.length;
+        this.updateHighlight(); 
+    }
+
+    if (gamepad.justPressed(2)) {
+        this.startSelected();
+    }
     
 };
 
