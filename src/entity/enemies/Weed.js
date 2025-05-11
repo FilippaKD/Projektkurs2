@@ -2,31 +2,31 @@ function Weed(x, y) {
     var canvasWidth = 400;
     var canvasHeight = 225;
 
-    // Om x eller y inte är angivna – välj slumpmässig kant
+  
     if (x === undefined || y === undefined) {
-        var spawnEdge = Math.floor(Math.random() * 4); // 0 = top, 1 = right, 2 = bottom, 3 = left
+        var spawnEdge = Math.floor(Math.random() * 4); 
 
         switch (spawnEdge) {
-            case 0: // Top
+            case 0: 
                 x = Math.random() * canvasWidth;
                 y = -16;
                 break;
-            case 1: // Right
+            case 1: 
                 x = canvasWidth + 16;
                 y = Math.random() * canvasHeight;
                 break;
-            case 2: // Bottom
+            case 2: 
                 x = Math.random() * canvasWidth;
                 y = canvasHeight + 16;
                 break;
-            case 3: // Left
+            case 3: 
                 x = -16;
                 y = Math.random() * canvasHeight;
                 break;
         }
     }
 
-    // Initiera entiteten på rätt plats
+   
     Entity.call(this, "image_game_weed", x, y, 16, 16);
     this.x = x;
     this.y = y;
