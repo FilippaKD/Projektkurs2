@@ -1,7 +1,7 @@
 
 function Flower() {
 
-    Entity.call(this, "image_game_flower", 185, 87, 30, 40);
+    Entity.call(this, "image_game_flower", 185, 90, 30, 40);
 
     this.flowerLifeBar = 100;
 
