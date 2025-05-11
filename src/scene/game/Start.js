@@ -71,7 +71,6 @@ projektkurs2.scene.Start.prototype.initChoices = function () {
     this.stage.addChild(title);
 
     this.selected = [];
-    this.backgrounds = [];
 
     var texts = ["Start", "Controls", "Credits"];
     var startY = 70;
@@ -82,16 +81,14 @@ projektkurs2.scene.Start.prototype.initChoices = function () {
         text.x = 20;
         text.y = startY + i * 30;
         text.color = "#FFFFFF";
+        text.autoSize = false;
+        text.backgroundColor = "pink";
         this.stage.addChild(text);
-        this.selected.push(text);
-
-        
+        this.selected.push(text);   
     }
 
     this.selectedI = 0;
     this.updateHighlight();
-
-   
 
 };
 
@@ -100,7 +97,11 @@ projektkurs2.scene.Start.prototype.updateHighlight = function () {
     
     for (var i = 0; i < this.selected.length; i++) {
         console.log("ghjkl")
-        this.selected[i].backgroundColor = (i == this.selectedI) ; 
+        if (i == this.selectedI) {
+            this.selected[i].backgroundColor = "#FF69B4";
+        } else {
+            this.selected[i].backgroundColor = "";
+        } 
     }
 
 };
@@ -147,14 +148,20 @@ projektkurs2.scene.Start.prototype.update = function (step) {
     var gamepad = this.gamepads.get(0);
 
     if (gamepad.stickLeftJustDown) {
-        this.selectedI = (this.selectedI + 1) % this.selected.length;
+        this.selectedI++;
+        if (this.selectedI >= this.selected.length) {
+            this.selectedI = 0;    
+        }  
         this.updateHighlight();
     } else if(gamepad.stickLeftJustUp) {
-        this.selectedI = (this.selectedI - 1 + this.selected.length) % this.selected.length;
+        this.selectedI--;
+        if (this.selectedI < 0) {
+            this.selectedI = this.selected.length - 1;   
+        } 
         this.updateHighlight(); 
     }
 
-    if (gamepad.justPressed(2)) {
+    if (gamepad.justPressed(0)) {
         this.startSelected();
     }
     

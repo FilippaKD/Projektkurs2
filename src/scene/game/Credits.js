@@ -115,6 +115,15 @@ projektkurs2.scene.Credits.prototype.initFairies = function () {
 projektkurs2.scene.Credits.prototype.update = function (step) {
 
     rune.scene.Scene.prototype.update.call(this, step);
+
+    var gamepad = this.gamepads.get(0);
+
+    if (gamepad.justPressed(2)) {
+         this.application.scenes.load([
+            new projektkurs2.scene.Start()
+        ]);
+    }
+    
     
 };
 
