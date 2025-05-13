@@ -95,8 +95,9 @@ projektkurs2.scene.Game.prototype.init = function () {
  * @inheritDoc
  */
 projektkurs2.scene.Game.prototype.m_initCamera = function (step) {
-    var camera = new Camera();
-    this.cameras.addCamera(camera);
+    this.camera = new Camera();
+    this.cameras.addCamera(this.camera);
+
 
 
 };
@@ -202,7 +203,7 @@ projektkurs2.scene.Game.prototype.initWeeds = function () {
 
 }
 
-projektkurs2.scene.Game.prototype.initBossWeeds = function () { 
+projektkurs2.scene.Game.prototype.initBossWeeds = function () {
     this.bossWeeds = new rune.display.DisplayGroup(this.stage);
 
 
@@ -374,6 +375,7 @@ projektkurs2.scene.Game.prototype.update = function (step) {
     // HEJ GOOPh
     var cam = this.cameras.getCameraAt(0);
     this.mushrooms.forEachMember(function (mushroom) {
+        rune.physics.Space.separate(this.flower, mushroom);
         var filippaDistance = this.filippa.distance(mushroom);
         var solDistance = this.sol.distance(mushroom);
 
@@ -432,7 +434,6 @@ projektkurs2.scene.Game.prototype.update = function (step) {
                 }
             });
         }
-        rune.physics.Space.separate(this.flower, mushroom);
     }.bind(this));
 
 
@@ -440,6 +441,7 @@ projektkurs2.scene.Game.prototype.update = function (step) {
         rune.physics.Space.separate(this.flower, weed);
         if (this.flower.hitTestObject(weed) && weed.canHit) {
             this.flower.flowerDamage(2);
+            this.flower.flicker.start();
             weed.canHit = false;
             this.timers.create({
                 duration: 2000,
@@ -452,9 +454,9 @@ projektkurs2.scene.Game.prototype.update = function (step) {
         //HÄR LIGGER DET
         this.fairies.forEachMember(function (fairy) {
             if (fairy.hitTestObject(weed)) {
-  
+
                 fairy.isStuck = true;
-    
+
                 this.timers.create({
                     duration: 2000,
                     onComplete: function () {
@@ -503,28 +505,31 @@ projektkurs2.scene.Game.prototype.update = function (step) {
                 this.score++
                 console.log(this.score);
             }
-            
+
         }.bind(this));
 
         this.mushrooms.forEachMember(function (mushroom) {
+            rune.physics.Space.separate(this.flower, mushroom);
             if (ball.hitTestObject(mushroom)) {
                 this.mushrooms.removeMember(mushroom);
                 this.lightballs.removeMember(ball);
                 this.score++;
-                
+
                 console.log(this.score);
             }
         }.bind(this));
 
         // bigboss
         this.bossWeeds.forEachMember(function (bossWeed) {
+            console.log(" bossWeed");
             if (ball.hitTestObject(bossWeed)) {
 
                 this.lightballs.removeMember(ball);
                 bossWeed.hp--;
+                this.camera.shake.start(300, 1, 1);
 
-                var originalColor = rune.color.Color24.fromHex("4b692f"); 
-                var hitColor = rune.color.Color24.fromHex("ac2828"); 
+                var originalColor = rune.color.Color24.fromHex("4b692f");
+                var hitColor = rune.color.Color24.fromHex("ac2828");
                 bossWeed.texture.replaceColor(originalColor, hitColor);
                 this.timers.create({
                     duration: 200,
@@ -533,26 +538,31 @@ projektkurs2.scene.Game.prototype.update = function (step) {
                     }
                 });
             }
-        }.bind(this));
 
-        this.bossWeeds.forEachMember(function (bossWeed){ 
-
-            if (bossWeed.hp == 0) { 
+            if (bossWeed.hp == 0) {
                 var weed1 = new Weed(bossWeed.x, bossWeed.y);
                 var weed2 = new Weed(bossWeed.x + 10, bossWeed.y + 10);
-            
+
                 this.weeds.addMember(weed1);
                 this.weeds.addMember(weed2);
 
                 this.bossWeeds.removeMember(bossWeed);
-                
+
                 this.score++;
             }
-
         }.bind(this));
 
     }.bind(this));
 
+
+
+    this.bossWeeds.forEachMember(function (bossWeed) {
+        rune.physics.Space.separate(this.flower, bossWeed);
+    }.bind(this));
+
+    this.allThorns.forEachMember(function (thorn) {
+        rune.physics.Space.separate(this.flower, thorn);
+    }.bind(this));
 
     console.log(this.lightballs.numMembers)
 
@@ -580,14 +590,12 @@ projektkurs2.scene.Game.prototype.update = function (step) {
     /*
     if (this.keyboard.justPressed("SPACE")) {
         const ball = this.filippa.shoot();
-        this.stage.addChild(ball.ball);
-        this.lightballs.push(ball);
+       this.lightballs.addMember(ball);
     }
 
     if (this.keyboard.justPressed("SPACE")) {
         const ball = this.sol.shoot();
-        this.stage.addChild(ball.ball);
-        this.lightballs.push(ball);
+       this.lightballs.addMember(ball);
     }
 */
     this.handleThorns();

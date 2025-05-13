@@ -73,10 +73,10 @@ Filippa.prototype.movement = function() {
         this.animation.gotoAndPlay("idle");
     }
 };
+
+
+
 */
-
-
-
 
 // -------------Styrning med kontroll-----------
 
