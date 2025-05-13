@@ -1,5 +1,5 @@
 function LightBall (x, y, direction) {
-    Entity.call(this, "image_sparkle", x, y, 8, 8);
+    Entity.call(this, "image_game_lightball", x, y, 8, 8);
 
     this.velocity.x = direction.x * 3;
     this.velocity.y = direction.y * 3;

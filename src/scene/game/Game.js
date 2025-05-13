@@ -590,14 +590,12 @@ projektkurs2.scene.Game.prototype.update = function (step) {
     /*
     if (this.keyboard.justPressed("SPACE")) {
         const ball = this.filippa.shoot();
-        this.stage.addChild(ball.ball);
-        this.lightballs.push(ball);
+       this.lightballs.addMember(ball);
     }
 
     if (this.keyboard.justPressed("SPACE")) {
         const ball = this.sol.shoot();
-        this.stage.addChild(ball.ball);
-        this.lightballs.push(ball);
+       this.lightballs.addMember(ball);
     }
 */
     this.handleThorns();
