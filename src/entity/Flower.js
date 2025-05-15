@@ -4,6 +4,7 @@ function Flower() {
     Entity.call(this, "image_game_flower", 185, 90, 30, 40);
 
     this.flowerLifeBar = 100;
+    console.log(this.flowerLifeBar)
 
     this.immovable = true;
     this.makeAnimations();
@@ -48,4 +49,6 @@ Flower.prototype.flowerHeal = function(amount) {
     if (this.flowerLifeBar > 100) {
         this.flowerLifeBar = 100;
     }
+
+    console.log(this.flowerLifeBar)
 }

@@ -1,17 +1,10 @@
 function Jesus() {
 
-    this.screenWidth = this.application.screen.width;
-    this.screenHeight = this.application.screen.height;
+    var x = 100;
+    var y = 100;
 
-
-    var x = Math.floor(Math.random() * (this.screenWidth - 20));
-    var y = Math.floor(Math.random() * (this.screenHeight - 20));
-
-
-    Entity.call(this, "image_game_powerups_Jesus", x, y, 20, 20);
+    Entity.call(this, "image_game_Jesus", x, y, 30, 40);
     this.makeAnimations();
-
-    this.hitbox.set(5, 8, 8, 8);
     
 }
 
@@ -20,17 +13,18 @@ Jesus.prototype.constructor = Jesus;
 
 Jesus.prototype.makeAnimations = function() {
 
-   this.animation.create("idle", [0, 1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1, 0], 6, true);
-   this.animation.gotoAndPlay("idle");
+   this.animation.create("holymacaroni", [9, 8, 7, 6, 5, 4, 3, 2, 1, 0], 8, false);
+   this.animation.gotoAndPlay("holymacaroni");
 
 };
-
 
 Jesus.prototype.update = function(step) {
     Entity.prototype.update.call(this, step);
     var current = this.animation.current;
 
-    if (current.name == "drop" && current.frameIndex == (current.frames.length - 1)) {
+    if (current.name == "holymacaroni" && current.frameIndex == (current.frames.length - 1)) {
         this.parent.removeChild(this);
     }
 };
+
+
