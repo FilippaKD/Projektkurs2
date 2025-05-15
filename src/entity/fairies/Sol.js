@@ -138,6 +138,37 @@ Sol.prototype.shoot = function () {
     return ball;
 };
 
+Sol.prototype.shootPowerUp = function () {
+    let directions = [
+        new rune.geom.Vector2D(1, 0),
+        new rune.geom.Vector2D(1, 1),
+        new rune.geom.Vector2D(0, 1),
+        new rune.geom.Vector2D(-1, 1),
+        new rune.geom.Vector2D(-1, 0),
+        new rune.geom.Vector2D(-1, -1),
+        new rune.geom.Vector2D(0, -1),
+        new rune.geom.Vector2D(1, -1)
+    ];
+
+    let balls = [];
+
+    for (let i = 0; i < directions.length; i++) {
+        let dir = directions[i].normalize();
+
+        let ball = new LightBall(
+            this.x + this.width / 2,
+            this.y + this.height / 2,
+            dir
+        );
+
+
+        balls.push(ball);
+    }
+
+    return balls;
+};
+
+
 Sol.prototype.addDrop = function (amount) {
 
     this.waterCollection += amount;

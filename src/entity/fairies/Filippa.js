@@ -108,7 +108,7 @@ Filippa.prototype.movement = function () {
     this.x += this.velocity.x;
     this.y += this.velocity.y;
 
-    
+
     this.emitter.x = this.centerX;
     this.emitter.y = this.y + this.height * 0.3;
 
@@ -145,18 +145,38 @@ Filippa.prototype.shoot = function () {
     );
 };
 
+
+
 Filippa.prototype.shootPowerUp = function () {
+    let directions = [
+        new rune.geom.Vector2D(1, 0),
+        new rune.geom.Vector2D(1, 1),
+        new rune.geom.Vector2D(0, 1),
+        new rune.geom.Vector2D(-1, 1),
+        new rune.geom.Vector2D(-1, 0),
+        new rune.geom.Vector2D(-1, -1),
+        new rune.geom.Vector2D(0, -1),
+        new rune.geom.Vector2D(1, -1)
+    ];
 
-    let dir;
+    let balls = [];
 
-    dir = new rune.geom.Vector2D(this.lastVX, this.lastVY).normalize();
+    for (let i = 0; i < directions.length; i++) {
+        let dir = directions[i].normalize();
 
-    return new LightBall(
-        this.x + this.width / 2,
-        this.y + this.height / 2,
-        dir
-    );
+        let ball = new LightBall(
+            this.x + this.width / 2,
+            this.y + this.height / 2,
+            dir
+        );
+
+
+        balls.push(ball);
+    }
+
+    return balls;
 };
+
 
 
 Filippa.prototype.addDrop = function (amount) {
@@ -164,5 +184,5 @@ Filippa.prototype.addDrop = function (amount) {
     this.waterCollection += amount;
     console.log("Filippa vatten" + this.waterCollection);
 
-   
+
 }

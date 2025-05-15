@@ -204,8 +204,17 @@ projektkurs2.scene.Game.prototype.initPowerups = function () {
         }.bind(this)
     });
 
+    this.timers.create({
+        duration: 9000,
+        repeat: Infinity,
+        onTick: function () {
+            this.bombPowerup = new Powerup("image_game_powerup_bomb");
+            this.stage.addChild(this.bombPowerup);
 
-    
+        }.bind(this)
+    });
+
+
 };
 
 
@@ -337,8 +346,8 @@ projektkurs2.scene.Game.prototype.handleWaterdroplets = function () {
 
 projektkurs2.scene.Game.prototype.handlePowerups = function () {
 
- this.fairies.forEachMember(function (fairy) {
-            if (fairy.hitTestObject(this.jesusPowerup)) {
+    this.fairies.forEachMember(function (fairy) {
+        if (fairy.hitTestObject(this.jesusPowerup)) {
 
             this.jesus = new Jesus();
             this.jesus.x = this.flower.x;
@@ -348,8 +357,21 @@ projektkurs2.scene.Game.prototype.handlePowerups = function () {
             this.flower.flowerHeal(100);
 
             this.stage.removeChild(this.jesusPowerup);
-            }
-        }.bind(this))
+        }
+    }.bind(this))
+
+    this.fairies.forEachMember(function (fairy) {
+        if (fairy.hitTestObject(this.bombPowerup)) {
+              fairy.powerUpShooting = true;
+                this.timers.create({
+                    duration: 5000,
+                    onComplete: function () {
+                        fairy.powerUpShooting = false;
+                    }
+                });
+            this.stage.removeChild(this.bombPowerup);
+        }
+    }.bind(this))
 
 }
 
@@ -535,13 +557,24 @@ projektkurs2.scene.Game.prototype.update = function (step) {
 
         this.weeds.forEachMember(function (weed) {
             if (ball.hitTestObject(weed)) {
+                weed.hp--;
 
                 // Glitter när ett ogräs dör
+                if (weed.hp == 0) {
+                    this.stage.addChild(weed.emitter);
+                    weed.emitter.emit(30);
+                    this.weeds.removeMember(weed);
+                }
 
-                this.stage.addChild(weed.emitter);
-                weed.emitter.emit(30);
-
-                this.weeds.removeMember(weed);
+                var originalColor = rune.color.Color24.fromHex("4b692f");
+                var hitColor = rune.color.Color24.fromHex("ac2828");
+                weed.texture.replaceColor(originalColor, hitColor);
+                this.timers.create({
+                    duration: 200,
+                    onTick: function () {
+                        weed.texture.replaceColor(hitColor, originalColor);
+                    }
+                });
                 this.lightballs.removeMember(ball);
                 this.score++
                 console.log(this.score);
@@ -611,17 +644,31 @@ projektkurs2.scene.Game.prototype.update = function (step) {
     // Skottlogik (tilläggning på scen)
     if (this.gamepads.get(0).justPressed(2)) {
         if (this.filippa.isStuck == false) {
-            const ball = this.filippa.shoot();
-            console.log(ball);
-            this.lightballs.addMember(ball);
+            if (this.filippa.powerUpShooting) {
+                var balls = this.filippa.shootPowerUp();
+                for (let i = 0; i < balls.length; i++) {
+                    this.lightballs.addMember(balls[i]);
+                }
+            } else {
+                var ball = this.filippa.shoot();
+                this.lightballs.addMember(ball);
+            }
+
         }
 
     }
 
     if (this.gamepads.get(1).justPressed(2)) {
         if (this.sol.isStuck == false) {
-            const ball = this.sol.shoot();
-            this.lightballs.addMember(ball);
+            if (this.sol.powerUpShooting) {
+                var balls = this.sol.shootPowerUp();
+                for (let i = 0; i < balls.length; i++) {
+                    this.lightballs.addMember(balls[i]);
+                }
+            } else {
+                var ball = this.sol.shoot();
+                this.lightballs.addMember(ball);
+            }
         }
 
 
@@ -633,15 +680,15 @@ projektkurs2.scene.Game.prototype.update = function (step) {
         const ball = this.filippa.shoot();
        this.lightballs.addMember(ball);
     }
-
+    
     if (this.keyboard.justPressed("SPACE")) {
         const ball = this.sol.shoot();
        this.lightballs.addMember(ball);
     }
-*/
+    */
     this.handleThorns();
     this.handleWaterdroplets();
-    this.handlePowerups(); 
+    this.handlePowerups();
 
 
 };
