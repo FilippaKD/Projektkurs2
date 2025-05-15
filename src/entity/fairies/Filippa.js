@@ -2,6 +2,7 @@
 function Filippa() {
     Fairy.call(this, "image_game_Filippa", 20, 20);
     this.emitY = this.y + this.height * 0.3;
+    this.elasticity = 10;
 
     this.emitter = new rune.particle.Emitter(this.centerX, this.emitY, 3, 5, {
         particles: [Glitter],
@@ -143,6 +144,20 @@ Filippa.prototype.shoot = function () {
         dir
     );
 };
+
+Filippa.prototype.shootPowerUp = function () {
+
+    let dir;
+
+    dir = new rune.geom.Vector2D(this.lastVX, this.lastVY).normalize();
+
+    return new LightBall(
+        this.x + this.width / 2,
+        this.y + this.height / 2,
+        dir
+    );
+};
+
 
 Filippa.prototype.addDrop = function (amount) {
 

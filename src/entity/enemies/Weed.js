@@ -1,6 +1,7 @@
 function Weed(x, y) {
     var canvasWidth = 400;
     var canvasHeight = 225;
+    this.hp = 2;
 
   
     if (x === undefined || y === undefined) {
@@ -28,6 +29,7 @@ function Weed(x, y) {
 
    
     Entity.call(this, "image_game_weed", x, y, 16, 16);
+    this.immovable = true;
     this.x = x;
     this.y = y;
 
