@@ -13,7 +13,7 @@
  * 
  * Game scene.
  */
-projektkurs2.scene.ChoosePlayer = function (score) {
+projektkurs2.scene.ChoosePlayer = function () {
 
     //--------------------------------------------------------------------------
     // Super call
@@ -22,7 +22,6 @@ projektkurs2.scene.ChoosePlayer = function (score) {
     /**
      * Calls the constructor method of the super class.
      */
-    this.score = score;
     rune.scene.Scene.call(this);
 };
 
@@ -64,6 +63,14 @@ projektkurs2.scene.ChoosePlayer.prototype.init = function () {
 
     this.initFairies();
 
+    this.selectedByP1 = 0;
+    this.selectedByP2 = 1;
+
+    this.p1choosen = false;
+    this.p2choosen = false;
+
+    this.updateHighlight();
+
 };
 
 
@@ -83,16 +90,16 @@ projektkurs2.scene.ChoosePlayer.prototype.initFairies = function () {
     this.fairies.addMember(this.kalle);
 
 
-    this.addLabel("Sol", this.sol);
-    this.addLabel("Filippa", this.filippa);
-    this.addLabel("Henrik", this.henrik);
-    this.addLabel("Rebecka", this.rebecka);
-    this.addLabel("Kalle", this.kalle);
+    this.addName("Sol", this.sol);
+    this.addName("Filippa", this.filippa);
+    this.addName("Henrik", this.henrik);
+    this.addName("Rebecka", this.rebecka);
+    this.addName("Kalle", this.kalle);
 
 };
 
 
-projektkurs2.scene.ChoosePlayer.prototype.addLabel = function (name, person) {
+projektkurs2.scene.ChoosePlayer.prototype.addName = function (name, person) {
     
    
     var names = new rune.text.BitmapField(name);
@@ -103,6 +110,16 @@ projektkurs2.scene.ChoosePlayer.prototype.addLabel = function (name, person) {
     this.stage.addChild(names);
 
 };
+
+projektkurs2.scene.ChoosePlayer.prototype.updateHighlight = function () {
+    
+    
+    
+     
+
+};
+
+
 
 
 /**
@@ -117,15 +134,35 @@ projektkurs2.scene.ChoosePlayer.prototype.update = function (step) {
 
     rune.scene.Scene.prototype.update.call(this, step);
 
-    var gamepad = this.gamepads.get(0);
+    var gamepad1 = this.gamepads.get(0);
+    var gamepad2 = this.gamepads.get(1);
 
-    if (gamepad.justPressed(2)) {
-         this.application.scenes.load([
-            new projektkurs2.scene.Start()
-        ]);
+    var maxI = this.fairies.length;
+
+    if (gamepad1.stickLeftJustLeft) {
+        this.selectedByP1--;
+        if (this.selectedByP1 < 0) {
+            this.selectedByP1 = 0;  
+        }
+        this.updateHighlight();
     }
+
+     if (gamepad1.stickLeftJustRight) {
+        this.selectedByP1++;
+        if (this.selectedByP1 > maxI) {
+            this.selectedByP1 = maxI;  
+        }
+        this.updateHighlight();
+    }
+
+    if (gamepad1.justPressed(2)) {
+        console.log("ghjkl")
+    }
+
+    
     
 };
+
 
 /**
  * This method is automatically called once just before the scene ends. Use 
