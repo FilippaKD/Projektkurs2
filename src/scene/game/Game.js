@@ -76,6 +76,7 @@ projektkurs2.scene.Game.prototype.init = function () {
     this.initMushrooms();
     this.initHud();
     this.initBossWeeds();
+    this.initPowerups();
 
     this.waterZone = new rune.display.Graphic(
         this.flower.x,
@@ -131,6 +132,8 @@ projektkurs2.scene.Game.prototype.initHud = function () {
 
 
 };
+
+
 projektkurs2.scene.Game.prototype.initMushrooms = function () {
 
     this.mushrooms = new rune.display.DisplayGroup(this.stage);
@@ -187,7 +190,26 @@ projektkurs2.scene.Game.prototype.initWaterdroplet = function () {
     })
 };
 
-// Ogräsfiender initiering
+
+projektkurs2.scene.Game.prototype.initPowerups = function () {
+
+
+    this.timers.create({
+        duration: 9000,
+        repeat: Infinity,
+        onTick: function () {
+            this.jesusPowerup = new Powerup("image_game_powerup_jesus");
+            this.stage.addChild(this.jesusPowerup);
+
+        }.bind(this)
+    });
+
+
+    
+};
+
+
+
 projektkurs2.scene.Game.prototype.initWeeds = function () {
 
     this.weeds = new rune.display.DisplayGroup(this.stage);
@@ -311,6 +333,25 @@ projektkurs2.scene.Game.prototype.handleWaterdroplets = function () {
 
 
 };
+
+
+projektkurs2.scene.Game.prototype.handlePowerups = function () {
+
+ this.fairies.forEachMember(function (fairy) {
+            if (fairy.hitTestObject(this.jesusPowerup)) {
+
+            this.jesus = new Jesus();
+            this.jesus.x = this.flower.x;
+            this.jesus.y = this.flower.y - 35;
+            this.stage.addChild(this.jesus);
+
+            this.flower.flowerHeal(100);
+
+            this.stage.removeChild(this.jesusPowerup);
+            }
+        }.bind(this))
+
+}
 
 
 projektkurs2.scene.Game.prototype.gameOver = function () {
@@ -600,6 +641,7 @@ projektkurs2.scene.Game.prototype.update = function (step) {
 */
     this.handleThorns();
     this.handleWaterdroplets();
+    this.handlePowerups(); 
 
 
 };
