@@ -52,7 +52,7 @@ projektkurs2.scene.ChoosePlayer.prototype.init = function () {
     this.bg.autoSize = true;
     bgContainer.addChild(this.bg);
 
-    this.text = new rune.text.BitmapField("Choose your player");
+    this.text = new rune.text.BitmapField("Choose your character");
 
     this.text.autoSize = true;
     this.text.center = this.application.screen.center;
@@ -90,11 +90,13 @@ projektkurs2.scene.ChoosePlayer.prototype.initFairies = function () {
     this.fairies.addMember(this.kalle);
 
 
+    /*
     this.addName("Sol", this.sol);
     this.addName("Filippa", this.filippa);
     this.addName("Henrik", this.henrik);
     this.addName("Rebecka", this.rebecka);
     this.addName("Kalle", this.kalle);
+    */
 
 };
 
