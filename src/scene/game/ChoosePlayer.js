@@ -73,11 +73,11 @@ projektkurs2.scene.ChoosePlayer.prototype.init = function () {
     this.p1text.autoSize = true;
     this.stage.addChild(this.p1text);
 
-    if (this.gamepads.get(1)) {
+    
     this.p2text = new rune.text.BitmapField("Player 2");
     this.p2text.autoSize = true;
     this.stage.addChild(this.p2text);
-    }
+    
 
      this.updateHighlight();
 
@@ -128,13 +128,12 @@ projektkurs2.scene.ChoosePlayer.prototype.updateHighlight = function () {
     var members = this.fairies.getMembers();
 
     var selected = members[this.selectedByP1];
-    if (selected && this.p1text) {
+    if (selected && this.p1text && !this.p1text.flicker.active) {
         this.p1text.x = selected.x + (selected.width - this.p1text.width) / 2;
         this.p1text.y = selected.y - 20;
     }
 
-    if (this.gamepads.get(1)) {
-
+    if (selected && this.p2text && !this.p2text.flicker.active) {
         var selectedP2 = members[this.selectedByP2];
         this.p2text.x = selectedP2.x + (selectedP2.width - this.p2text.width) / 2;
         this.p2text.y = selectedP2.y - 20;
@@ -162,55 +161,74 @@ projektkurs2.scene.ChoosePlayer.prototype.update = function (step) {
     var gamepad1 = this.gamepads.get(0);
     var gamepad2 = this.gamepads.get(1);
 
-    var maxI = this.fairies.length;
+    var maxIndex = this.fairies.getMembers().length - 1;
 
-    if (gamepad1.stickLeftJustLeft) {
-        this.selectedByP1--;
-        if (this.selectedByP1 < 0) {
-            this.selectedByP1 = 0;  
+      if (gamepad1.stickLeftJustLeft) {
+        var newIndex = this.selectedByP1 - 1;
+        while (newIndex >= 0 && newIndex === this.selectedByP2) {
+            newIndex--;
         }
-        this.updateHighlight();
-    }
-
-     if (gamepad1.stickLeftJustRight) {
-        this.selectedByP1++;
-        if (this.selectedByP1 > maxI) {
-            this.selectedByP1 = maxI;  
+        if (newIndex >= 0) {
+            this.selectedByP1 = newIndex;
+            this.updateHighlight();
         }
-        this.updateHighlight();
     }
 
-    if (gamepad1.justPressed(2)) {
-        console.log("ghjkl")
+    if (gamepad1.stickLeftJustRight) {
+        var newIndex = this.selectedByP1 + 1;
+        while (newIndex <= maxIndex && newIndex === this.selectedByP2) {
+            newIndex++;
+        }
+        if (newIndex <= maxIndex) {
+            this.selectedByP1 = newIndex;
+            this.updateHighlight();
+        }
+    }
+
+    if (gamepad1.justPressed(0)) {
+        this.p1text.flicker.start(Infinity, 350);
+    }
+    if (gamepad1.justPressed(1)) {
+        this.p1text.flicker.stop();
     }
 
 
-
-    if (gamepad2) {
     if (gamepad2.stickLeftJustLeft) {
-        this.selectedByP2--;
-        if (this.selectedByP2 < 0) {
-            this.selectedByP2 = 0;  
+        var newIndex = this.selectedByP2 - 1;
+        while (newIndex >= 0 && newIndex === this.selectedByP1) {
+            newIndex--;
         }
-        this.updateHighlight();
-    }
-
-     if (gamepad2.stickLeftJustRight) {
-        this.selectedByP2++;
-        if (this.selectedByP2 > maxI) {
-            this.selectedByP2 = maxI;  
+        if (newIndex >= 0) {
+            this.selectedByP2 = newIndex;
+            this.updateHighlight();
         }
-        this.updateHighlight();
     }
 
-    if (gamepad2.justPressed(2)) {
-        console.log("ghjkl")
+    if (gamepad2 && gamepad2.stickLeftJustRight) {
+        var newIndex = this.selectedByP2 + 1;
+        while (newIndex <= maxIndex && newIndex === this.selectedByP1) {
+            newIndex++;
+        }
+        if (newIndex <= maxIndex) {
+            this.selectedByP2 = newIndex;
+            this.updateHighlight();
+        }
     }
-}
+
+    if (gamepad2.justPressed(0)) {
+        this.p2text.flicker.start(Infinity, 350);
+    }
+    if (gamepad2.justPressed(1)) {
+        this.p2text.flicker.stop();
+    }
 
 
-    
-    
+    if (this.p1text.flicker.active && this.p2text.flicker.active) {
+        var startText = new rune.text.BitmapField("Press X to start");
+        startText.autoSize = true;
+        this.stage.addChild(startText);
+    }
+   
 };
 
 
