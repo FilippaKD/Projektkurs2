@@ -198,8 +198,10 @@ projektkurs2.scene.Game.prototype.initPowerups = function () {
         duration: 9000,
         repeat: Infinity,
         onTick: function () {
+            if (Math.random() > 0.25 && !this.jesusPowerup) {
             this.jesusPowerup = new Powerup("image_game_powerup_jesus");
             this.stage.addChild(this.jesusPowerup);
+            }
 
         }.bind(this)
     });
@@ -208,8 +210,10 @@ projektkurs2.scene.Game.prototype.initPowerups = function () {
         duration: 9000,
         repeat: Infinity,
         onTick: function () {
+            if (Math.random() > 0.25 && !this.bombPowerup) {
             this.bombPowerup = new Powerup("image_game_powerup_bomb");
             this.stage.addChild(this.bombPowerup);
+            }
 
         }.bind(this)
     });
@@ -223,12 +227,23 @@ projektkurs2.scene.Game.prototype.initWeeds = function () {
 
     this.weeds = new rune.display.DisplayGroup(this.stage);
 
+    var spawnInterval = 3000;
+
     this.timers.create({
-        duration: 2000,
+        duration: spawnInterval,
         repeat: Infinity,
         onTick: function () {
             var weed = new Weed();
             this.weeds.addMember(weed);
+        }
+    });
+
+
+     this.timers.create({
+        duration: 8000,
+        repeat: Infinity,
+        onTick: function () {
+            spawnInterval = Math.max(1000, spawnInterval - 200);
         }
     });
 
@@ -237,13 +252,23 @@ projektkurs2.scene.Game.prototype.initWeeds = function () {
 projektkurs2.scene.Game.prototype.initBossWeeds = function () {
     this.bossWeeds = new rune.display.DisplayGroup(this.stage);
 
+    var spawnInterval = 100000;
 
     this.timers.create({
-        duration: 6000,
+        duration: spawnInterval,
         repeat: Infinity,
         onTick: function () {
             var bossWeed = new BossWeed();
             this.bossWeeds.addMember(bossWeed);
+        }
+    });
+
+
+    this.timers.create({
+        duration: 8000,
+        repeat: Infinity,
+        onTick: function () {
+            spawnInterval = Math.max(1000, spawnInterval - 200);
         }
     });
 }
