@@ -69,7 +69,17 @@ projektkurs2.scene.ChoosePlayer.prototype.init = function () {
     this.p1choosen = false;
     this.p2choosen = false;
 
-    this.updateHighlight();
+    this.p1text = new rune.text.BitmapField("Player 1");
+    this.p1text.autoSize = true;
+    this.stage.addChild(this.p1text);
+
+    if (this.gamepads.get(1)) {
+    this.p2text = new rune.text.BitmapField("Player 2");
+    this.p2text.autoSize = true;
+    this.stage.addChild(this.p2text);
+    }
+
+     this.updateHighlight();
 
 };
 
@@ -115,10 +125,23 @@ projektkurs2.scene.ChoosePlayer.prototype.addName = function (name, person) {
 
 projektkurs2.scene.ChoosePlayer.prototype.updateHighlight = function () {
     
-    
-    
-     
+    var members = this.fairies.getMembers();
 
+    var selected = members[this.selectedByP1];
+    if (selected && this.p1text) {
+        this.p1text.x = selected.x + (selected.width - this.p1text.width) / 2;
+        this.p1text.y = selected.y - 20;
+    }
+
+    if (this.gamepads.get(1)) {
+
+        var selectedP2 = members[this.selectedByP2];
+        this.p2text.x = selectedP2.x + (selectedP2.width - this.p2text.width) / 2;
+        this.p2text.y = selectedP2.y - 20;
+
+    }
+    
+    
 };
 
 
@@ -160,6 +183,31 @@ projektkurs2.scene.ChoosePlayer.prototype.update = function (step) {
     if (gamepad1.justPressed(2)) {
         console.log("ghjkl")
     }
+
+
+
+    if (gamepad2) {
+    if (gamepad2.stickLeftJustLeft) {
+        this.selectedByP2--;
+        if (this.selectedByP2 < 0) {
+            this.selectedByP2 = 0;  
+        }
+        this.updateHighlight();
+    }
+
+     if (gamepad2.stickLeftJustRight) {
+        this.selectedByP2++;
+        if (this.selectedByP2 > maxI) {
+            this.selectedByP2 = maxI;  
+        }
+        this.updateHighlight();
+    }
+
+    if (gamepad2.justPressed(2)) {
+        console.log("ghjkl")
+    }
+}
+
 
     
     
