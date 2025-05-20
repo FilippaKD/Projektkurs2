@@ -68,11 +68,11 @@ Weed.prototype.update = function (step) {
     var dx = centerX - this.x;
     var dy = centerY - this.y;
 
-    var dist = Math.sqrt(dx * dx + dy * dy);
+    var dist = rune.util.Math.distance(this.x, this.y, 190, 105);
 
-    if (dist > 0) {
-        this.x += (dx / dist) * (step / 100);
-        this.y += (dy / dist) * (step / 100);
+    if (dist > 21) {
+        this.x += (dx / dist) * (step / 10);
+        this.y += (dy / dist) * (step / 10);
     }
     this.animation.gotoAndPlay("walk");
 
