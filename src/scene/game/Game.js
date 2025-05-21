@@ -13,7 +13,7 @@
  * 
  * Game scene.
  */
-projektkurs2.scene.Game = function () {
+projektkurs2.scene.Game = function (p1Character, p2Character) {
 
     //--------------------------------------------------------------------------
     // Super call
@@ -23,6 +23,8 @@ projektkurs2.scene.Game = function () {
      * Calls the constructor method of the super class.
      */
     rune.scene.Scene.call(this);
+    this.p1choosen = p1Character;
+    this.p2choosen = p2Character;
 };
 
 //------------------------------------------------------------------------------
@@ -55,8 +57,8 @@ projektkurs2.scene.Game.prototype.init = function () {
     this.bg.autoSize = true;
     bgContainer.addChild(this.bg);
 
-    this.sol = new Sol();
-    this.filippa = new Filippa();
+    this.sol = new Sol(this.p1choosen);
+    this.filippa = new Filippa(this.p2choosen);
 
     this.fairies = new rune.display.DisplayGroup(this.stage);
 
