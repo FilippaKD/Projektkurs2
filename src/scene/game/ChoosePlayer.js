@@ -87,17 +87,20 @@ projektkurs2.scene.ChoosePlayer.prototype.init = function () {
 projektkurs2.scene.ChoosePlayer.prototype.initFairies = function () {
     
     this.fairies = new rune.display.DisplayGroup(this.stage);
-    this.sol = new Fairy("image_game_Sol", null, 100, 100);
-    this.filippa = new Fairy("image_game_Filippa", null, 150, 100);
-    this.henrik = new Fairy("image_game_Henrik", null, 200, 100);
-    this.rebecka = new Fairy("image_game_Rebecka", null, 250, 100);
-    this.kalle = new Fairy("image_game_Kalle", null, 300, 100);
+   
+    this.characters = [
+    { name: "Sol", image: "image_game_Sol" },
+    { name: "Filippa", image: "image_game_Filippa" },
+    { name: "Henrik", image: "image_game_Henrik" },
+    { name: "Rebecka", image: "image_game_Rebecka" },
+    { name: "Kalle", image: "image_game_Kalle" }
+    ]
 
-    this.fairies.addMember(this.sol);
-    this.fairies.addMember(this.filippa);
-    this.fairies.addMember(this.henrik);
-    this.fairies.addMember(this.rebecka);
-    this.fairies.addMember(this.kalle);
+    for (var i = 0; i < this.characters.length; i++) {
+    var fairy = new Fairy(this.characters[i].image, null, 100 + i * 50, 100);
+    this.characters[i].fairy = fairy;
+    this.fairies.addMember(fairy);
+    }
 
 
     /*
@@ -226,7 +229,22 @@ projektkurs2.scene.ChoosePlayer.prototype.update = function (step) {
     if (this.p1text.flicker.active && this.p2text.flicker.active) {
         var startText = new rune.text.BitmapField("Press X to start");
         startText.autoSize = true;
+        startText.center = this.application.screen.center;
+        startText.y = 180;
         this.stage.addChild(startText);
+
+
+
+        if (gamepad1.justPressed(2) || gamepad2.justPressed(2)) {
+            var p1Character = this.characters[this.selectedByP1].image;
+            var p2Character = this.characters[this.selectedByP2].image;
+
+         this.application.scenes.load([
+           new projektkurs2.scene.Game(p1Character, p2Character)
+        ]);
+        }
+        
+        
     }
    
 };

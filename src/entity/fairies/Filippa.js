@@ -1,6 +1,6 @@
 
-function Filippa() {
-    Fairy.call(this, "image_game_Filippa", 20, 20);
+function Filippa(image) {
+    Fairy.call(this, image, 20, 20);
     this.emitY = this.y + this.height * 0.3;
 
     this.emitter = new rune.particle.Emitter(this.centerX, this.emitY, 3, 5, {

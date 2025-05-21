@@ -82,7 +82,6 @@ projektkurs2.scene.Start.prototype.initChoices = function () {
         text.y = startY + i * 30;
         text.color = "#FFFFFF";
         text.autoSize = false;
-        text.backgroundColor = "pink";
         this.stage.addChild(text);
         this.selected.push(text);   
     }
@@ -96,11 +95,10 @@ projektkurs2.scene.Start.prototype.initChoices = function () {
 projektkurs2.scene.Start.prototype.updateHighlight = function () {
     
     for (var i = 0; i < this.selected.length; i++) {
-        console.log("ghjkl")
         if (i == this.selectedI) {
-            this.selected[i].backgroundColor = "#FF69B4";
+            this.selected[i].flicker.start(Infinity, 350);
         } else {
-            this.selected[i].backgroundColor = "";
+            this.selected[i].flicker.stop();
         } 
     }
 
@@ -112,7 +110,7 @@ projektkurs2.scene.Start.prototype.startSelected = function () {
    switch (this.selectedI) {
     case 0:
          this.application.scenes.load([
-            new projektkurs2.scene.Game()
+            new projektkurs2.scene.ChoosePlayer()
         ]);
         break;
     case 1:
