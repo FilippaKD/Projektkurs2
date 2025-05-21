@@ -343,6 +343,7 @@ projektkurs2.scene.Game.prototype.handleThorns = function () {
     this.fairies.forEachMember(function (fairy) {
         if (fairy.hitTestGroup(this.allThorns)) {
             fairy.isStuck = true;
+            fairy.immovable = true;
         }
     }.bind(this));
 
@@ -599,6 +600,7 @@ projektkurs2.scene.Game.prototype.update = function (step) {
                     if (fairy.isStuck == true && fairy.hitTestObject(thorn)) {
 
                         fairy.isStuck = false;
+                        fairy.immovable = false;
                     }
                 });
 
