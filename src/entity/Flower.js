@@ -39,6 +39,10 @@ Flower.prototype.update = function(step) {
 Flower.prototype.flowerDamage = function(amount) {
     
     this.flowerLifeBar -= amount;
+
+    if (this.flowerLifeBar < 0) {
+        this.flowerLifeBar = 0;
+    }
    
 }
 
@@ -49,6 +53,4 @@ Flower.prototype.flowerHeal = function(amount) {
     if (this.flowerLifeBar > 100) {
         this.flowerLifeBar = 100;
     }
-
-    console.log(this.flowerLifeBar)
 }
