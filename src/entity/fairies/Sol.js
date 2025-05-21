@@ -130,8 +130,8 @@ Sol.prototype.shoot = function () {
     dir = new rune.geom.Vector2D(this.lastVX, this.lastVY).normalize();
 
     const ball = new LightBall(
-        this.x + this.width / 2,
-        this.y + this.height / 2,
+        (this.x - 4) + this.width / 2,
+        (this.y - 4) + this.height / 2,
         dir
     );
 
