@@ -544,7 +544,7 @@ projektkurs2.scene.Game.prototype.update = function (step) {
         //HÄR LIGGER DET
         this.fairies.forEachMember(function (fairy) {
             
- rune.physics.Space.separate(fairy, weed);
+         rune.physics.Space.separate(fairy, weed);
                 
 
             
@@ -615,7 +615,7 @@ projektkurs2.scene.Game.prototype.update = function (step) {
 
         // bigboss
         this.bossWeeds.forEachMember(function (bossWeed) {
-            console.log(" bossWeed");
+            console.log("bossWeed");
             if (ball.hitTestObject(bossWeed)) {
 
                 this.lightballs.removeMember(ball);
@@ -709,6 +709,13 @@ projektkurs2.scene.Game.prototype.update = function (step) {
     this.handleThorns();
     this.handleWaterdroplets();
     this.handlePowerups();
+
+
+      this.fairies.forEachMember(function (fairy) {
+                
+
+            
+        }.bind(this))
 
 
 };
