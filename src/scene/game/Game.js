@@ -218,7 +218,7 @@ projektkurs2.scene.Game.prototype.initPowerups = function () {
         duration: 9000,
         repeat: Infinity,
         onTick: function () {
-            if (Math.random() > 0.25 && !this.jesusPowerup) {
+            if (Math.random() < 0.25 && !this.jesusPowerup) {
                 this.jesusPowerup = new Powerup("image_game_powerup_jesus");
                 this.stage.addChild(this.jesusPowerup);
             }
@@ -230,7 +230,7 @@ projektkurs2.scene.Game.prototype.initPowerups = function () {
         duration: 9000,
         repeat: Infinity,
         onTick: function () {
-            if (Math.random() > 0.25 && !this.bombPowerup) {
+            if (Math.random() < 0.25 && !this.bombPowerup) {
                 this.bombPowerup = new Powerup("image_game_powerup_bomb");
                 this.stage.addChild(this.bombPowerup);
             }
