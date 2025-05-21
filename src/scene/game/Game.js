@@ -255,6 +255,7 @@ projektkurs2.scene.Game.prototype.initWeeds = function () {
         onTick: function () {
             var weed = new Weed();
             this.weeds.addMember(weed);
+            this.stage.addChildAt(weed, 1);
         }
     });
 
