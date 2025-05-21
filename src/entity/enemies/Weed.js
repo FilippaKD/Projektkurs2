@@ -70,7 +70,7 @@ Weed.prototype.update = function (step) {
 
     var dist = rune.util.Math.distance(this.x, this.y, 190, 105);
 
-    if (dist > 21) {
+    if (dist > 18) {
         this.x += (dx / dist) * (step / 10);
         this.y += (dy / dist) * (step / 10);
     }
