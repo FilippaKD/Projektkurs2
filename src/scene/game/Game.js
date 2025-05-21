@@ -86,6 +86,24 @@ projektkurs2.scene.Game.prototype.init = function () {
     );
 
     this.stage.addChild(this.waterZone);
+    // protect the flower-ljud
+    this.timers.create({
+        duration: 2000,
+        onTick: function () {
+            var protectSound = this.application.sounds.sound.get("sound_protectheflower");
+            protectSound.volume = 0.9;
+            protectSound.play();
+        }.bind(this)
+    });
+
+
+
+    var bgm = this.application.sounds.music.get("themesong");
+    bgm.loop = true;
+    bgm.volume = 0.5;
+    bgm.play();
+
+
 
 };
 
@@ -199,8 +217,8 @@ projektkurs2.scene.Game.prototype.initPowerups = function () {
         repeat: Infinity,
         onTick: function () {
             if (Math.random() > 0.25 && !this.jesusPowerup) {
-            this.jesusPowerup = new Powerup("image_game_powerup_jesus");
-            this.stage.addChild(this.jesusPowerup);
+                this.jesusPowerup = new Powerup("image_game_powerup_jesus");
+                this.stage.addChild(this.jesusPowerup);
             }
 
         }.bind(this)
@@ -211,8 +229,8 @@ projektkurs2.scene.Game.prototype.initPowerups = function () {
         repeat: Infinity,
         onTick: function () {
             if (Math.random() > 0.25 && !this.bombPowerup) {
-            this.bombPowerup = new Powerup("image_game_powerup_bomb");
-            this.stage.addChild(this.bombPowerup);
+                this.bombPowerup = new Powerup("image_game_powerup_bomb");
+                this.stage.addChild(this.bombPowerup);
             }
 
         }.bind(this)
@@ -239,7 +257,7 @@ projektkurs2.scene.Game.prototype.initWeeds = function () {
     });
 
 
-     this.timers.create({
+    this.timers.create({
         duration: 8000,
         repeat: Infinity,
         onTick: function () {
@@ -252,7 +270,7 @@ projektkurs2.scene.Game.prototype.initWeeds = function () {
 projektkurs2.scene.Game.prototype.initBossWeeds = function () {
     this.bossWeeds = new rune.display.DisplayGroup(this.stage);
 
-    var spawnInterval = 100000;
+    var spawnInterval = 70000;
 
     this.timers.create({
         duration: spawnInterval,
@@ -375,6 +393,12 @@ projektkurs2.scene.Game.prototype.handlePowerups = function () {
         if (fairy.hitTestObject(this.jesusPowerup)) {
 
             this.jesus = new Jesus();
+            // jesusljud
+
+            var isThatJesusSound = this.application.sounds.sound.get("sound_isthatjesus");
+            isThatJesusSound.volume = 0.9;
+            isThatJesusSound.play();
+
             this.jesus.x = this.flower.x;
             this.jesus.y = this.flower.y - 35;
             this.stage.addChild(this.jesus);
@@ -387,13 +411,13 @@ projektkurs2.scene.Game.prototype.handlePowerups = function () {
 
     this.fairies.forEachMember(function (fairy) {
         if (fairy.hitTestObject(this.bombPowerup)) {
-              fairy.powerUpShooting = true;
-                this.timers.create({
-                    duration: 5000,
-                    onComplete: function () {
-                        fairy.powerUpShooting = false;
-                    }
-                });
+            fairy.powerUpShooting = true;
+            this.timers.create({
+                duration: 5000,
+                onComplete: function () {
+                    fairy.powerUpShooting = false;
+                }
+            });
             this.stage.removeChild(this.bombPowerup);
         }
     }.bind(this))
@@ -510,6 +534,15 @@ projektkurs2.scene.Game.prototype.update = function (step) {
                     }
                 }
             });
+// are we tripping-ljud
+            this.timers.create({
+                duration: 1000,
+                onTick: function () {
+                    var sound = this.application.sounds.sound.get("sound_arewetripping");
+                    sound.volume = 0.9;
+                    sound.play();
+                }.bind(this)
+            });
 
 
             // Svamptimer hur länge den ska hålla på
@@ -541,11 +574,11 @@ projektkurs2.scene.Game.prototype.update = function (step) {
 
         //HÄR LIGGER DET
         this.fairies.forEachMember(function (fairy) {
-            
- rune.physics.Space.separate(fairy, weed);
-                
 
-            
+            rune.physics.Space.separate(fairy, weed);
+
+
+
         }.bind(this))
     }.bind(this));
 
@@ -639,6 +672,11 @@ projektkurs2.scene.Game.prototype.update = function (step) {
                 this.weeds.addMember(weed2);
 
                 this.bossWeeds.removeMember(bossWeed);
+
+              
+                    var sound = this.application.sounds.sound.get("sound_teamwork");
+                    sound.volume = 0.9;
+                    sound.play();
 
                 this.score++;
             }
