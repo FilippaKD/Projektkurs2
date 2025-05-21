@@ -364,6 +364,9 @@ projektkurs2.scene.Game.prototype.handleWaterdroplets = function () {
 
         this.fairies.forEachMember(function (fairy) {
             if (droplet.hitTestObject(fairy) && fairy.waterCollection < 3 && !collected) {
+                var sound = this.application.sounds.sound.get("sound_waterpickup");
+                    sound.volume = 0.9;
+                    sound.play();
                 fairy.addDrop(1);
                 this.waterdroplets.removeMember(droplet);
                 collected = true;
@@ -373,6 +376,9 @@ projektkurs2.scene.Game.prototype.handleWaterdroplets = function () {
 
 
     if (this.filippa.hitTestObject(this.waterZone) && this.gamepads.get(0).justPressed(7) && this.filippa.waterCollection > 0) {
+        var sound = this.application.sounds.sound.get("sound_watersplash");
+                    sound.volume = 0.9;
+                    sound.play();
         this.flower.flowerHeal(this.filippa.waterCollection);
         var droppedWater = new Waterdroplet;
         droppedWater.x = this.filippa.x;
@@ -627,6 +633,9 @@ projektkurs2.scene.Game.prototype.update = function (step) {
 
                 // Glitter när ett ogräs dör
                 if (weed.hp == 0) {
+                    var sound = this.application.sounds.sound.get("sound_dramabush");
+                    sound.volume = 0.9;
+                    sound.play();
                     this.stage.addChild(weed.emitter);
                     weed.emitter.emit(30);
                     this.weeds.removeMember(weed);
@@ -714,8 +723,10 @@ projektkurs2.scene.Game.prototype.update = function (step) {
 
     // Skottlogik (tilläggning på scen)
     if (this.gamepads.get(0).justPressed(2)) {
-        if (this.filippa.isStuck == false) {
-
+        if (this.filippa.isStuck == false) { 
+var sound = this.application.sounds.sound.get("sound_blub");
+                    sound.volume = 0.9;
+                    sound.play();
        
 
             if (this.filippa.powerUpShooting) {
@@ -736,6 +747,9 @@ projektkurs2.scene.Game.prototype.update = function (step) {
 
     if (this.gamepads.get(1).justPressed(2)) {
         if (this.sol.isStuck == false) {
+            var sound = this.application.sounds.sound.get("sound_blub");
+                    sound.volume = 0.9;
+                    sound.play();
             if (this.sol.powerUpShooting) {
                 var balls = this.sol.shootPowerUp();
                 for (let i = 0; i < balls.length; i++) {
