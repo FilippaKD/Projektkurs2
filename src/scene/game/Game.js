@@ -659,9 +659,11 @@ projektkurs2.scene.Game.prototype.update = function (step) {
                     var sound = this.application.sounds.sound.get("sound_dramabush");
                     sound.volume = 0.9;
                     sound.play();
+                    
                     this.stage.addChild(weed.emitter);
                     weed.emitter.emit(30);
                     this.weeds.removeMember(weed);
+                    this.score += 50;
                 }
 
                 var originalColor = rune.color.Color24.fromHex("4b692f");
@@ -674,7 +676,6 @@ projektkurs2.scene.Game.prototype.update = function (step) {
                     }
                 });
                 this.lightballs.removeMember(ball);
-                this.score++
                 console.log(this.score);
             }
 
@@ -685,7 +686,7 @@ projektkurs2.scene.Game.prototype.update = function (step) {
             if (ball.hitTestObject(mushroom)) {
                 this.mushrooms.removeMember(mushroom);
                 this.lightballs.removeMember(ball);
-                this.score++;
+                this.score += 25;
 
                 console.log(this.score);
             }
@@ -725,7 +726,7 @@ projektkurs2.scene.Game.prototype.update = function (step) {
                 sound.volume = 0.9;
                 sound.play();
 
-                this.score++;
+                this.score += 100;
             }
         }.bind(this));
 
@@ -737,6 +738,8 @@ projektkurs2.scene.Game.prototype.update = function (step) {
         rune.physics.Space.separate(this.flower, bossWeed);
     }.bind(this));
 
+
+    // denna funkar ej
     this.allThorns.forEachMember(function (thorn) {
         rune.physics.Space.separate(this.flower, thorn);
     }.bind(this));
