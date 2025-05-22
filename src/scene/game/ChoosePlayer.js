@@ -72,7 +72,7 @@ projektkurs2.scene.ChoosePlayer.prototype.init = function () {
     this.stage.addChild(this.p1text);
 
     this.gamepad2 = this.gamepads.get(1);
-    if (this.gamepad2 == null) {
+    if (this.gamepad2.connected) {
     this.selectedByP2 = 1;
     this.p2text = new rune.text.BitmapField("Player 2");
     this.p2text.autoSize = true;
@@ -128,6 +128,67 @@ projektkurs2.scene.ChoosePlayer.prototype.updateHighlight = function () {
 };
 
 
+projektkurs2.scene.ChoosePlayer.prototype.twoPlayers = function () {
+
+    var gamepad1 = this.gamepads.get(0);
+    
+     if (this.gamepad2.stickLeftJustLeft) {
+        var newIndex = this.selectedByP2 - 1;
+        while (newIndex >= 0 && newIndex === this.selectedByP1) {
+            newIndex--;
+        }
+        if (newIndex >= 0) {
+            this.selectedByP2 = newIndex;
+            this.updateHighlight();
+        }
+    }
+
+    if (this.gamepad2 && this.gamepad2.stickLeftJustRight) {
+        var newIndex = this.selectedByP2 + 1;
+        while (newIndex <= maxIndex && newIndex === this.selectedByP1) {
+            newIndex++;
+        }
+        if (newIndex <= maxIndex) {
+            this.selectedByP2 = newIndex;
+            this.updateHighlight();
+        }
+    }
+
+    if (this.gamepad2 && this.gamepad2.justPressed(0)) {
+        this.p2text.flicker.start(Infinity, 350);
+    }
+    if (this.gamepad2 && this.gamepad2.justPressed(1)) {
+        this.p2text.flicker.stop();
+    }
+
+
+    if (this.p1text.flicker.active && this.p2text && this.p2text.flicker.active && this.gamepad2) {
+        var startText = new rune.text.BitmapField("Press X to start");
+        startText.autoSize = true;
+        startText.center = this.application.screen.center;
+        startText.y = 180;
+        this.stage.addChild(startText);
+
+
+
+        if (gamepad1.justPressed(2) || this.gamepad2.justPressed(2)) {
+            var p1Character = this.characters[this.selectedByP1].image;
+            var p2Character = this.characters[this.selectedByP2].image;
+
+         this.application.scenes.load([
+           new projektkurs2.scene.Game(p1Character, p2Character)
+        ]);
+        }
+        
+        
+    }
+
+    
+    
+    
+};
+
+
 
 
 /**
@@ -141,6 +202,11 @@ projektkurs2.scene.ChoosePlayer.prototype.updateHighlight = function () {
 projektkurs2.scene.ChoosePlayer.prototype.update = function (step) {
 
     rune.scene.Scene.prototype.update.call(this, step);
+
+
+    if (this.gamepad2.connected) {
+        this.twoPlayers();
+    }
 
     var gamepad1 = this.gamepads.get(0);
     //var gamepad2 = this.gamepads.get(1);
@@ -176,65 +242,26 @@ projektkurs2.scene.ChoosePlayer.prototype.update = function (step) {
         this.p1text.flicker.stop();
     }
 
+    console.log(this.gamepad2)
 
-    if (this.gamepad2.stickLeftJustLeft) {
-        var newIndex = this.selectedByP2 - 1;
-        while (newIndex >= 0 && newIndex === this.selectedByP1) {
-            newIndex--;
-        }
-        if (newIndex >= 0) {
-            this.selectedByP2 = newIndex;
-            this.updateHighlight();
-        }
-    }
+    if (this.p1text.flicker.active && !this.gamepad2.connected) {
 
-    if (this.gamepad2 && this.gamepad2.stickLeftJustRight) {
-        var newIndex = this.selectedByP2 + 1;
-        while (newIndex <= maxIndex && newIndex === this.selectedByP1) {
-            newIndex++;
-        }
-        if (newIndex <= maxIndex) {
-            this.selectedByP2 = newIndex;
-            this.updateHighlight();
-        }
-    }
-
-    if (this.gamepad2 && this.gamepad2.justPressed(0)) {
-        this.p2text.flicker.start(Infinity, 350);
-    }
-    if (this.gamepad2 && this.gamepad2.justPressed(1)) {
-        this.p2text.flicker.stop();
-    }
-
-
-    if (this.p1text.flicker.active && this.p2text.flicker.active) {
-        var startText = new rune.text.BitmapField("Press X to start");
+    var startText = new rune.text.BitmapField("Press X to start");
         startText.autoSize = true;
         startText.center = this.application.screen.center;
         startText.y = 180;
         this.stage.addChild(startText);
 
 
-
-        if (gamepad1.justPressed(2) || this.gamepad2 && this.gamepad2.justPressed(2)) {
-            var p1Character = this.characters[this.selectedByP1].image;
-            var p2Character = this.characters[this.selectedByP2].image;
-
-         this.application.scenes.load([
-           new projektkurs2.scene.Game(p1Character, p2Character)
-        ]);
-        }
-
-
-        if (gamepad1.justPressed(2) && this.gamepad2 == null) {
-            var p1Character = this.characters[this.selectedByP1].image;
-
+     if (gamepad1.justPressed(2)) {
+            console.log("slay")
+           // var p1Character = this.characters[this.selectedByP1].image;
+/*
          this.application.scenes.load([
            new projektkurs2.scene.GameOnePlayer(p1Character)
         ]);
+        */
         }
-        
-        
     }
    
 };
