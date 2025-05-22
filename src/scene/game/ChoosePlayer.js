@@ -66,17 +66,18 @@ projektkurs2.scene.ChoosePlayer.prototype.init = function () {
     this.selectedByP1 = 0;
     this.selectedByP2 = 1;
 
-    this.p1choosen = false;
-    this.p2choosen = false;
 
     this.p1text = new rune.text.BitmapField("Player 1");
     this.p1text.autoSize = true;
     this.stage.addChild(this.p1text);
 
-    
+    this.gamepad2 = this.gamepads.get(1);
+    if (this.gamepad2 == null) {
+    this.selectedByP2 = 1;
     this.p2text = new rune.text.BitmapField("Player 2");
     this.p2text.autoSize = true;
     this.stage.addChild(this.p2text);
+    }
     
 
      this.updateHighlight();
@@ -102,29 +103,8 @@ projektkurs2.scene.ChoosePlayer.prototype.initFairies = function () {
     this.fairies.addMember(fairy);
     }
 
-
-    /*
-    this.addName("Sol", this.sol);
-    this.addName("Filippa", this.filippa);
-    this.addName("Henrik", this.henrik);
-    this.addName("Rebecka", this.rebecka);
-    this.addName("Kalle", this.kalle);
-    */
-
 };
 
-
-projektkurs2.scene.ChoosePlayer.prototype.addName = function (name, person) {
-    
-   
-    var names = new rune.text.BitmapField(name);
-
-    names.autoSize = true;
-    names.x = person.x + (person.width - names.width) / 2;
-    names.y = person.y + 20;
-    this.stage.addChild(names);
-
-};
 
 projektkurs2.scene.ChoosePlayer.prototype.updateHighlight = function () {
     
@@ -136,7 +116,8 @@ projektkurs2.scene.ChoosePlayer.prototype.updateHighlight = function () {
         this.p1text.y = selected.y - 20;
     }
 
-    if (selected && this.p2text && !this.p2text.flicker.active) {
+
+    if (this.gamepad2 && selected && this.p2text && !this.p2text.flicker.active) {
         var selectedP2 = members[this.selectedByP2];
         this.p2text.x = selectedP2.x + (selectedP2.width - this.p2text.width) / 2;
         this.p2text.y = selectedP2.y - 20;
@@ -162,7 +143,7 @@ projektkurs2.scene.ChoosePlayer.prototype.update = function (step) {
     rune.scene.Scene.prototype.update.call(this, step);
 
     var gamepad1 = this.gamepads.get(0);
-    var gamepad2 = this.gamepads.get(1);
+    //var gamepad2 = this.gamepads.get(1);
 
     var maxIndex = this.fairies.getMembers().length - 1;
 
@@ -196,7 +177,7 @@ projektkurs2.scene.ChoosePlayer.prototype.update = function (step) {
     }
 
 
-    if (gamepad2.stickLeftJustLeft) {
+    if (this.gamepad2.stickLeftJustLeft) {
         var newIndex = this.selectedByP2 - 1;
         while (newIndex >= 0 && newIndex === this.selectedByP1) {
             newIndex--;
@@ -207,7 +188,7 @@ projektkurs2.scene.ChoosePlayer.prototype.update = function (step) {
         }
     }
 
-    if (gamepad2 && gamepad2.stickLeftJustRight) {
+    if (this.gamepad2 && this.gamepad2.stickLeftJustRight) {
         var newIndex = this.selectedByP2 + 1;
         while (newIndex <= maxIndex && newIndex === this.selectedByP1) {
             newIndex++;
@@ -218,10 +199,10 @@ projektkurs2.scene.ChoosePlayer.prototype.update = function (step) {
         }
     }
 
-    if (gamepad2.justPressed(0)) {
+    if (this.gamepad2 && this.gamepad2.justPressed(0)) {
         this.p2text.flicker.start(Infinity, 350);
     }
-    if (gamepad2.justPressed(1)) {
+    if (this.gamepad2 && this.gamepad2.justPressed(1)) {
         this.p2text.flicker.stop();
     }
 
@@ -235,12 +216,21 @@ projektkurs2.scene.ChoosePlayer.prototype.update = function (step) {
 
 
 
-        if (gamepad1.justPressed(2) || gamepad2.justPressed(2)) {
+        if (gamepad1.justPressed(2) || this.gamepad2 && this.gamepad2.justPressed(2)) {
             var p1Character = this.characters[this.selectedByP1].image;
             var p2Character = this.characters[this.selectedByP2].image;
 
          this.application.scenes.load([
            new projektkurs2.scene.Game(p1Character, p2Character)
+        ]);
+        }
+
+
+        if (gamepad1.justPressed(2) && this.gamepad2 == null) {
+            var p1Character = this.characters[this.selectedByP1].image;
+
+         this.application.scenes.load([
+           new projektkurs2.scene.GameOnePlayer(p1Character)
         ]);
         }
         
