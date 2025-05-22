@@ -205,20 +205,35 @@ projektkurs2.scene.Game.prototype.initWaterdroplet = function () {
 
 
     this.timers.create({
-        duration: 10000,
+        duration: 8000,
         repeat: Infinity,
         onTick: function () {
-            var members = this.waterdroplets.getMembers();
+              var members = this.waterdroplets.getMembers();
             if (members.length > 0) {
                 var randomI = Math.floor(Math.random() * members.length);
                 var toBeRemoved = members[randomI];
-                this.stage.removeChild(toBeRemoved);
-                this.waterdroplets.removeMember(toBeRemoved);
+                toBeRemoved.flicker.start(2000, 200);
+
+                this.removeWaterdrop(toBeRemoved);
             }
         }.bind(this)
     })
 };
 
+
+projektkurs2.scene.Game.prototype.removeWaterdrop = function (toBeRemoved) {
+
+     this.timers.create({
+        duration: 2000,
+        repeat: Infinity,
+        onTick: function () {
+    
+            this.stage.removeChild(toBeRemoved);
+            this.waterdroplets.removeMember(toBeRemoved);
+        }.bind(this)
+    })
+
+ }
 
 projektkurs2.scene.Game.prototype.initPowerups = function () {
 
