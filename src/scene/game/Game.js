@@ -364,6 +364,9 @@ projektkurs2.scene.Game.prototype.handleWaterdroplets = function () {
 
         this.fairies.forEachMember(function (fairy) {
             if (droplet.hitTestObject(fairy) && fairy.waterCollection < 3 && !collected) {
+                var sound = this.application.sounds.sound.get("sound_waterpickup");
+                    sound.volume = 0.9;
+                    sound.play();
                 fairy.addDrop(1);
                 this.waterdroplets.removeMember(droplet);
                 collected = true;
@@ -373,6 +376,9 @@ projektkurs2.scene.Game.prototype.handleWaterdroplets = function () {
 
 
     if (this.filippa.hitTestObject(this.waterZone) && this.gamepads.get(0).justPressed(7) && this.filippa.waterCollection > 0) {
+        var sound = this.application.sounds.sound.get("sound_watersplash");
+                    sound.volume = 0.9;
+                    sound.play();
         this.flower.flowerHeal(this.filippa.waterCollection);
         var droppedWater = new Waterdroplet;
         droppedWater.x = this.filippa.x;
@@ -422,6 +428,9 @@ projektkurs2.scene.Game.prototype.handlePowerups = function () {
 
     this.fairies.forEachMember(function (fairy) {
         if (fairy.hitTestObject(this.bombPowerup)) {
+            var sound = this.application.sounds.sound.get("sound_powerup");
+                    sound.volume = 0.9;
+                    sound.play();
             fairy.powerUpShooting = true;
             this.timers.create({
                 duration: 5000,
@@ -484,15 +493,15 @@ projektkurs2.scene.Game.prototype.update = function (step) {
     this.displayCounter.text = "";
     this.displayCounter.text = this.score.toString();
 
-    /* Flytta på detta
-       this.displayPlayer1.text = "";
-       this.displayPlayer1.text = "Player 1 " + this.sol.waterCollection.toString() + "/3";
-       this.watercan1.updatePicture(this.sol.waterCollection);
-    
-       this.displayPlayer2.text = "";
-       this.displayPlayer2.text = "Player 2 " + this.filippa.waterCollection.toString() + "/3";
-       this.watercan2.updatePicture(this.filippa.waterCollection);
-    */
+
+    this.displayPlayer1.text = "";
+    this.displayPlayer1.text = "Player 1 " + this.sol.waterCollection.toString() + "/3";
+    this.watercan1.updatePicture(this.sol.waterCollection);
+
+    this.displayPlayer2.text = "";
+    this.displayPlayer2.text = "Player 2 " + this.filippa.waterCollection.toString() + "/3";
+    this.watercan2.updatePicture(this.filippa.waterCollection);
+
 
 
     // HEJ GOOPh
@@ -545,11 +554,11 @@ projektkurs2.scene.Game.prototype.update = function (step) {
                     }
                 }
             });
-// are we tripping-ljud
+            // are we tripping-ljud
             this.timers.create({
                 duration: 1000,
                 onTick: function () {
-                    var sound = this.application.sounds.sound.get("sound_arewetripping");
+                    var sound = this.application.sounds.sound.get("sound_trippy");
                     sound.volume = 0.9;
                     sound.play();
                 }.bind(this)
@@ -624,6 +633,9 @@ projektkurs2.scene.Game.prototype.update = function (step) {
 
                 // Glitter när ett ogräs dör
                 if (weed.hp == 0) {
+                    var sound = this.application.sounds.sound.get("sound_dramabush");
+                    sound.volume = 0.9;
+                    sound.play();
                     this.stage.addChild(weed.emitter);
                     weed.emitter.emit(30);
                     this.weeds.removeMember(weed);
@@ -685,10 +697,10 @@ projektkurs2.scene.Game.prototype.update = function (step) {
 
                 this.bossWeeds.removeMember(bossWeed);
 
-              
-                    var sound = this.application.sounds.sound.get("sound_teamwork");
-                    sound.volume = 0.9;
-                    sound.play();
+
+                var sound = this.application.sounds.sound.get("sound_teamwork");
+                sound.volume = 0.9;
+                sound.play();
 
                 this.score++;
             }
@@ -711,9 +723,16 @@ projektkurs2.scene.Game.prototype.update = function (step) {
 
     // Skottlogik (tilläggning på scen)
     if (this.gamepads.get(0).justPressed(2)) {
-        if (this.filippa.isStuck == false) {
+        if (this.filippa.isStuck == false) { 
+var sound = this.application.sounds.sound.get("sound_blub");
+                    sound.volume = 0.9;
+                    sound.play();
+       
+
             if (this.filippa.powerUpShooting) {
                 var balls = this.filippa.shootPowerUp();
+
+   
                 for (let i = 0; i < balls.length; i++) {
                     this.lightballs.addMember(balls[i]);
                 }
@@ -728,6 +747,9 @@ projektkurs2.scene.Game.prototype.update = function (step) {
 
     if (this.gamepads.get(1).justPressed(2)) {
         if (this.sol.isStuck == false) {
+            var sound = this.application.sounds.sound.get("sound_blub");
+                    sound.volume = 0.9;
+                    sound.play();
             if (this.sol.powerUpShooting) {
                 var balls = this.sol.shootPowerUp();
                 for (let i = 0; i < balls.length; i++) {
@@ -759,11 +781,11 @@ projektkurs2.scene.Game.prototype.update = function (step) {
     this.handlePowerups();
 
 
-      this.fairies.forEachMember(function (fairy) {
-                
+    this.fairies.forEachMember(function (fairy) {
 
-            
-        }.bind(this))
+
+
+    }.bind(this))
 
 
 };
