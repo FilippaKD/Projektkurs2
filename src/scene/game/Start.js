@@ -53,6 +53,22 @@ projektkurs2.scene.Start.prototype.init = function () {
     this.bg.autoSize = true;
     bgContainer.addChild(this.bg);
 
+
+    var sound = this.application.sounds.master.get("sound_startsong");
+    sound.volume = 0.5;
+    sound.loop = true;
+    sound.play();
+
+     this.timers.create({
+        duration: 1000,
+        onTick: function () {
+            var protectSound = this.application.sounds.sound.get("sound_storymission");
+            protectSound.volume = 0.9;
+            protectSound.play();
+        }.bind(this)
+    });
+
+
     //this.bg.animation.create("idle", [0, 1, 2, 1, 0], 6, true);
     //this.bg.animation.gotoAndPlay("idle");
 
@@ -63,7 +79,7 @@ projektkurs2.scene.Start.prototype.init = function () {
 
 
 projektkurs2.scene.Start.prototype.initChoices = function () {
-    
+
     var title = new rune.text.BitmapField("PIXIE POWER", rune.text.BitmapFormat.FONT_MEDIUM);
     title.center = this.application.screen.center;
     title.y = 30;
@@ -83,7 +99,7 @@ projektkurs2.scene.Start.prototype.initChoices = function () {
         text.color = "#FFFFFF";
         text.autoSize = false;
         this.stage.addChild(text);
-        this.selected.push(text);   
+        this.selected.push(text);
     }
 
     this.selectedI = 0;
@@ -93,37 +109,37 @@ projektkurs2.scene.Start.prototype.initChoices = function () {
 
 
 projektkurs2.scene.Start.prototype.updateHighlight = function () {
-    
+
     for (var i = 0; i < this.selected.length; i++) {
         if (i == this.selectedI) {
             this.selected[i].flicker.start(Infinity, 350);
         } else {
             this.selected[i].flicker.stop();
-        } 
+        }
     }
 
 };
 
 
 projektkurs2.scene.Start.prototype.startSelected = function () {
-    
-   switch (this.selectedI) {
-    case 0:
-         this.application.scenes.load([
-            new projektkurs2.scene.ChoosePlayer()
-        ]);
-        break;
-    case 1:
-         this.application.scenes.load([
-            new projektkurs2.scene.Controls()
-        ]);
-        break;
-    case 2:
-         this.application.scenes.load([
-            new projektkurs2.scene.Credits()
-        ]);
-        break;    
-   }
+
+    switch (this.selectedI) {
+        case 0:
+            this.application.scenes.load([
+                new projektkurs2.scene.ChoosePlayer()
+            ]);
+            break;
+        case 1:
+            this.application.scenes.load([
+                new projektkurs2.scene.Controls()
+            ]);
+            break;
+        case 2:
+            this.application.scenes.load([
+                new projektkurs2.scene.Credits()
+            ]);
+            break;
+    }
 
 
 };
@@ -148,21 +164,21 @@ projektkurs2.scene.Start.prototype.update = function (step) {
     if (gamepad.stickLeftJustDown) {
         this.selectedI++;
         if (this.selectedI >= this.selected.length) {
-            this.selectedI = 0;    
-        }  
+            this.selectedI = 0;
+        }
         this.updateHighlight();
-    } else if(gamepad.stickLeftJustUp) {
+    } else if (gamepad.stickLeftJustUp) {
         this.selectedI--;
         if (this.selectedI < 0) {
-            this.selectedI = this.selected.length - 1;   
-        } 
-        this.updateHighlight(); 
+            this.selectedI = this.selected.length - 1;
+        }
+        this.updateHighlight();
     }
 
     if (gamepad.justPressed(0)) {
         this.startSelected();
     }
-    
+
 };
 
 /**
