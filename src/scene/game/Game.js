@@ -560,7 +560,7 @@ projektkurs2.scene.Game.prototype.update = function (step) {
             this.timers.create({
                 duration: 1000,
                 onTick: function () {
-                    var sound = this.application.sounds.sound.get("sound_trippy");
+                    var sound = this.application.sounds.sound.get("sound_ohno");
                     sound.volume = 0.9;
                     sound.play();
                 }.bind(this)
