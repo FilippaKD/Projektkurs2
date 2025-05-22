@@ -48,6 +48,7 @@ Flower.prototype.flowerDamage = function(amount) {
 
 Flower.prototype.flowerHeal = function(amount) {
     
+    //hej
     this.flowerLifeBar += amount;
     
     if (this.flowerLifeBar > 100) {
