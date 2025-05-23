@@ -475,13 +475,21 @@ projektkurs2.scene.Game.prototype.gameOver = function () {
 
         var cam = this.cameras.getCameraAt(0);
 
+        this.gameOverStart = true;
+
         this.weeds.forEachMember(function(weed) {
-            weed.y += 10;
+            weed.dispose()
+        })
+        this.allThorns.forEachMember(function(thorn) {
+            thorn.dispose()
+        })
+        this.mushrooms.forEachMember(function(mushroom) {
+            mushroom.dispose()
         })
 
         this.flower.dyingFlower();
-        //this.sol.isStuck = true;
-        //this.filippa.isStuck = true;
+        this.sol.isStuck = true;
+        this.filippa.isStuck = true;
 
         //cam.target = this.flower;
         console.log(cam.target);
@@ -496,7 +504,7 @@ projektkurs2.scene.Game.prototype.gameOver = function () {
 
 
         this.timers.create({
-        duration: 5000,
+        duration: 2500,
         repeat: 1,
         onComplete: function () {
            this.application.scenes.load([
@@ -508,17 +516,24 @@ projektkurs2.scene.Game.prototype.gameOver = function () {
     }
 
 
-     if (this.sol.isStuck && this.filippa.isStuck) {
-        
+     if (this.sol.isStuck && this.filippa.isStuck && !this.gameOverStart) {
 
         var score = this.score;
 
+        var sound = this.application.sounds.sound.get("sound_ohno");
+        sound.volume = 0.9;
+        sound.play();
 
-        this.application.scenes.load([
+        this.timers.create({
+        duration: 2500,
+        repeat: 1,
+        onComplete: function () {
+           this.application.scenes.load([
             new projektkurs2.scene.GameOver(score)
         ]);
-
-
+        }.bind(this)
+        });
+        
     }
 };
 
