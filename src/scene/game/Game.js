@@ -475,14 +475,41 @@ projektkurs2.scene.Game.prototype.gameOver = function () {
 
         var cam = this.cameras.getCameraAt(0);
 
-        cam.target = this.flower;
+        this.weeds.forEachMember(function(weed) {
+            weed.y += 10;
+        })
+
+        this.flower.dyingFlower();
+        //this.sol.isStuck = true;
+        //this.filippa.isStuck = true;
+
+        //cam.target = this.flower;
         console.log(cam.target);
 
         //cam.center = this.application.screen.center;
-        cam.viewport.zoom = 2.0;
+        //cam.viewport.zoom = 2.0;
 
         //cam.centerX = this.flower.x + this.flower.width / 2;
         //cam.centerY = this.flower.y + this.flower.height / 2;
+
+        var score = this.score;
+
+
+        this.timers.create({
+        duration: 5000,
+        repeat: 1,
+        onComplete: function () {
+           this.application.scenes.load([
+            new projektkurs2.scene.GameOver(score)
+        ]);
+        }.bind(this)
+    });
+        
+    }
+
+
+     if (this.sol.isStuck && this.filippa.isStuck) {
+        
 
         var score = this.score;
 
