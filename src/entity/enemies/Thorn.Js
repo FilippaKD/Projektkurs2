@@ -8,7 +8,7 @@ function Thorn() {
     var x = Math.floor(Math.random() * (this.screenWidth - 20));
     var y = Math.floor(Math.random() * (this.screenHeight - 20));
 
-    Entity.call(this, "image_game_thorns", x, y, 17, 20);
+    Entity.call(this, "image_game_thorns", x, y, 26, 25);
     this.makeAnimations();
 
     this.hitbox.set(2, 6, 8, 10);
@@ -44,3 +44,9 @@ Thorn.prototype.update = function(step) {
     }
 };
 
+Thorn.prototype.fairyStuck = function() {
+
+   this.animation.create("stuck", [22, 23, 24, 25, 26], 3, true);
+   this.animation.gotoAndPlay("stuck");
+
+};

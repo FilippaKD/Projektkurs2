@@ -362,23 +362,30 @@ projektkurs2.scene.Game.prototype.initFlower = function () {
 
 };
 
-
 projektkurs2.scene.Game.prototype.handleThorns = function () {
 
     this.fairies.forEachMember(function (fairy) {
-        if (fairy.hitTestGroup(this.allThorns)) {
+        if (!fairy.isStuck) {
+            this.allThorns.forEachMember(function (thorn) {
+                if (fairy.hitTestObject(thorn)) {
+                   
+                    thorn.fairyStuck();
+        
+                    var sound = this.application.sounds.sound.get("sound_helpme");
+                    sound.volume = 0.9;
+                    sound.play();
 
-            if (!fairy.isStuck) {
-                var sound = this.application.sounds.sound.get("sound_helpme");
-                sound.volume = 0.9;
-                sound.play();
-            }
-            fairy.isStuck = true;
-            fairy.immovable = true;
+                    fairy.isStuck = true;
+                    fairy.immovable = true;
+                }
+            }.bind(this));
         }
     }.bind(this));
 
 };
+
+
+
 
 projektkurs2.scene.Game.prototype.handleWaterdroplets = function () {
 
