@@ -1,7 +1,7 @@
 
-function Fairy(name, keyboard, x, y) {
+function Fairy(name, x, y) {
     Entity.call(this, name, x, y, 20, 20);
-    this.keyboard = keyboard;
+    
 
     this.hitbox.set(5, 5, 10, 10);
 

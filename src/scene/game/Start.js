@@ -55,7 +55,7 @@ projektkurs2.scene.Start.prototype.init = function () {
 
 
     var sound = this.application.sounds.master.get("sound_startsong");
-    sound.volume = 0.5;
+    sound.volume = 0.4;
     sound.loop = true;
     sound.play();
 
@@ -63,7 +63,7 @@ projektkurs2.scene.Start.prototype.init = function () {
         duration: 1000,
         onTick: function () {
             var protectSound = this.application.sounds.sound.get("sound_storymission");
-            protectSound.volume = 0.9;
+            protectSound.volume = 1;
             protectSound.play();
         }.bind(this)
     });

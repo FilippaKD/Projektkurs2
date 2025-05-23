@@ -57,15 +57,19 @@ projektkurs2.scene.Game.prototype.init = function () {
     this.bg.autoSize = true;
     bgContainer.addChild(this.bg);
 
-    this.borderBottom = new rune.display.DisplayObject(50, 395, 100, 100);
-    this.borderBottom.backgroundColor = "#FF00FF";
-    this.borderBottom.active = true;
-    this.borderBottom.debug = true;
-    console.log(this.borderBottom)
-    this.stage.addChild(this.borderBottom);
-
     this.sol = new Sol(this.p2choosen);
     this.filippa = new Filippa(this.p1choosen);
+
+    this.borderBottom = new rune.display.DisplayObject(0, 225, 400, 1);
+    this.borderLeft = new rune.display.DisplayObject(0, 0, 1, 225);
+    this.borderRight = new rune.display.DisplayObject(400, 0, 1, 225);
+    this.borderTop = new rune.display.DisplayObject(0, 20, 400, 1);
+
+    
+    this.borderBottom.immovable = true;
+    this.borderLeft.immovable = true;
+    this.borderRight.immovable = true;
+    this.borderTop.immovable = true;
 
     this.fairies = new rune.display.DisplayGroup(this.stage);
 
@@ -74,6 +78,11 @@ projektkurs2.scene.Game.prototype.init = function () {
 
     bgContainer.addChild(this.sol.emitter);
     bgContainer.addChild(this.filippa.emitter);
+
+     this.stage.addChild(this.borderBottom);
+    this.stage.addChild(this.borderLeft);
+    this.stage.addChild(this.borderRight);
+    this.stage.addChild(this.borderTop);
 
     this.initFlower();
     this.initWaterdroplet();
@@ -624,6 +633,18 @@ projektkurs2.scene.Game.prototype.update = function (step) {
 
         }.bind(this))
     }.bind(this));
+
+
+    // borders
+     this.fairies.forEachMember(function (fairy) {
+
+            rune.physics.Space.separate(fairy, this.borderBottom);
+            rune.physics.Space.separate(fairy, this.borderLeft);
+            rune.physics.Space.separate(fairy, this.borderRight);
+            rune.physics.Space.separate(fairy, this.borderTop);
+
+        }.bind(this))
+    
 
 
     this.lightballs.forEachMember(function (ball) {

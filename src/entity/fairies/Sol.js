@@ -1,6 +1,6 @@
 
 function Sol(image) {
-    Fairy.call(this, image, 20, 20);
+    Fairy.call(this, image, 120, 120);
     this.emitY = this.y + this.height * 0.3;
 
     this.emitter = new rune.particle.Emitter(this.centerX, this.emitY, 3, 5, {

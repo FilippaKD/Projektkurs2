@@ -1,6 +1,6 @@
 
 function Filippa(image) {
-    Fairy.call(this, image, 20, 20);
+    Fairy.call(this, image, 80, 120);
     this.emitY = this.y + this.height * 0.3;
     this.elasticity = 10;
 
