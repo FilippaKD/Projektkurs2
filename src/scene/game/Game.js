@@ -371,23 +371,30 @@ projektkurs2.scene.Game.prototype.initFlower = function () {
 
 };
 
-
 projektkurs2.scene.Game.prototype.handleThorns = function () {
 
     this.fairies.forEachMember(function (fairy) {
-        if (fairy.hitTestGroup(this.allThorns)) {
+        if (!fairy.isStuck) {
+            this.allThorns.forEachMember(function (thorn) {
+                if (fairy.hitTestObject(thorn)) {
+                   
+                    thorn.fairyStuck();
+        
+                    var sound = this.application.sounds.sound.get("sound_helpme");
+                    sound.volume = 0.9;
+                    sound.play();
 
-            if (!fairy.isStuck) {
-                var sound = this.application.sounds.sound.get("sound_helpme");
-                sound.volume = 0.9;
-                sound.play();
-            }
-            fairy.isStuck = true;
-            fairy.immovable = true;
+                    fairy.isStuck = true;
+                    fairy.immovable = true;
+                }
+            }.bind(this));
         }
     }.bind(this));
 
 };
+
+
+
 
 projektkurs2.scene.Game.prototype.handleWaterdroplets = function () {
 
@@ -484,11 +491,27 @@ projektkurs2.scene.Game.prototype.gameOver = function () {
 
         var cam = this.cameras.getCameraAt(0);
 
-        cam.target = this.flower;
+        this.gameOverStart = true;
+
+        this.weeds.forEachMember(function(weed) {
+            weed.dispose()
+        })
+        this.allThorns.forEachMember(function(thorn) {
+            thorn.dispose()
+        })
+        this.mushrooms.forEachMember(function(mushroom) {
+            mushroom.dispose()
+        })
+
+        this.flower.dyingFlower();
+        this.sol.isStuck = true;
+        this.filippa.isStuck = true;
+
+        //cam.target = this.flower;
         console.log(cam.target);
 
         //cam.center = this.application.screen.center;
-        cam.viewport.zoom = 2.0;
+        //cam.viewport.zoom = 2.0;
 
         //cam.centerX = this.flower.x + this.flower.width / 2;
         //cam.centerY = this.flower.y + this.flower.height / 2;
@@ -496,11 +519,37 @@ projektkurs2.scene.Game.prototype.gameOver = function () {
         var score = this.score;
 
 
-        this.application.scenes.load([
+        this.timers.create({
+        duration: 2500,
+        repeat: 1,
+        onComplete: function () {
+           this.application.scenes.load([
             new projektkurs2.scene.GameOver(score)
         ]);
+        }.bind(this)
+    });
+        
+    }
 
 
+     if (this.sol.isStuck && this.filippa.isStuck && !this.gameOverStart) {
+
+        var score = this.score;
+
+        var sound = this.application.sounds.sound.get("sound_ohno");
+        sound.volume = 0.9;
+        sound.play();
+
+        this.timers.create({
+        duration: 2500,
+        repeat: 1,
+        onComplete: function () {
+           this.application.scenes.load([
+            new projektkurs2.scene.GameOver(score)
+        ]);
+        }.bind(this)
+        });
+        
     }
 };
 

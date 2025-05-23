@@ -77,18 +77,25 @@ projektkurs2.scene.Controls.prototype.init = function () {
 
 
 projektkurs2.scene.Controls.prototype.initControls = function () {
-    
 
-    this.control = new Entity("image_controls_control", 110, 70, 200, 120);
+    this.control = new Controll();
 
     this.stage.addChild(this.control);
 
-    var shoot = new rune.text.BitmapField("Shoot");
-    shoot.y = 100;
-    shoot.x = 310;
-    shoot.color = "#FFFFFF";
-    this.stage.addChild(shoot);
+    var header = new rune.text.BitmapField("Move");
+    header.y = 60;
+    header.x = 285;
+    this.stage.addChild(header);
 
+    var desc = new rune.text.BitmapField("Use\nthe stick to move and avoid the mushrooms and the thorns");
+    desc.y = 80;
+    desc.x = 265;
+    desc.scaleX = 1.0;
+    desc.scaleY = 1.0;
+    desc.maxWith = 50;
+    this.stage.addChild(desc);
+
+    /*
     var drop = new rune.text.BitmapField("Drop collected water");
     drop.y = 68;
     drop.x = 255;
@@ -107,7 +114,7 @@ projektkurs2.scene.Controls.prototype.initControls = function () {
     move.color = "#FFFFFF";
     this.stage.addChild(move);
 
-
+*/
 
 };
 

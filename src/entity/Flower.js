@@ -9,6 +9,8 @@ function Flower() {
     this.immovable = true;
     this.makeAnimations();
     this.hitbox.set(3, 8, 25, 35);
+
+    this.isDead = false;
     
 }
 
@@ -27,11 +29,13 @@ Flower.prototype.update = function(step) {
 
     Entity.prototype.update.call(this, step);
 
+    if (!this.isDead) {
     var totalFrames = 10;
     var percent = (0, this.flowerLifeBar / 100);
     var frame = Math.floor((1 - percent) * (totalFrames - 1));
 
     this.animation.current.gotoAndStop(frame); 
+    }
     
 };
 
@@ -55,3 +59,10 @@ Flower.prototype.flowerHeal = function(amount) {
         this.flowerLifeBar = 100;
     }
 }
+
+
+Flower.prototype.dyingFlower = function() {
+    this.isDead = true;
+   this.animation.create("dying", [9, 10, 11, 12, 13, 14, 15, 16, 17, 18 ,19], 2, true);
+   this.animation.gotoAndPlay("dying");
+};
