@@ -57,8 +57,8 @@ projektkurs2.scene.Game.prototype.init = function () {
     this.bg.autoSize = true;
     bgContainer.addChild(this.bg);
 
-    this.sol = new Sol(this.p2choosen);
-    this.filippa = new Filippa(this.p1choosen);
+    this.sol = new Sol("image_game_Sol");
+    this.filippa = new Filippa("image_game_Filippa");
 
     this.borderBottom = new rune.display.DisplayObject(0, 225, 400, 1);
     this.borderLeft = new rune.display.DisplayObject(0, 0, 1, 225);
