@@ -8,7 +8,7 @@ function Flower() {
 
     this.immovable = true;
     this.makeAnimations();
-    this.hitbox.set(1, 8, 27, 35);
+    this.hitbox.set(-1, 8, 31, 35);
 
     this.isDead = false;
     

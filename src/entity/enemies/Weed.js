@@ -51,7 +51,7 @@ function Weed(x, y) {
     this.addChild(this.emitter);
 
     this.canHit = true;
-    this.hitbox.set(5, 5, 10, 10);
+    this.hitbox.set(2, 2, 10, 10);
 }
 
 Weed.prototype = Object.create(Entity.prototype);
