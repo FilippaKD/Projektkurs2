@@ -52,11 +52,11 @@ projektkurs2.scene.ChoosePlayer.prototype.init = function () {
     this.bg.autoSize = true;
     bgContainer.addChild(this.bg);
 
-    this.text = new rune.text.BitmapField("Choose your character");
+    this.text = new rune.text.BitmapField("CHOOSE YOUR CHARACTER", "image_alfafont");
 
     this.text.autoSize = true;
     this.text.center = this.application.screen.center;
-    this.text.y = 10;
+    this.text.y = 35;
 
     this.text.color = "#FFFFFF";
     this.stage.addChild(this.text);
@@ -67,7 +67,7 @@ projektkurs2.scene.ChoosePlayer.prototype.init = function () {
     this.selectedByP2 = 1;
 
 
-    this.p1text = new rune.text.BitmapField("Player 1");
+    this.p1text = new rune.text.BitmapField("PLAYER 1", "image_font_new");
     this.p1text.autoSize = true;
     this.stage.addChild(this.p1text);
 
