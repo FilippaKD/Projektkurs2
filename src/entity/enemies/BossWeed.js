@@ -5,7 +5,7 @@ function BossWeed() {
     this.y = -Math.random() * 50;
     this.hp = 3;
 
-    Entity.call(this, "image_game_bossweed", this.x, this.y, 32, 32);
+    Entity.call(this, "image_game_bigweed", this.x, this.y, 32, 32);
     this.animation.create("walk", [0, 1, 2, 3, 4], 6, true);
 
     /* this.emitY = this.y + this.height * 0.3;

@@ -28,7 +28,7 @@ function Weed(x, y) {
     }
 
    
-    Entity.call(this, "image_game_weed", x, y, 16, 16);
+    Entity.call(this, "image_game_weedenemy", x, y, 16, 16);
     this.immovable = true;
     this.x = x;
     this.y = y;

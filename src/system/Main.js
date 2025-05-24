@@ -25,7 +25,7 @@ projektkurs2.system.Main = function() {
         developer: "com.example",
         app: "projektkurs2",
         build: "1.0.0",
-        scene: projektkurs2.scene.Start,
+        scene: projektkurs2.scene.Game,
         resources: projektkurs2.data.Requests,
         useGamepads:true,
         useKeyboard:true,
