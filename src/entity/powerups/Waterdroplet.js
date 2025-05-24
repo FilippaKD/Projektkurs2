@@ -5,7 +5,7 @@ function Waterdroplet() {
 
 
     var x = Math.floor(Math.random() * (this.screenWidth - 20));
-    var y = Math.floor(Math.random() * (this.screenHeight - 30)) + 20;
+    var y = Math.floor(Math.random() * (this.screenHeight - 40)) + 20;
     console.log(this.screenHeight)
 
 
