@@ -588,7 +588,7 @@ projektkurs2.scene.Game.prototype.update = function (step) {
     // HEJ GOOPh
     var cam = this.cameras.getCameraAt(0);
     this.mushrooms.forEachMember(function (mushroom) {
-        rune.physics.Space.separate(this.flower, mushroom);
+        rune.physics.Space.separate(this.flower, mushroom); 
         var filippaDistance = this.filippa.distance(mushroom);
         var solDistance = this.sol.distance(mushroom);
 
@@ -808,10 +808,15 @@ projektkurs2.scene.Game.prototype.update = function (step) {
         rune.physics.Space.separate(this.flower, bossWeed);
     }.bind(this));
 
+     this.waterdroplets.forEachMember(function (droplet) {
+        droplet.hitTestAndSeparate(this.flower);
+    }.bind(this));
+
 
     // denna funkar ej
     this.allThorns.forEachMember(function (thorn) {
-        rune.physics.Space.separate(this.flower, thorn);
+       // rune.physics.Space.separate(this.flower, thorn);
+        this.flower.hitTestAndSeparate(thorn);
     }.bind(this));
 
     console.log(this.lightballs.numMembers)

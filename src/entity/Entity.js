@@ -8,7 +8,7 @@ function Entity(name, x, y, width, height) {
     this.speed = 1;
 
 
-   // this.initHitboxes();
+    this.initHitboxes();
 
 }
 

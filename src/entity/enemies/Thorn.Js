@@ -11,7 +11,7 @@ function Thorn() {
     Entity.call(this, "image_game_thorns", x, y, 26, 25);
     this.makeAnimations();
 
-    this.hitbox.set(2, 6, 8, 10);
+    this.hitbox.set(5, 10, 9, 11);
     
 }
 
