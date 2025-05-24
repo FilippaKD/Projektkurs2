@@ -84,6 +84,15 @@ projektkurs2.scene.Start.prototype.init = function () {
     this.initElderflowers();
     this.initChoices();
 
+    // testa tavla 
+    var tavla = new rune.display.Sprite(220, 65, 150, 200, "image_start_scoreboard");
+    this.stage.addChild(tavla);
+
+    var highscore = new rune.text.BitmapField("HIGHSCORE");
+    highscore.y = 25;
+    highscore.x = 50;
+    tavla.addChild(highscore);
+
 };
 
 projektkurs2.scene.Start.prototype.initElderflowers = function () {
