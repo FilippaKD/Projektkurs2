@@ -52,13 +52,13 @@ projektkurs2.scene.Start.prototype.init = function () {
     this.bg = new rune.display.Graphic(0, 0, 400, 225, "image_menu_background");
     this.bg.autoSize = true;
     bgContainer.addChild(this.bg);
-      var title = new rune.text.BitmapField("PIXIE POWER", "image_pixie_blackfont");
-     
+    var title = new rune.text.BitmapField("PIXIE POWER", "image_pixie_blackfont");
+
 
     title.autoSize = true;
     title.y = 20;
     title.x = 70;
-    
+
 
     this.stage.addChild(title);
 
@@ -68,7 +68,7 @@ projektkurs2.scene.Start.prototype.init = function () {
     sound.loop = true;
     sound.play();
 
-     this.timers.create({
+    this.timers.create({
         duration: 1000,
         onTick: function () {
             var protectSound = this.application.sounds.sound.get("sound_storymission");
@@ -81,15 +81,40 @@ projektkurs2.scene.Start.prototype.init = function () {
     //this.bg.animation.create("idle", [0, 1, 2, 1, 0], 6, true);
     //this.bg.animation.gotoAndPlay("idle");
 
-
+    this.initElderflowers();
     this.initChoices();
 
 };
 
+projektkurs2.scene.Start.prototype.initElderflowers = function () {
+
+    this.emitter = new rune.particle.Emitter(400, 0, 2, 190, {
+        particles: [Glitter],
+        capacity: 150,
+        accelerationY: 0.00000005,
+        accelerationX: -0.0005,
+        dragY: 0.2,
+        maxRotation: 50,
+        minVelocityX: -0.004,
+        maxVelocityX: -0.004,
+        maxVelocityY: -0.015,
+        //minVelocityX: -0.05, 
+        // maxVelocityX: 0.05, 
+        // maxVelocityY: 0.4,  
+        maxLifespan: 50000
+    });
+
+    this.emitCounter = 0;
+    this.emitInterval = 30;
+
+    this.stage.addChild(this.emitter);
+
+
+};
 
 projektkurs2.scene.Start.prototype.initChoices = function () {
 
-  
+
     this.selected = [];
 
     var texts = ["START", "CONTROLS", "CREDITS"];
@@ -183,6 +208,12 @@ projektkurs2.scene.Start.prototype.update = function (step) {
     if (gamepad.justPressed(0)) {
         this.startSelected();
     }
+
+    this.emitCounter++;
+if (this.emitCounter >= this.emitInterval) {
+    this.emitter.emit(1); 
+    this.emitCounter = 0;
+}
 
 };
 
