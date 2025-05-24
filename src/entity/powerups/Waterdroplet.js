@@ -5,7 +5,8 @@ function Waterdroplet() {
 
 
     var x = Math.floor(Math.random() * (this.screenWidth - 20));
-    var y = Math.floor(Math.random() * (this.screenHeight - 20));
+    var y = Math.floor(Math.random() * (this.screenHeight - 30)) + 20;
+    console.log(this.screenHeight)
 
 
     Entity.call(this, "image_game_waterdroplet", x, y, 20, 20);

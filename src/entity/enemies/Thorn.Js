@@ -6,7 +6,7 @@ function Thorn() {
     this.screenHeight = this.application.screen.height;
 
     var x = Math.floor(Math.random() * (this.screenWidth - 20));
-    var y = Math.floor(Math.random() * (this.screenHeight - 20));
+    var y = Math.floor(Math.random() * (this.screenHeight - 30)) + 20;
 
     Entity.call(this, "image_game_thorns", x, y, 26, 25);
     this.makeAnimations();

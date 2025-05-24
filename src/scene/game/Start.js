@@ -52,6 +52,15 @@ projektkurs2.scene.Start.prototype.init = function () {
     this.bg = new rune.display.Graphic(0, 0, 400, 225, "image_menu_background");
     this.bg.autoSize = true;
     bgContainer.addChild(this.bg);
+      var title = new rune.text.BitmapField("PIXIE POWER", "image_pixie_blackfont");
+     
+
+    title.autoSize = true;
+    title.y = 20;
+    title.x = 70;
+    
+
+    this.stage.addChild(title);
 
 
     var sound = this.application.sounds.master.get("sound_startsong");
@@ -80,30 +89,26 @@ projektkurs2.scene.Start.prototype.init = function () {
 
 projektkurs2.scene.Start.prototype.initChoices = function () {
 
-    var title = new rune.text.BitmapField("PIXIE POWER", rune.text.BitmapFormat.FONT_MEDIUM);
-    title.center = this.application.screen.center;
-    title.y = 30;
-    title.color = "#FFFFFF";
-    this.stage.addChild(title);
-
+  
     this.selected = [];
 
-    var texts = ["Start", "Controls", "Credits"];
+    var texts = ["START", "CONTROLS", "CREDITS"];
     var startY = 70;
 
     for (var i = 0; i < texts.length; i++) {
 
-        var text = new rune.text.BitmapField(texts[i]);
+        var text = new rune.text.BitmapField(texts[i], "image_alfafont");
         text.x = 20;
         text.y = startY + i * 30;
         text.color = "#FFFFFF";
-        text.autoSize = false;
+        text.autoSize = true;
         this.stage.addChild(text);
         this.selected.push(text);
     }
 
     this.selectedI = 0;
     this.updateHighlight();
+
 
 };
 
