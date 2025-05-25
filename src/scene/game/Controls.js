@@ -53,20 +53,20 @@ projektkurs2.scene.Controls.prototype.init = function () {
     this.bg.autoSize = true;
     bgContainer.addChild(this.bg);
 
-    this.text = new rune.text.BitmapField("Controls");
+    this.text = new rune.text.BitmapField("CONTROLS", "image_alfafont");
 
     this.text.autoSize = true;
     this.text.center = this.application.screen.center;
-    this.text.y = 10;
+    this.text.y = 20;
 
     this.text.color = "#FFFFFF";
     this.stage.addChild(this.text);
 
-    this.desc = new rune.text.BitmapField("Protect the flower while collecting and watering the flower");
+    this.desc = new rune.text.BitmapField("protect the flower and water it", "image_font_testsmall");
 
     this.desc.autoSize = true;
     this.desc.center = this.application.screen.center;
-    this.desc.y = 25;
+    this.desc.y = 35;
 
     this.desc.color = "#FFFFFF";
     this.stage.addChild(this.desc);
@@ -82,12 +82,12 @@ projektkurs2.scene.Controls.prototype.initControls = function () {
 
     this.stage.addChild(this.control);
 
-    var header = new rune.text.BitmapField("Move");
-    header.y = 60;
-    header.x = 285;
+    var header = new rune.text.BitmapField("MOVE", "image_alfafont");
+    header.y = 55;
+    header.x = 275;
     this.stage.addChild(header);
 
-    var desc = new rune.text.BitmapField("Use\nthe stick to move and avoid the mushrooms and the thorns");
+    var desc = new rune.text.BitmapField("use the stick to move and avoid the mushrooms and the thorns", "image_font_testnew");
     desc.y = 80;
     desc.x = 265;
     desc.scaleX = 1.0;
