@@ -108,20 +108,29 @@ projektkurs2.scene.Game.prototype.init = function () {
     this.timers.create({
         duration: 2000,
         onTick: function () {
-            var protectSound = this.application.sounds.sound.get("sound_protectheflower");
-            protectSound.volume = 0.9;
-            protectSound.play();
+            this.sound_protect.volume = 0.9;
+            this.sound_protect.play();
         }.bind(this)
     });
 
+    
+    this.sound_protect = this.application.sounds.sound.get("sound_protectheflower");
+    this.sound_blub = this.application.sounds.sound.get("sound_blub");
+    this.sound_helpme = this.application.sounds.sound.get("sound_helpme");
+    this.sound_waterPickup = this.application.sounds.sound.get("sound_waterpickup");
+    this.sound_waterSplash = this.application.sounds.sound.get("sound_watersplash");
+    this.sound_isThatJesus = this.application.sounds.sound.get("sound_isthatjesus");
+    this.sound_powerup = this.application.sounds.sound.get("sound_powerup");
+     this.sound_ohno = this.application.sounds.sound.get("sound_ohno");
+     this.sound_dramabush = this.application.sounds.sound.get("sound_dramabush");
+     this.sound_teamwork = this.application.sounds.sound.get("sound_teamwork");
+
     this.application.sounds.master.get("sound_startsong").fade(0, 2000);
-
-
-    var bgm = this.application.sounds.music.get("themesong");
-    bgm.volume = 0;
-    bgm.loop = true;
-    bgm.play();
-    bgm.fade(0.5, 2000);
+    this.bgm = this.application.sounds.music.get("themesong");
+    this.bgm.volume = 0;
+    this.bgm.loop = true;
+    this.bgm.play();
+    this.bgm.fade(0.5, 2000);
 
 
 
@@ -379,10 +388,8 @@ projektkurs2.scene.Game.prototype.handleThorns = function () {
                 if (fairy.hitTestObject(thorn)) {
 
                     thorn.fairyStuck();
-
-                    var sound = this.application.sounds.sound.get("sound_helpme");
-                    sound.volume = 0.9;
-                    sound.play();
+                    this.sound_helpme.volume = 0.9;
+                    this.sound_helpme.play();
 
                     fairy.isStuck = true;
                     fairy.immovable = true;
@@ -403,9 +410,9 @@ projektkurs2.scene.Game.prototype.handleWaterdroplets = function () {
 
         this.fairies.forEachMember(function (fairy) {
             if (droplet.hitTestObject(fairy) && fairy.waterCollection < 3 && !collected) {
-                var sound = this.application.sounds.sound.get("sound_waterpickup");
-                sound.volume = 0.9;
-                sound.play();
+
+                this.sound_waterPickup.volume = 0.9;
+                this.sound_waterPickup.play();
                 fairy.addDrop(1);
                 this.waterdroplets.removeMember(droplet);
                 collected = true;
@@ -415,9 +422,8 @@ projektkurs2.scene.Game.prototype.handleWaterdroplets = function () {
 
 
     if (this.filippa.hitTestObject(this.waterZone) && this.gamepads.get(0).justPressed(7) && this.filippa.waterCollection > 0) {
-        var sound = this.application.sounds.sound.get("sound_watersplash");
-        sound.volume = 0.9;
-        sound.play();
+        this.sound_waterSplash.volume = 0.9;
+        this.sound_waterSplash.play();
         this.flower.flowerHeal(this.filippa.waterCollection);
         var droppedWater = new Waterdroplet;
         droppedWater.x = this.filippa.x;
@@ -450,10 +456,8 @@ projektkurs2.scene.Game.prototype.handlePowerups = function () {
 
             this.jesus = new Jesus();
             // jesusljud
-
-            var isThatJesusSound = this.application.sounds.sound.get("sound_isthatjesus");
-            isThatJesusSound.volume = 0.9;
-            isThatJesusSound.play();
+            this.sound_isThatJesus.volume = 0.9;
+            this.sound_isThatJesus.play();
 
             this.jesus.x = this.flower.x;
             this.jesus.y = this.flower.y - 35;
@@ -473,9 +477,8 @@ projektkurs2.scene.Game.prototype.handlePowerups = function () {
 
     this.fairies.forEachMember(function (fairy) {
         if (fairy.hitTestObject(this.bombPowerup)) {
-            var sound = this.application.sounds.sound.get("sound_powerup");
-            sound.volume = 0.9;
-            sound.play();
+            this.sound_powerup.volume = 0.9;
+            this.sound_powerup.play();
             fairy.powerUpShooting = true;
             this.timers.create({
                 duration: 5000,
@@ -541,10 +544,8 @@ projektkurs2.scene.Game.prototype.gameOver = function () {
     if (this.sol.isStuck && this.filippa.isStuck && !this.gameOverStart) {
 
         var score = this.score;
-
-        var sound = this.application.sounds.sound.get("sound_ohno");
-        sound.volume = 0.9;
-        sound.play();
+        this.sound_ohno.volume = 0.9;
+        this.sound_ohno.play();
 
         this.timers.create({
             duration: 2500,
@@ -645,9 +646,8 @@ projektkurs2.scene.Game.prototype.update = function (step) {
             this.timers.create({
                 duration: 1000,
                 onTick: function () {
-                    var sound = this.application.sounds.sound.get("sound_ohno");
-                    sound.volume = 0.9;
-                    sound.play();
+                    this.sound_ohno.volume = 0.9;
+                    this.sound_ohno.play();
                 }.bind(this)
             });
 
@@ -732,9 +732,8 @@ projektkurs2.scene.Game.prototype.update = function (step) {
 
                 // Glitter när ett ogräs dör
                 if (weed.hp == 0) {
-                    var sound = this.application.sounds.sound.get("sound_dramabush");
-                    sound.volume = 0.9;
-                    sound.play();
+                    this.sound_dramabush.volume = 0.9;
+                    this.sound_dramabush.play();
 
                     this.stage.addChild(weed.emitter);
                     weed.emitter.emit(30);
@@ -797,10 +796,8 @@ projektkurs2.scene.Game.prototype.update = function (step) {
 
                 this.bossWeeds.removeMember(bossWeed);
 
-
-                var sound = this.application.sounds.sound.get("sound_teamwork");
-                sound.volume = 0.9;
-                sound.play();
+                this.sound_teamwork.volume = 0.9;
+                this.sound_teamwork.play();
 
                 this.score += 100;
             }
@@ -831,9 +828,8 @@ projektkurs2.scene.Game.prototype.update = function (step) {
     // Skottlogik (tilläggning på scen)
     if (this.gamepads.get(0).justPressed(2)) {
         if (this.filippa.isStuck == false) {
-            var sound = this.application.sounds.sound.get("sound_blub");
-            sound.volume = 0.9;
-            sound.play();
+            this.sound_blub.volume = 0.9;
+            this.sound_blub.play();
 
 
             if (this.filippa.powerUpShooting) {
@@ -854,9 +850,9 @@ projektkurs2.scene.Game.prototype.update = function (step) {
 
     if (this.gamepads.get(1).justPressed(2)) {
         if (this.sol.isStuck == false) {
-            var sound = this.application.sounds.sound.get("sound_blub");
-            sound.volume = 0.9;
-            sound.play();
+            
+            this.sound_blub.volume = 0.9;
+            this.sound.blub.play();
             if (this.sol.powerUpShooting) {
                 var balls = this.sol.shootPowerUp();
                 for (let i = 0; i < balls.length; i++) {
