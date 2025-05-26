@@ -2,6 +2,7 @@
 function Sol(image) {
     Fairy.call(this, image, 120, 120);
     this.emitY = this.y + this.height * 0.3;
+    this.elasticity = 10;
 
     this.emitter = new rune.particle.Emitter(this.centerX, this.emitY, 3, 5, {
         particles: [Glitter],
