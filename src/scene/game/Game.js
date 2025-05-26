@@ -852,7 +852,7 @@ projektkurs2.scene.Game.prototype.update = function (step) {
         if (this.sol.isStuck == false) {
             
             this.sound_blub.volume = 0.9;
-            this.sound.blub.play();
+            this.sound_blub.play();
             if (this.sol.powerUpShooting) {
                 var balls = this.sol.shootPowerUp();
                 for (let i = 0; i < balls.length; i++) {
