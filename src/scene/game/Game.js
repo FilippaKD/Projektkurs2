@@ -416,7 +416,7 @@ projektkurs2.scene.Game.prototype.handleWaterdroplets = function () {
                 fairy.addDrop(1);
                 this.waterdroplets.removeMember(droplet);
                 collected = true;
-                this.score += droplet.point;
+
             }
         }.bind(this));
     }.bind(this));
@@ -432,6 +432,12 @@ projektkurs2.scene.Game.prototype.handleWaterdroplets = function () {
         droppedWater.dropWater();
         this.stage.addChild(droppedWater);
         this.filippa.waterCollection = 0;
+        
+     this.waterdroplets.forEachMember(function (droplet) {
+    
+        this.score += droplet.point;
+            
+        }.bind(this));
 
 
     }
@@ -444,6 +450,14 @@ projektkurs2.scene.Game.prototype.handleWaterdroplets = function () {
         droppedWater.dropWater();
         this.stage.addChild(droppedWater);
         this.sol.waterCollection = 0;
+         this.score += this.waterdroplet.point;
+
+
+          this.waterdroplets.forEachMember(function (droplet) {
+    
+        this.score += droplet.point;
+            
+        }.bind(this));
     }
 
 
