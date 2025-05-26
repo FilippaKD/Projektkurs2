@@ -113,7 +113,7 @@ projektkurs2.scene.Game.prototype.init = function () {
         }.bind(this)
     });
 
-    
+
     this.sound_protect = this.application.sounds.sound.get("sound_protectheflower");
     this.sound_blub = this.application.sounds.sound.get("sound_blub");
     this.sound_helpme = this.application.sounds.sound.get("sound_helpme");
@@ -121,9 +121,9 @@ projektkurs2.scene.Game.prototype.init = function () {
     this.sound_waterSplash = this.application.sounds.sound.get("sound_watersplash");
     this.sound_isThatJesus = this.application.sounds.sound.get("sound_isthatjesus");
     this.sound_powerup = this.application.sounds.sound.get("sound_powerup");
-     this.sound_ohno = this.application.sounds.sound.get("sound_ohno");
-     this.sound_dramabush = this.application.sounds.sound.get("sound_dramabush");
-     this.sound_teamwork = this.application.sounds.sound.get("sound_teamwork");
+    this.sound_ohno = this.application.sounds.sound.get("sound_ohno");
+    this.sound_dramabush = this.application.sounds.sound.get("sound_dramabush");
+    this.sound_teamwork = this.application.sounds.sound.get("sound_teamwork");
 
     this.application.sounds.master.get("sound_startsong").fade(0, 2000);
     this.bgm = this.application.sounds.music.get("themesong");
@@ -431,13 +431,11 @@ projektkurs2.scene.Game.prototype.handleWaterdroplets = function () {
         droppedWater.y = this.filippa.y;
         droppedWater.dropWater();
         this.stage.addChild(droppedWater);
-        this.filippa.waterCollection = 0;
-        
-     this.waterdroplets.forEachMember(function (droplet) {
-    
-        this.score += droplet.point;
-            
+        this.waterdroplets.forEachMember(function (droplet) {
+            this.score += droplet.point;
         }.bind(this));
+        this.filippa.waterCollection = 0;
+
 
 
     }
@@ -449,15 +447,11 @@ projektkurs2.scene.Game.prototype.handleWaterdroplets = function () {
         droppedWater.y = this.sol.y;
         droppedWater.dropWater();
         this.stage.addChild(droppedWater);
-        this.sol.waterCollection = 0;
-         this.score += this.waterdroplet.point;
-
-
-          this.waterdroplets.forEachMember(function (droplet) {
-    
-        this.score += droplet.point;
-            
+        this.waterdroplets.forEachMember(function (droplet) {
+            this.score += droplet.point;
         }.bind(this));
+        this.sol.waterCollection = 0;
+
     }
 
 
@@ -865,7 +859,7 @@ projektkurs2.scene.Game.prototype.update = function (step) {
 
     if (this.gamepads.get(1).justPressed(2)) {
         if (this.sol.isStuck == false) {
-            
+
             this.sound_blub.volume = 0.9;
             this.sound_blub.play();
             if (this.sol.powerUpShooting) {
