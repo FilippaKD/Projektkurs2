@@ -103,7 +103,6 @@ projektkurs2.scene.Start.prototype.initElderflowers = function () {
         accelerationY: 0.00000005,
         accelerationX: -0.0005,
         dragY: 0.2,
-        maxRotation: 50,
         minVelocityX: -0.004,
         maxVelocityX: -0.004,
         maxVelocityY: -0.015,

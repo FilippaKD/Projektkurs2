@@ -48,7 +48,7 @@ projektkurs2.scene.Game.prototype.init = function () {
     rune.scene.Scene.prototype.init.call(this);
 
     // kolla om gamepads är connected
-    console.log(this.gamepads.numGamepads)
+    // console.log(this.gamepads.numGamepads)
 
     var bgContainer = new rune.display.DisplayObjectContainer(0, 0, 400, 225);
     this.stage.addChild(bgContainer);
@@ -213,17 +213,20 @@ projektkurs2.scene.Game.prototype.initWaterdroplet = function () {
     this.waterdroplets = new rune.display.DisplayGroup(this.stage);
 
     this.timers.create({
-        duration: 5000,
+        duration: 2500,
         repeat: Infinity,
         onTick: function () {
+
             this.waterdroplet = new Waterdroplet();
             this.waterdroplets.addMember(this.waterdroplet);
+
+
         }.bind(this)
     });
 
 
     this.timers.create({
-        duration: 8000,
+        duration: 7000,
         repeat: Infinity,
         onTick: function () {
             var members = this.waterdroplets.getMembers();
@@ -289,33 +292,49 @@ projektkurs2.scene.Game.prototype.initWeeds = function () {
 
     this.weeds = new rune.display.DisplayGroup(this.stage);
 
-    var spawnInterval = 3000;
+    this.spawnInterval = 3000;
+
+    const startSpawnTimer = () => {
+        if (this.spawnTimer) {
+            this.spawnTimer.stop();
+        }
+
+        this.spawnTimer = this.timers.create({
+            duration: this.spawnInterval,
+            repeat: Infinity,
+            onTick: () => {
+                for (let i = 0; i < 2; i++) {
+                    var weed = new Weed();
+                    this.weeds.addMember(weed);
+                    this.stage.addChildAt(weed, 1);
+
+                }
+
+            }
+        });
+    };
+
+    startSpawnTimer();
 
     this.timers.create({
-        duration: spawnInterval,
-        repeat: Infinity,
-        onTick: function () {
-            var weed = new Weed();
-            this.weeds.addMember(weed);
-            this.stage.addChildAt(weed, 1);
+        duration: 10000,
+        repeat: 12,
+        onTick: () => {
+            if (this.spawnInterval > 500) {
+                this.spawnInterval -= 200;
+                // console.log("New spawn interval: " + this.spawnInterval);
+                startSpawnTimer();
+            }
         }
     });
 
-
-    this.timers.create({
-        duration: 8000,
-        repeat: Infinity,
-        onTick: function () {
-            spawnInterval = Math.max(1000, spawnInterval - 200);
-        }
-    });
 
 }
 
 projektkurs2.scene.Game.prototype.initBossWeeds = function () {
     this.bossWeeds = new rune.display.DisplayGroup(this.stage);
 
-    var spawnInterval = 70000;
+    var spawnInterval = 45000;
 
     this.timers.create({
         duration: spawnInterval,
@@ -505,7 +524,7 @@ projektkurs2.scene.Game.prototype.handlePowerups = function () {
 projektkurs2.scene.Game.prototype.gameOver = function () {
 
     if (this.flower.flowerLifeBar == 0) {
-        console.log("gameover");
+        //  console.log("gameover");
 
         var cam = this.cameras.getCameraAt(0);
 
@@ -526,7 +545,7 @@ projektkurs2.scene.Game.prototype.gameOver = function () {
         this.filippa.isStuck = true;
 
         //cam.target = this.flower;
-        console.log(cam.target);
+        //  console.log(cam.target);
 
         //cam.center = this.application.screen.center;
         //cam.viewport.zoom = 2.0;
@@ -599,7 +618,7 @@ projektkurs2.scene.Game.prototype.update = function (step) {
     this.displayPlayer2.text = "Player 2 " + this.filippa.waterCollection.toString() + "/3";
     this.watercan2.updatePicture(this.filippa.waterCollection);
 
-
+    console.log("HÄR ÄR HP PÅ BLOMMAN" + this.flower.flowerLifeBar)
 
     // HEJ GOOPh
     var cam = this.cameras.getCameraAt(0);
@@ -760,7 +779,7 @@ projektkurs2.scene.Game.prototype.update = function (step) {
                     }
                 });
                 this.lightballs.removeMember(ball);
-                console.log(this.score);
+                // console.log(this.score);
             }
 
         }.bind(this));
@@ -772,13 +791,29 @@ projektkurs2.scene.Game.prototype.update = function (step) {
                 this.lightballs.removeMember(ball);
                 this.score += 25;
 
-                console.log(this.score);
+                // console.log(this.score);
             }
         }.bind(this));
 
         // bigboss
         this.bossWeeds.forEachMember(function (bossWeed) {
-            console.log("bossWeed");
+            //  console.log("bossWeed");
+
+            if (this.flower.hitTestObject(bossWeed) && bossWeed.canHit) {
+                this.flower.flowerDamage(10);
+                this.flower.flicker.start();
+                bossWeed.canHit = false;
+                this.timers.create({
+                    duration: 2000,
+                    onTick: function () {
+                        bossWeed.canHit = true;
+                    }
+                })
+            }
+
+
+
+
             if (ball.hitTestObject(bossWeed)) {
 
                 this.lightballs.removeMember(ball);
@@ -831,7 +866,7 @@ projektkurs2.scene.Game.prototype.update = function (step) {
         this.flower.hitTestAndSeparate(thorn);
     }.bind(this));
 
-    console.log(this.lightballs.numMembers)
+    // console.log(this.lightballs.numMembers)
 
 
     // Skottlogik (tilläggning på scen)
