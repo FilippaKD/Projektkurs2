@@ -11,6 +11,7 @@ function Waterdroplet() {
 
     Entity.call(this, "image_game_waterdroplet", x, y, 20, 20);
     this.makeAnimations();
+    this.point = 10;
 
     this.hitbox.set(5, 8, 8, 8);
     
