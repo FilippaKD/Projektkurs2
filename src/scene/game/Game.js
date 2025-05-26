@@ -416,6 +416,7 @@ projektkurs2.scene.Game.prototype.handleWaterdroplets = function () {
                 fairy.addDrop(1);
                 this.waterdroplets.removeMember(droplet);
                 collected = true;
+                this.score += droplet.point;
             }
         }.bind(this));
     }.bind(this));
