@@ -13,7 +13,7 @@
  * 
  * Game scene.
  */
-projektkurs2.scene.Controls = function (score) {
+projektkurs2.scene.Controls = function () {
 
     //--------------------------------------------------------------------------
     // Super call
@@ -22,7 +22,6 @@ projektkurs2.scene.Controls = function (score) {
     /**
      * Calls the constructor method of the super class.
      */
-    this.score = score;
     rune.scene.Scene.call(this);
 };
 
@@ -53,6 +52,10 @@ projektkurs2.scene.Controls.prototype.init = function () {
     this.bg.autoSize = true;
     bgContainer.addChild(this.bg);
 
+    this.board = new rune.display.Graphic(270, 30, 112, 180, "image_rules");
+    this.board.autoSize = true;
+    bgContainer.addChild(this.board);
+
     this.text = new rune.text.BitmapField("CONTROLS", "image_alfafont");
 
     this.text.autoSize = true;
@@ -61,15 +64,6 @@ projektkurs2.scene.Controls.prototype.init = function () {
 
     this.text.color = "#FFFFFF";
     this.stage.addChild(this.text);
-
-    this.desc = new rune.text.BitmapField("protect the flower and water it", "image_font_testsmall");
-
-    this.desc.autoSize = true;
-    this.desc.center = this.application.screen.center;
-    this.desc.y = 35;
-
-    this.desc.color = "#FFFFFF";
-    this.stage.addChild(this.desc);
 
     this.initControls();
 
@@ -82,39 +76,36 @@ projektkurs2.scene.Controls.prototype.initControls = function () {
 
     this.stage.addChild(this.control);
 
-    var header = new rune.text.BitmapField("MOVE", "image_alfafont");
-    header.y = 55;
-    header.x = 275;
-    this.stage.addChild(header);
-
-    var desc = new rune.text.BitmapField("use the stick to move and avoid the mushrooms and the thorns", "image_font_testnew");
-    desc.y = 80;
-    desc.x = 265;
-    desc.scaleX = 1.0;
-    desc.scaleY = 1.0;
-    desc.maxWith = 50;
+    var desc = new rune.text.BitmapField("shoot", "image_font_testsmall");
+    desc.y = 118;
+    desc.x = 202;
     this.stage.addChild(desc);
 
-    /*
-    var drop = new rune.text.BitmapField("Drop collected water");
-    drop.y = 68;
-    drop.x = 255;
-    drop.color = "#FFFFFF";
+    
+    var drop = new rune.text.BitmapField("drop water", "image_font_testsmall");
+    drop.y = 76;
+    drop.x = 180;
     this.stage.addChild(drop);
 
-    var stop = new rune.text.BitmapField("Stand still");
-    stop.y = 68;
-    stop.x = 85;
+    var stop = new rune.text.BitmapField("stand still", "image_font_testsmall");
+    stop.y = 76;
+    stop.x = 5;
     stop.color = "#FFFFFF";
     this.stage.addChild(stop);
 
-    var move = new rune.text.BitmapField("Move ------");
-    move.y = 112;
-    move.x = 65;
+    var move = new rune.text.BitmapField("move/aim", "image_font_testsmall");
+    move.y = 114;
+    move.x = 5;
     move.color = "#FFFFFF";
     this.stage.addChild(move);
 
-*/
+
+    var avoid = new rune.text.BitmapField("AVOID SHOOT", "image_alfafont");
+    avoid.y = 50;
+    avoid.x = 281;
+    avoid.autoSize = true;
+    avoid.color = "#FFFFFF";
+    this.stage.addChild(avoid);
 
 };
 
