@@ -27,10 +27,11 @@ Thorn.prototype.makeAnimations = function() {
 
 };
 
+
 Thorn.prototype.attackMode = function() {
 
-     this.animation.create("idle", [1, 0], 2, true);
-     this.animation.gotoAndPlay("idle");
+    this.animation.create("idle", [1, 0], 2, true);
+    this.animation.gotoAndPlay("idle");
 }
 
 
