@@ -52,7 +52,7 @@ projektkurs2.scene.Controls.prototype.init = function () {
     this.bg.autoSize = true;
     bgContainer.addChild(this.bg);
 
-    this.board = new rune.display.Graphic(270, 30, 112, 180, "image_rules");
+    this.board = new rune.display.Graphic(260, 30, 130, 180, "image_controls_board");
     this.board.autoSize = true;
     bgContainer.addChild(this.board);
 
@@ -101,11 +101,19 @@ projektkurs2.scene.Controls.prototype.initControls = function () {
 
 
     var avoid = new rune.text.BitmapField("AVOID SHOOT", "image_alfafont");
-    avoid.y = 50;
+    avoid.y = 65;
     avoid.x = 281;
     avoid.autoSize = true;
     avoid.color = "#FFFFFF";
     this.stage.addChild(avoid);
+
+
+    var collect = new rune.text.BitmapField("COLLECT", "image_alfafont");
+    collect.y = 135;
+    collect.x = 297;
+    collect.autoSize = true;
+    collect.color = "#FFFFFF";
+    this.stage.addChild(collect);
 
 };
 
