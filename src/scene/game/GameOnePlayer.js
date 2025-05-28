@@ -373,8 +373,6 @@ projektkurs2.scene.GameOnePlayer.prototype.handleThorns = function () {
         if (!fairy.isStuck) {
             this.allThorns.forEachMember(function (thorn) {
                 if (fairy.hitTestObject(thorn)) {
-
-                    thorn.fairyStuck();
                     this.sound_helpme.volume = 0.9;
                     this.sound_helpme.play();
 
@@ -447,14 +445,15 @@ projektkurs2.scene.GameOnePlayer.prototype.handlePowerups = function () {
             this.stage.addChild(this.jesus);
 
             this.timers.create({
-                duration: 1000,
-                repeat: this.flower.flowerLifeBar,
+                duration: 500,
+                repeat: 10,
                 onTick: function () {
                     this.flower.flowerHeal(10);
                 }.bind(this)
             });
 
             this.stage.removeChild(this.jesusPowerup);
+            this.jesusPowerup = null;
         }
     }.bind(this))
 
@@ -470,6 +469,7 @@ projektkurs2.scene.GameOnePlayer.prototype.handlePowerups = function () {
                 }
             });
             this.stage.removeChild(this.bombPowerup);
+            this.bombPowerup = null;
         }
     }.bind(this))
 

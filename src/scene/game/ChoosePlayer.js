@@ -67,16 +67,18 @@ projektkurs2.scene.ChoosePlayer.prototype.init = function () {
     this.selectedByP2 = 1;
 
 
-    this.p1text = new rune.text.BitmapField("PLAYER 1", "image_font_new");
+    this.p1text = new rune.text.BitmapField("player1", "image_font_testsmall");
     this.p1text.autoSize = true;
     this.stage.addChild(this.p1text);
 
     this.gamepad2 = this.gamepads.get(1);
     if (this.gamepad2.connected) {
     this.selectedByP2 = 1;
-    this.p2text = new rune.text.BitmapField("Player 2");
+    this.p2text = new rune.text.BitmapField("Player2");
     this.p2text.autoSize = true;
     this.stage.addChild(this.p2text);
+    } else {
+        this.selectedByP2 =-1;
     }
     
 
@@ -164,7 +166,7 @@ projektkurs2.scene.ChoosePlayer.prototype.twoPlayers = function () {
 
 
     if (this.p1text.flicker.active && this.p2text && this.p2text.flicker.active && this.gamepad2) {
-        var startText = new rune.text.BitmapField("Press X to start");
+        var startText = new rune.text.BitmapField("press x to start", "image_font_testsmall");
         startText.autoSize = true;
         startText.center = this.application.screen.center;
         startText.y = 180;
@@ -247,7 +249,7 @@ projektkurs2.scene.ChoosePlayer.prototype.update = function (step) {
 
     if (this.p1text.flicker.active && !this.gamepad2.connected) {
 
-    var startText = new rune.text.BitmapField("Press X to start");
+    var startText = new rune.text.BitmapField("press x to start", "image_font_testsmall");
         startText.autoSize = true;
         startText.center = this.application.screen.center;
         startText.y = 180;
