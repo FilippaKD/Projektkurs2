@@ -28,4 +28,4 @@ npx google-closure-compiler \
 --js "./../../src/entity/Watercan.js" \
 --js "./../../src/scene/game/GameOver.js" \
 --js "./../../src/scene/game/Game.js" \
---js_output_file "./../../dist/projektkurs2.js";
+--js_output_file "./../../dist/pixiepower.js";

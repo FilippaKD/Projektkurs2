@@ -12,7 +12,7 @@
  * 
  * Entry point class.
  */
-projektkurs2.system.Main = function() {
+pixiepower.system.Main = function() {
 
     //--------------------------------------------------------------------------
     // Super call
@@ -23,10 +23,10 @@ projektkurs2.system.Main = function() {
      */
     rune.system.Application.call(this, {
         developer: "com.example",
-        app: "projektkurs2",
+        app: "pixiepower",
         build: "1.0.0",
-        scene: projektkurs2.scene.Start,
-        resources: projektkurs2.data.Requests,
+        scene: pixiepower.scene.Game,
+        resources: pixiepower.data.Requests,
         useGamepads:true,
         useKeyboard:true,
         framerate: 30,
@@ -39,5 +39,5 @@ projektkurs2.system.Main = function() {
 // Inheritance
 //------------------------------------------------------------------------------
 
-projektkurs2.system.Main.prototype = Object.create(rune.system.Application.prototype);
-projektkurs2.system.Main.prototype.constructor = projektkurs2.system.Main;
+pixiepower.system.Main.prototype = Object.create(rune.system.Application.prototype);
+pixiepower.system.Main.prototype.constructor = pixiepower.system.Main;

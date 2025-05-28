@@ -6,8 +6,8 @@
  * Exports the application to the global scope.
  */
 if (typeof window !== "undefined") {
-    if (typeof window.projektkurs2 === "undefined") {
-        window.projektkurs2 = projektkurs2;
+    if (typeof window.pixiepower === "undefined") {
+        window.pixiepower = pixiepower;
     }
 }
 
@@ -16,5 +16,5 @@ if (typeof window !== "undefined") {
  * Rune OS.
  */
 if (typeof window !== "undefined" && typeof window.runeos === "object") {
-    window.runeos.install(projektkurs2);
+    window.runeos.install(pixiepower);
 }

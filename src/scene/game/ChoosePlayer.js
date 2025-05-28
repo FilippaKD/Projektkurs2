@@ -13,7 +13,7 @@
  * 
  * Game scene.
  */
-projektkurs2.scene.ChoosePlayer = function () {
+pixiepower.scene.ChoosePlayer = function () {
 
     //--------------------------------------------------------------------------
     // Super call
@@ -29,8 +29,8 @@ projektkurs2.scene.ChoosePlayer = function () {
 // Inheritance
 //------------------------------------------------------------------------------
 
-projektkurs2.scene.ChoosePlayer.prototype = Object.create(rune.scene.Scene.prototype);
-projektkurs2.scene.ChoosePlayer.prototype.constructor = projektkurs2.scene.ChoosePlayer;
+pixiepower.scene.ChoosePlayer.prototype = Object.create(rune.scene.Scene.prototype);
+pixiepower.scene.ChoosePlayer.prototype.constructor = pixiepower.scene.ChoosePlayer;
 
 //------------------------------------------------------------------------------
 // Override public prototype methods (ENGINE)
@@ -42,7 +42,7 @@ projektkurs2.scene.ChoosePlayer.prototype.constructor = projektkurs2.scene.Choos
  *
  * @returns {undefined}
  */
-projektkurs2.scene.ChoosePlayer.prototype.init = function () {
+pixiepower.scene.ChoosePlayer.prototype.init = function () {
     rune.scene.Scene.prototype.init.call(this);
 
     var bgContainer = new rune.display.DisplayObjectContainer(0, 0, 400, 225);
@@ -85,7 +85,7 @@ projektkurs2.scene.ChoosePlayer.prototype.init = function () {
 };
 
 
-projektkurs2.scene.ChoosePlayer.prototype.initFairies = function () {
+pixiepower.scene.ChoosePlayer.prototype.initFairies = function () {
     
     this.fairies = new rune.display.DisplayGroup(this.stage);
    
@@ -106,7 +106,7 @@ projektkurs2.scene.ChoosePlayer.prototype.initFairies = function () {
 };
 
 
-projektkurs2.scene.ChoosePlayer.prototype.updateHighlight = function () {
+pixiepower.scene.ChoosePlayer.prototype.updateHighlight = function () {
     
     var members = this.fairies.getMembers();
 
@@ -128,7 +128,7 @@ projektkurs2.scene.ChoosePlayer.prototype.updateHighlight = function () {
 };
 
 
-projektkurs2.scene.ChoosePlayer.prototype.twoPlayers = function () {
+pixiepower.scene.ChoosePlayer.prototype.twoPlayers = function () {
 
     var gamepad1 = this.gamepads.get(0);
     var maxIndex = this.fairies.getMembers().length - 1;
@@ -177,7 +177,7 @@ projektkurs2.scene.ChoosePlayer.prototype.twoPlayers = function () {
             var p2Character = this.characters[this.selectedByP2].image;
 
          this.application.scenes.load([
-           new projektkurs2.scene.Game(p1Character, p2Character)
+           new pixiepower.scene.Game(p1Character, p2Character)
         ]);
         }
         
@@ -200,7 +200,7 @@ projektkurs2.scene.ChoosePlayer.prototype.twoPlayers = function () {
  *
  * @returns {undefined}
  */
-projektkurs2.scene.ChoosePlayer.prototype.update = function (step) {
+pixiepower.scene.ChoosePlayer.prototype.update = function (step) {
 
     rune.scene.Scene.prototype.update.call(this, step);
 
@@ -259,7 +259,7 @@ projektkurs2.scene.ChoosePlayer.prototype.update = function (step) {
            // var p1Character = this.characters[this.selectedByP1].image;
 /*
          this.application.scenes.load([
-           new projektkurs2.scene.GameOnePlayer(p1Character)
+           new pixiepower.scene.GameOnePlayer(p1Character)
         ]);
         */
         }
@@ -276,6 +276,6 @@ projektkurs2.scene.ChoosePlayer.prototype.update = function (step) {
  *
  * @returns {undefined}
  */
-projektkurs2.scene.ChoosePlayer.prototype.dispose = function () {
+pixiepower.scene.ChoosePlayer.prototype.dispose = function () {
     rune.scene.Scene.prototype.dispose.call(this);
 };

@@ -13,7 +13,7 @@
  * 
  * Game scene.
  */
-projektkurs2.scene.GameOnePlayer = function (p1Character) {
+pixiepower.scene.GameOnePlayer = function (p1Character) {
 
     //--------------------------------------------------------------------------
     // Super call
@@ -30,8 +30,8 @@ projektkurs2.scene.GameOnePlayer = function (p1Character) {
 // Inheritance
 //------------------------------------------------------------------------------
 
-projektkurs2.scene.GameOnePlayer.prototype = Object.create(rune.scene.Scene.prototype);
-projektkurs2.scene.GameOnePlayer.prototype.constructor = projektkurs2.scene.GameOnePlayer;
+pixiepower.scene.GameOnePlayer.prototype = Object.create(rune.scene.Scene.prototype);
+pixiepower.scene.GameOnePlayer.prototype.constructor = pixiepower.scene.GameOnePlayer;
 
 //------------------------------------------------------------------------------
 // Override public prototype methods (ENGINE)
@@ -43,7 +43,7 @@ projektkurs2.scene.GameOnePlayer.prototype.constructor = projektkurs2.scene.Game
  *
  * @returns {undefined}
  */
-projektkurs2.scene.GameOnePlayer.prototype.init = function () {
+pixiepower.scene.GameOnePlayer.prototype.init = function () {
     rune.scene.Scene.prototype.init.call(this);
 
     var bgContainer = new rune.display.DisplayObjectContainer(0, 0, 400, 225);
@@ -134,12 +134,12 @@ projektkurs2.scene.GameOnePlayer.prototype.init = function () {
 /**
  * @inheritDoc
  */
-projektkurs2.scene.GameOnePlayer.prototype.m_initCamera = function (step) {
+pixiepower.scene.GameOnePlayer.prototype.m_initCamera = function (step) {
     this.camera = new Camera();
     this.cameras.addCamera(this.camera);
 };
 
-projektkurs2.scene.GameOnePlayer.prototype.initHud = function () {
+pixiepower.scene.GameOnePlayer.prototype.initHud = function () {
 
     this.score = 0;
     this.displayCounter = new rune.text.BitmapField();
@@ -170,7 +170,7 @@ projektkurs2.scene.GameOnePlayer.prototype.initHud = function () {
 };
 
 
-projektkurs2.scene.GameOnePlayer.prototype.initMushrooms = function () {
+pixiepower.scene.GameOnePlayer.prototype.initMushrooms = function () {
 
     this.mushrooms = new rune.display.DisplayGroup(this.stage);
 
@@ -188,7 +188,7 @@ projektkurs2.scene.GameOnePlayer.prototype.initMushrooms = function () {
 }
 
 
-projektkurs2.scene.GameOnePlayer.prototype.initWaterdroplet = function () {
+pixiepower.scene.GameOnePlayer.prototype.initWaterdroplet = function () {
 
     this.waterdroplets = new rune.display.DisplayGroup(this.stage);
 
@@ -222,7 +222,7 @@ projektkurs2.scene.GameOnePlayer.prototype.initWaterdroplet = function () {
 };
 
 
-projektkurs2.scene.GameOnePlayer.prototype.removeWaterdrop = function (toBeRemoved) {
+pixiepower.scene.GameOnePlayer.prototype.removeWaterdrop = function (toBeRemoved) {
 
     this.timers.create({
         duration: 2000,
@@ -236,7 +236,7 @@ projektkurs2.scene.GameOnePlayer.prototype.removeWaterdrop = function (toBeRemov
 
 }
 
-projektkurs2.scene.GameOnePlayer.prototype.initPowerups = function () {
+pixiepower.scene.GameOnePlayer.prototype.initPowerups = function () {
 
 
     this.timers.create({
@@ -268,7 +268,7 @@ projektkurs2.scene.GameOnePlayer.prototype.initPowerups = function () {
 
 
 
-projektkurs2.scene.GameOnePlayer.prototype.initWeeds = function () {
+pixiepower.scene.GameOnePlayer.prototype.initWeeds = function () {
 
     this.weeds = new rune.display.DisplayGroup(this.stage);
 
@@ -311,7 +311,7 @@ projektkurs2.scene.GameOnePlayer.prototype.initWeeds = function () {
 
 }
 
-projektkurs2.scene.GameOnePlayer.prototype.initBossWeeds = function () {
+pixiepower.scene.GameOnePlayer.prototype.initBossWeeds = function () {
     this.bossWeeds = new rune.display.DisplayGroup(this.stage);
 
     var spawnInterval = 45000;
@@ -336,7 +336,7 @@ projektkurs2.scene.GameOnePlayer.prototype.initBossWeeds = function () {
 }
 
 // Taggbuskar initiering
-projektkurs2.scene.GameOnePlayer.prototype.initThorns = function () {
+pixiepower.scene.GameOnePlayer.prototype.initThorns = function () {
 
     this.allThorns = new rune.display.DisplayGroup(this.stage);
 
@@ -362,7 +362,7 @@ projektkurs2.scene.GameOnePlayer.prototype.initThorns = function () {
 };
 
 
-projektkurs2.scene.GameOnePlayer.prototype.initFlower = function () {
+pixiepower.scene.GameOnePlayer.prototype.initFlower = function () {
 
     this.flower = new Flower();
     this.stage.addChild(this.flower);
@@ -379,7 +379,7 @@ projektkurs2.scene.GameOnePlayer.prototype.initFlower = function () {
 
 };
 
-projektkurs2.scene.GameOnePlayer.prototype.handleThorns = function () {
+pixiepower.scene.GameOnePlayer.prototype.handleThorns = function () {
 
     this.fairies.forEachMember(function (fairy) {
         if (!fairy.isStuck) {
@@ -402,7 +402,7 @@ projektkurs2.scene.GameOnePlayer.prototype.handleThorns = function () {
 
 
 
-projektkurs2.scene.GameOnePlayer.prototype.handleWaterdroplets = function () {
+pixiepower.scene.GameOnePlayer.prototype.handleWaterdroplets = function () {
 
     this.waterdroplets.forEachMember(function (droplet) {
         var collected = false;
@@ -457,7 +457,7 @@ projektkurs2.scene.GameOnePlayer.prototype.handleWaterdroplets = function () {
 };
 
 
-projektkurs2.scene.GameOnePlayer.prototype.handlePowerups = function () {
+pixiepower.scene.GameOnePlayer.prototype.handlePowerups = function () {
 
     this.fairies.forEachMember(function (fairy) {
         if (fairy.hitTestObject(this.jesusPowerup)) {
@@ -501,7 +501,7 @@ projektkurs2.scene.GameOnePlayer.prototype.handlePowerups = function () {
 }
 
 
-projektkurs2.scene.GameOnePlayer.prototype.gameOver = function () {
+pixiepower.scene.GameOnePlayer.prototype.gameOver = function () {
 
     if (this.flower.flowerLifeBar == 0) {
         //  console.log("gameover");
@@ -541,7 +541,7 @@ projektkurs2.scene.GameOnePlayer.prototype.gameOver = function () {
             repeat: 1,
             onComplete: function () {
                 this.application.scenes.load([
-                    new projektkurs2.scene.GameOver(score)
+                    new pixiepower.scene.GameOver(score)
                 ]);
             }.bind(this)
         });
@@ -560,7 +560,7 @@ projektkurs2.scene.GameOnePlayer.prototype.gameOver = function () {
             repeat: 1,
             onComplete: function () {
                 this.application.scenes.load([
-                    new projektkurs2.scene.GameOver(score)
+                    new pixiepower.scene.GameOver(score)
                 ]);
             }.bind(this)
         });
@@ -579,7 +579,7 @@ projektkurs2.scene.GameOnePlayer.prototype.gameOver = function () {
  *
  * @returns {undefined}
  */
-projektkurs2.scene.GameOnePlayer.prototype.update = function (step) {
+pixiepower.scene.GameOnePlayer.prototype.update = function (step) {
 
     rune.scene.Scene.prototype.update.call(this, step);
     this.sol.movement();
@@ -925,6 +925,6 @@ projektkurs2.scene.GameOnePlayer.prototype.update = function (step) {
  *
  * @returns {undefined}
  */
-projektkurs2.scene.GameOnePlayer.prototype.dispose = function () {
+pixiepower.scene.GameOnePlayer.prototype.dispose = function () {
     rune.scene.Scene.prototype.dispose.call(this);
 };

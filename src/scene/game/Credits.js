@@ -13,7 +13,7 @@
  * 
  * Game scene.
  */
-projektkurs2.scene.Credits = function (score) {
+pixiepower.scene.Credits = function (score) {
 
     //--------------------------------------------------------------------------
     // Super call
@@ -30,8 +30,8 @@ projektkurs2.scene.Credits = function (score) {
 // Inheritance
 //------------------------------------------------------------------------------
 
-projektkurs2.scene.Credits.prototype = Object.create(rune.scene.Scene.prototype);
-projektkurs2.scene.Credits.prototype.constructor = projektkurs2.scene.Credits;
+pixiepower.scene.Credits.prototype = Object.create(rune.scene.Scene.prototype);
+pixiepower.scene.Credits.prototype.constructor = pixiepower.scene.Credits;
 
 //------------------------------------------------------------------------------
 // Override public prototype methods (ENGINE)
@@ -43,7 +43,7 @@ projektkurs2.scene.Credits.prototype.constructor = projektkurs2.scene.Credits;
  *
  * @returns {undefined}
  */
-projektkurs2.scene.Credits.prototype.init = function () {
+pixiepower.scene.Credits.prototype.init = function () {
     rune.scene.Scene.prototype.init.call(this);
 
     var bgContainer = new rune.display.DisplayObjectContainer(0, 0, 400, 225);
@@ -68,7 +68,7 @@ projektkurs2.scene.Credits.prototype.init = function () {
 };
 
 
-projektkurs2.scene.Credits.prototype.initFairies = function () {
+pixiepower.scene.Credits.prototype.initFairies = function () {
     
 
     this.sol = new Entity("image_credits_sol", 230, 120, 45, 70);
@@ -112,7 +112,7 @@ projektkurs2.scene.Credits.prototype.initFairies = function () {
  *
  * @returns {undefined}
  */
-projektkurs2.scene.Credits.prototype.update = function (step) {
+pixiepower.scene.Credits.prototype.update = function (step) {
 
     rune.scene.Scene.prototype.update.call(this, step);
 
@@ -120,7 +120,7 @@ projektkurs2.scene.Credits.prototype.update = function (step) {
 
     if (gamepad.justPressed(2)) {
          this.application.scenes.load([
-            new projektkurs2.scene.Start()
+            new pixiepower.scene.Start()
         ]);
     }
     
@@ -135,6 +135,6 @@ projektkurs2.scene.Credits.prototype.update = function (step) {
  *
  * @returns {undefined}
  */
-projektkurs2.scene.Credits.prototype.dispose = function () {
+pixiepower.scene.Credits.prototype.dispose = function () {
     rune.scene.Scene.prototype.dispose.call(this);
 };

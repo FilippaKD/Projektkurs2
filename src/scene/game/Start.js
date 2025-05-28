@@ -13,7 +13,7 @@
  * 
  * Game scene.
  */
-projektkurs2.scene.Start = function (score) {
+pixiepower.scene.Start = function (score) {
 
     //--------------------------------------------------------------------------
     // Super call
@@ -30,8 +30,8 @@ projektkurs2.scene.Start = function (score) {
 // Inheritance
 //------------------------------------------------------------------------------
 
-projektkurs2.scene.Start.prototype = Object.create(rune.scene.Scene.prototype);
-projektkurs2.scene.Start.prototype.constructor = projektkurs2.scene.Start;
+pixiepower.scene.Start.prototype = Object.create(rune.scene.Scene.prototype);
+pixiepower.scene.Start.prototype.constructor = pixiepower.scene.Start;
 
 //------------------------------------------------------------------------------
 // Override public prototype methods (ENGINE)
@@ -43,7 +43,7 @@ projektkurs2.scene.Start.prototype.constructor = projektkurs2.scene.Start;
  *
  * @returns {undefined}
  */
-projektkurs2.scene.Start.prototype.init = function () {
+pixiepower.scene.Start.prototype.init = function () {
     rune.scene.Scene.prototype.init.call(this);
 
     var bgContainer = new rune.display.DisplayObjectContainer(0, 0, 400, 225);
@@ -95,7 +95,7 @@ projektkurs2.scene.Start.prototype.init = function () {
 
 };
 
-projektkurs2.scene.Start.prototype.initElderflowers = function () {
+pixiepower.scene.Start.prototype.initElderflowers = function () {
 
     this.emitter = new rune.particle.Emitter(400, 0, 2, 190, {
         particles: [Glitter],
@@ -120,7 +120,7 @@ projektkurs2.scene.Start.prototype.initElderflowers = function () {
 
 };
 
-projektkurs2.scene.Start.prototype.initChoices = function () {
+pixiepower.scene.Start.prototype.initChoices = function () {
 
 
     this.selected = [];
@@ -146,7 +146,7 @@ projektkurs2.scene.Start.prototype.initChoices = function () {
 };
 
 
-projektkurs2.scene.Start.prototype.updateHighlight = function () {
+pixiepower.scene.Start.prototype.updateHighlight = function () {
 
     for (var i = 0; i < this.selected.length; i++) {
         if (i == this.selectedI) {
@@ -159,22 +159,22 @@ projektkurs2.scene.Start.prototype.updateHighlight = function () {
 };
 
 
-projektkurs2.scene.Start.prototype.startSelected = function () {
+pixiepower.scene.Start.prototype.startSelected = function () {
 
     switch (this.selectedI) {
         case 0:
             this.application.scenes.load([
-                new projektkurs2.scene.ChoosePlayer()
+                new pixiepower.scene.ChoosePlayer()
             ]);
             break;
         case 1:
             this.application.scenes.load([
-                new projektkurs2.scene.Controls()
+                new pixiepower.scene.Controls()
             ]);
             break;
         case 2:
             this.application.scenes.load([
-                new projektkurs2.scene.Credits()
+                new pixiepower.scene.Credits()
             ]);
             break;
     }
@@ -193,7 +193,7 @@ projektkurs2.scene.Start.prototype.startSelected = function () {
  *
  * @returns {undefined}
  */
-projektkurs2.scene.Start.prototype.update = function (step) {
+pixiepower.scene.Start.prototype.update = function (step) {
 
     rune.scene.Scene.prototype.update.call(this, step);
 
@@ -233,6 +233,6 @@ if (this.emitCounter >= this.emitInterval) {
  *
  * @returns {undefined}
  */
-projektkurs2.scene.Start.prototype.dispose = function () {
+pixiepower.scene.Start.prototype.dispose = function () {
     rune.scene.Scene.prototype.dispose.call(this);
 };

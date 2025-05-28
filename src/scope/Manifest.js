@@ -5,9 +5,9 @@
 /**
  * The application namespace.
  * 
- * @namespace projektkurs2
+ * @namespace pixiepower
  */
-var projektkurs2 = function() {
+var pixiepower = function() {
 
     //--------------------------------------------------------------------------
     // Public static scope
@@ -31,7 +31,7 @@ var projektkurs2 = function() {
      * such as resource files.
      *
      * @namespace data
-     * @memberof projektkurs2
+     * @memberof pixiepower
      * @since 1.0
      */
     m_this.data = {};
@@ -42,7 +42,7 @@ var projektkurs2 = function() {
      * application.
      *
      * @namespace scene
-     * @memberof projektkurs2
+     * @memberof pixiepower
      * @since 1.0
      */
     m_this.scene = {};
@@ -51,7 +51,7 @@ var projektkurs2 = function() {
      * This package contains the application's most vital classes.
      *
      * @namespace system
-     * @memberof projektkurs2
+     * @memberof pixiepower
      * @since 1.0
      */
     m_this.system = {};
@@ -77,8 +77,8 @@ var projektkurs2 = function() {
  *
  * @ignore
  */
-projektkurs2.bootstrap = function(callback) {
-    var app = new projektkurs2.system.Main();
+pixiepower.bootstrap = function(callback) {
+    var app = new pixiepower.system.Main();
         app.start(callback);
         
     return app;

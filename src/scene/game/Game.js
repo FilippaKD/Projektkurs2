@@ -13,7 +13,7 @@
  * 
  * Game scene.
  */
-projektkurs2.scene.Game = function (p1Character, p2Character) {
+pixiepower.scene.Game = function (p1Character, p2Character) {
 
     //--------------------------------------------------------------------------
     // Super call
@@ -31,8 +31,8 @@ projektkurs2.scene.Game = function (p1Character, p2Character) {
 // Inheritance
 //------------------------------------------------------------------------------
 
-projektkurs2.scene.Game.prototype = Object.create(rune.scene.Scene.prototype);
-projektkurs2.scene.Game.prototype.constructor = projektkurs2.scene.Game;
+pixiepower.scene.Game.prototype = Object.create(rune.scene.Scene.prototype);
+pixiepower.scene.Game.prototype.constructor = pixiepower.scene.Game;
 
 //------------------------------------------------------------------------------
 // Override public prototype methods (ENGINE)
@@ -44,7 +44,7 @@ projektkurs2.scene.Game.prototype.constructor = projektkurs2.scene.Game;
  *
  * @returns {undefined}
  */
-projektkurs2.scene.Game.prototype.init = function () {
+pixiepower.scene.Game.prototype.init = function () {
     rune.scene.Scene.prototype.init.call(this);
 
     // kolla om gamepads är connected
@@ -122,7 +122,7 @@ projektkurs2.scene.Game.prototype.init = function () {
     this.sound_isThatJesus = this.application.sounds.sound.get("sound_isthatjesus");
     this.sound_powerup = this.application.sounds.sound.get("sound_powerup");
     this.sound_ohno = this.application.sounds.sound.get("sound_ohno");
-    this.sound_dramabush = this.application.sounds.sound.get("sound_dramabush");
+    this.sound_dramabush = this.application.sounds.sound.get("sound_deadbush");
     this.sound_teamwork = this.application.sounds.sound.get("sound_teamwork");
 
     this.application.sounds.master.get("sound_startsong").fade(0, 2000);
@@ -131,6 +131,10 @@ projektkurs2.scene.Game.prototype.init = function () {
     this.bgm.loop = true;
     this.bgm.play();
     this.bgm.fade(0.5, 2000);
+
+    this.highscores = new rune.data.Highscores("pixiepower", 10, 1);
+
+
 
 
 
@@ -142,7 +146,7 @@ projektkurs2.scene.Game.prototype.init = function () {
 /**
  * @inheritDoc
  */
-projektkurs2.scene.Game.prototype.m_initCamera = function (step) {
+pixiepower.scene.Game.prototype.m_initCamera = function (step) {
     this.camera = new Camera();
     this.cameras.addCamera(this.camera);
 
@@ -150,7 +154,7 @@ projektkurs2.scene.Game.prototype.m_initCamera = function (step) {
 
 };
 
-projektkurs2.scene.Game.prototype.initHud = function () {
+pixiepower.scene.Game.prototype.initHud = function () {
 
     this.score = 0;
     this.displayCounter = new rune.text.BitmapField();
@@ -181,7 +185,7 @@ projektkurs2.scene.Game.prototype.initHud = function () {
 };
 
 
-projektkurs2.scene.Game.prototype.initMushrooms = function () {
+pixiepower.scene.Game.prototype.initMushrooms = function () {
 
     this.mushrooms = new rune.display.DisplayGroup(this.stage);
 
@@ -208,7 +212,7 @@ projektkurs2.scene.Game.prototype.initMushrooms = function () {
 }
 
 
-projektkurs2.scene.Game.prototype.initWaterdroplet = function () {
+pixiepower.scene.Game.prototype.initWaterdroplet = function () {
 
     this.waterdroplets = new rune.display.DisplayGroup(this.stage);
 
@@ -242,7 +246,7 @@ projektkurs2.scene.Game.prototype.initWaterdroplet = function () {
 };
 
 
-projektkurs2.scene.Game.prototype.removeWaterdrop = function (toBeRemoved) {
+pixiepower.scene.Game.prototype.removeWaterdrop = function (toBeRemoved) {
 
     this.timers.create({
         duration: 2000,
@@ -256,7 +260,7 @@ projektkurs2.scene.Game.prototype.removeWaterdrop = function (toBeRemoved) {
 
 }
 
-projektkurs2.scene.Game.prototype.initPowerups = function () {
+pixiepower.scene.Game.prototype.initPowerups = function () {
 
 
     this.timers.create({
@@ -288,7 +292,7 @@ projektkurs2.scene.Game.prototype.initPowerups = function () {
 
 
 
-projektkurs2.scene.Game.prototype.initWeeds = function () {
+pixiepower.scene.Game.prototype.initWeeds = function () {
 
     this.weeds = new rune.display.DisplayGroup(this.stage);
 
@@ -318,7 +322,7 @@ projektkurs2.scene.Game.prototype.initWeeds = function () {
 
     this.timers.create({
         duration: 10000,
-        repeat: 12,
+        repeat: 10,
         onTick: () => {
             if (this.spawnInterval > 500) {
                 this.spawnInterval -= 200;
@@ -331,7 +335,7 @@ projektkurs2.scene.Game.prototype.initWeeds = function () {
 
 }
 
-projektkurs2.scene.Game.prototype.initBossWeeds = function () {
+pixiepower.scene.Game.prototype.initBossWeeds = function () {
     this.bossWeeds = new rune.display.DisplayGroup(this.stage);
 
     var spawnInterval = 45000;
@@ -356,33 +360,48 @@ projektkurs2.scene.Game.prototype.initBossWeeds = function () {
 }
 
 // Taggbuskar initiering
-projektkurs2.scene.Game.prototype.initThorns = function () {
+pixiepower.scene.Game.prototype.initThorns = function () {
 
     this.allThorns = new rune.display.DisplayGroup(this.stage);
 
-    var spawnInterval = 3000;
+    this.spawnIntervalThorns = 3000;
 
-    this.timers.create({
-        duration: spawnInterval,
-        repeat: Infinity,
-        onTick: function () {
-            this.thorn = new Thorn();
-            this.allThorns.addMember(this.thorn);
+    const startSpawnTimer = () => {
+        if (this.spawnTimer) {
+            this.spawnTimer.stop();
         }
-    });
+
+        this.spawnTimerThorns = this.timers.create({
+            duration: this.spawnIntervalThorns,
+            repeat: Infinity,
+            onTick: () => {
+
+                var thorn = new Thorn();
+                this.allThorns.addMember(thorn);
+
+            }
+        });
+    };
+
+    startSpawnTimer();
 
     this.timers.create({
-        duration: 8000,
-        repeat: Infinity,
-        onTick: function () {
-            spawnInterval = Math.max(1000, spawnInterval - 200);
+        duration: 10000,
+        repeat: 5,
+        onTick: () => {
+            if (this.spawnIntervalThorns > 2500) {
+                this.spawnIntervalThorns -= 100;
+                // console.log("New spawn interval: " + this.spawnInterval);
+                startSpawnTimer();
+            }
+            console.log("SPAWNINTERVALL THORNS" + this.spawnIntervalThorns);
         }
     });
 
 };
 
 
-projektkurs2.scene.Game.prototype.initFlower = function () {
+pixiepower.scene.Game.prototype.initFlower = function () {
 
     this.flower = new Flower();
     this.stage.addChild(this.flower);
@@ -399,7 +418,7 @@ projektkurs2.scene.Game.prototype.initFlower = function () {
 
 };
 
-projektkurs2.scene.Game.prototype.handleThorns = function () {
+pixiepower.scene.Game.prototype.handleThorns = function () {
 
     this.fairies.forEachMember(function (fairy) {
         if (!fairy.isStuck) {
@@ -422,7 +441,7 @@ projektkurs2.scene.Game.prototype.handleThorns = function () {
 
 
 
-projektkurs2.scene.Game.prototype.handleWaterdroplets = function () {
+pixiepower.scene.Game.prototype.handleWaterdroplets = function () {
 
     this.waterdroplets.forEachMember(function (droplet) {
         var collected = false;
@@ -477,7 +496,7 @@ projektkurs2.scene.Game.prototype.handleWaterdroplets = function () {
 };
 
 
-projektkurs2.scene.Game.prototype.handlePowerups = function () {
+pixiepower.scene.Game.prototype.handlePowerups = function () {
 
     this.fairies.forEachMember(function (fairy) {
         if (fairy.hitTestObject(this.jesusPowerup)) {
@@ -521,7 +540,7 @@ projektkurs2.scene.Game.prototype.handlePowerups = function () {
 }
 
 
-projektkurs2.scene.Game.prototype.gameOver = function () {
+pixiepower.scene.Game.prototype.gameOver = function () {
 
     if (this.flower.flowerLifeBar == 0) {
         //  console.log("gameover");
@@ -553,37 +572,47 @@ projektkurs2.scene.Game.prototype.gameOver = function () {
         //cam.centerX = this.flower.x + this.flower.width / 2;
         //cam.centerY = this.flower.y + this.flower.height / 2;
 
-        var score = this.score;
+     
+        var highscoreTest = this.highscores.test(this.score);
+        console.log(highscoreTest)
+        console.log(this.highscores)
 
 
-        this.timers.create({
-            duration: 2500,
-            repeat: 1,
-            onComplete: function () {
-                this.application.scenes.load([
-                    new projektkurs2.scene.GameOver(score)
-                ]);
-            }.bind(this)
-        });
+        if (highscoreTest !== -1) {
+            this.timers.create({
+                duration: 2500,
+                repeat: 1,
+                onComplete: function () {
+
+                    this.application.scenes.load([
+                        new pixiepower.scene.GameOver(this.score, this.highscores)
+                    ]);
+
+                }.bind(this)
+            });
+        } else {
+            console.log("try again") // Här ska de va gameover på samma scen och fler knappar
+        }
 
     }
 
 
     if (this.sol.isStuck && this.filippa.isStuck && !this.gameOverStart) {
 
-        var score = this.score;
-        this.sound_ohno.volume = 0.9;
-        this.sound_ohno.play();
 
-        this.timers.create({
-            duration: 2500,
-            repeat: 1,
-            onComplete: function () {
-                this.application.scenes.load([
-                    new projektkurs2.scene.GameOver(score)
-                ]);
-            }.bind(this)
-        });
+        if (highscoreTest !== -1) {
+            this.timers.create({
+                duration: 2500,
+                repeat: 1,
+                onComplete: function () {
+                    this.application.scenes.load([
+                        new pixiepower.scene.GameOver(this.score, this.highscores)
+                    ]);
+                }.bind(this)
+            });
+        } else {
+            console.log("try again") // Här ska de va gameover på samma scen och fler knappar
+        }
 
     }
 };
@@ -599,7 +628,7 @@ projektkurs2.scene.Game.prototype.gameOver = function () {
  *
  * @returns {undefined}
  */
-projektkurs2.scene.Game.prototype.update = function (step) {
+pixiepower.scene.Game.prototype.update = function (step) {
 
     rune.scene.Scene.prototype.update.call(this, step);
     this.sol.movement();
@@ -618,7 +647,6 @@ projektkurs2.scene.Game.prototype.update = function (step) {
     this.displayPlayer2.text = "Player 2 " + this.filippa.waterCollection.toString() + "/3";
     this.watercan2.updatePicture(this.filippa.waterCollection);
 
-    console.log("HÄR ÄR HP PÅ BLOMMAN" + this.flower.flowerLifeBar)
 
     // HEJ GOOPh
     var cam = this.cameras.getCameraAt(0);
@@ -945,6 +973,6 @@ projektkurs2.scene.Game.prototype.update = function (step) {
  *
  * @returns {undefined}
  */
-projektkurs2.scene.Game.prototype.dispose = function () {
+pixiepower.scene.Game.prototype.dispose = function () {
     rune.scene.Scene.prototype.dispose.call(this);
 };
