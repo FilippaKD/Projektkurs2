@@ -96,7 +96,6 @@ pixiepower.scene.GameOnePlayer.prototype.init = function () {
     );
 
     this.stage.addChild(this.waterZone);
-    // protect the flower-ljud
     this.timers.create({
         duration: 2000,
         onTick: function () {
@@ -152,19 +151,9 @@ pixiepower.scene.GameOnePlayer.prototype.initHud = function () {
 
     this.displayPlayer1 = new rune.text.BitmapField();
     this.displayPlayer1.color = "#FFFFFF";
-    //this.displayPlayer1.y = 100;
     this.stage.addChild(this.displayPlayer1);
     this.watercan1 = new Watercan;
     this.stage.addChild(this.watercan1);
-
-
-
-    this.displayPlayer2 = new rune.text.BitmapField();
-    this.displayPlayer2.color = "#FFFFFF";
-    this.displayPlayer2.x = 300;
-    this.stage.addChild(this.displayPlayer2);
-    this.watercan2 = new Watercan(375, 0);
-    this.stage.addChild(this.watercan2);
 
 
 };
@@ -302,7 +291,6 @@ pixiepower.scene.GameOnePlayer.prototype.initWeeds = function () {
         onTick: () => {
             if (this.spawnInterval > 500) {
                 this.spawnInterval -= 200;
-                // console.log("New spawn interval: " + this.spawnInterval);
                 startSpawnTimer();
             }
         }
@@ -385,8 +373,6 @@ pixiepower.scene.GameOnePlayer.prototype.handleThorns = function () {
         if (!fairy.isStuck) {
             this.allThorns.forEachMember(function (thorn) {
                 if (fairy.hitTestObject(thorn)) {
-
-                    thorn.fairyStuck();
                     this.sound_helpme.volume = 0.9;
                     this.sound_helpme.play();
 
@@ -439,19 +425,6 @@ pixiepower.scene.GameOnePlayer.prototype.handleWaterdroplets = function () {
 
     }
 
-    if (this.sol.hitTestObject(this.waterZone) && this.gamepads.get(1).justPressed(7) && this.sol.waterCollection > 0) {
-        this.flower.flowerHeal(this.sol.waterCollection);
-        var droppedWater = new Waterdroplet;
-        droppedWater.x = this.sol.x;
-        droppedWater.y = this.sol.y;
-        droppedWater.dropWater();
-        this.stage.addChild(droppedWater);
-        this.waterdroplets.forEachMember(function (droplet) {
-            this.score += droplet.point;
-        }.bind(this));
-        this.sol.waterCollection = 0;
-
-    }
 
 
 };
@@ -472,14 +445,15 @@ pixiepower.scene.GameOnePlayer.prototype.handlePowerups = function () {
             this.stage.addChild(this.jesus);
 
             this.timers.create({
-                duration: 1000,
-                repeat: this.flower.flowerLifeBar,
+                duration: 500,
+                repeat: 10,
                 onTick: function () {
                     this.flower.flowerHeal(10);
                 }.bind(this)
             });
 
             this.stage.removeChild(this.jesusPowerup);
+            this.jesusPowerup = null;
         }
     }.bind(this))
 
@@ -495,6 +469,7 @@ pixiepower.scene.GameOnePlayer.prototype.handlePowerups = function () {
                 }
             });
             this.stage.removeChild(this.bombPowerup);
+            this.bombPowerup = null;
         }
     }.bind(this))
 
@@ -521,7 +496,6 @@ pixiepower.scene.GameOnePlayer.prototype.gameOver = function () {
         })
 
         this.flower.dyingFlower();
-        this.sol.isStuck = true;
         this.filippa.isStuck = true;
 
         //cam.target = this.flower;
@@ -549,7 +523,7 @@ pixiepower.scene.GameOnePlayer.prototype.gameOver = function () {
     }
 
 
-    if (this.sol.isStuck && this.filippa.isStuck && !this.gameOverStart) {
+    if (this.filippa.isStuck && !this.gameOverStart) {
 
         var score = this.score;
         this.sound_ohno.volume = 0.9;
@@ -582,7 +556,6 @@ pixiepower.scene.GameOnePlayer.prototype.gameOver = function () {
 pixiepower.scene.GameOnePlayer.prototype.update = function (step) {
 
     rune.scene.Scene.prototype.update.call(this, step);
-    this.sol.movement();
     this.filippa.movement();
 
     this.gameOver();
@@ -591,12 +564,8 @@ pixiepower.scene.GameOnePlayer.prototype.update = function (step) {
 
 
     this.displayPlayer1.text = "";
-    this.displayPlayer1.text = "Player 1 " + this.sol.waterCollection.toString() + "/3";
-    this.watercan1.updatePicture(this.sol.waterCollection);
-
-    this.displayPlayer2.text = "";
-    this.displayPlayer2.text = "Player 2 " + this.filippa.waterCollection.toString() + "/3";
-    this.watercan2.updatePicture(this.filippa.waterCollection);
+    this.displayPlayer1text = "Player 1 " + this.filippa.waterCollection.toString() + "/3";
+    this.watercan1.updatePicture(this.filippa.waterCollection);
 
     console.log("HÄR ÄR HP PÅ BLOMMAN" + this.flower.flowerLifeBar)
 
@@ -605,13 +574,8 @@ pixiepower.scene.GameOnePlayer.prototype.update = function (step) {
     this.mushrooms.forEachMember(function (mushroom) {
         rune.physics.Space.separate(this.flower, mushroom);
         var filippaDistance = this.filippa.distance(mushroom);
-        var solDistance = this.sol.distance(mushroom);
 
-        if (filippaDistance < solDistance) {
-            var nearestPlayer = this.filippa;
-        } else {
-            var nearestPlayer = this.sol;
-        }
+        var nearestPlayer = this.filippa;
 
         mushroom.getDistanceOfPlayers(nearestPlayer);
 
@@ -872,37 +836,8 @@ pixiepower.scene.GameOnePlayer.prototype.update = function (step) {
 
     }
 
-    if (this.gamepads.get(1).justPressed(2)) {
-        if (this.sol.isStuck == false) {
-
-            this.sound_blub.volume = 0.9;
-            this.sound_blub.play();
-            if (this.sol.powerUpShooting) {
-                var balls = this.sol.shootPowerUp();
-                for (let i = 0; i < balls.length; i++) {
-                    this.lightballs.addMember(balls[i]);
-                }
-            } else {
-                var ball = this.sol.shoot();
-                this.lightballs.addMember(ball);
-            }
-        }
 
 
-    }
-
-    // Med tangentbord
-    /*
-    if (this.keyboard.justPressed("SPACE")) {
-        const ball = this.filippa.shoot();
-       this.lightballs.addMember(ball);
-    }
-    
-    if (this.keyboard.justPressed("SPACE")) {
-        const ball = this.sol.shoot();
-       this.lightballs.addMember(ball);
-    }
-    */
     this.handleThorns();
     this.handleWaterdroplets();
     this.handlePowerups();

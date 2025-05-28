@@ -125,7 +125,7 @@ pixiepower.scene.Start.prototype.initChoices = function () {
 
     this.selected = [];
 
-    var texts = ["START", "CONTROLS", "CREDITS"];
+    var texts = ["1 PLAYER", "2 PLAYERS", "CONTROLS", "CREDITS"];
     var startY = 70;
 
     for (var i = 0; i < texts.length; i++) {

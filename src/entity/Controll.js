@@ -1,6 +1,9 @@
 function Controll() {
 
-    Entity.call(this, "image_controls_controll", 60, 60, 300, 130);
+    Entity.call(this, "image_controls_controll", 50, 80, 180, 100);
+
+
+   this.makeAnimation();
     
 }
 
@@ -8,20 +11,8 @@ Controll.prototype = Object.create(Entity.prototype);
 Controll.prototype.constructor = Controll;
 
 
-Controll.prototype.SlideOne = function() {
+Controll.prototype.makeAnimation = function() {
 
-   this.animation.create("one", [1, 0], 4, true);
-   this.animation.gotoAndPlay("one");
-};
-
-Controll.prototype.SlideTwo = function() {
-
-   this.animation.create("two", [2, 3], 4, true);
-   this.animation.gotoAndPlay("two");
-};
-
-Controll.prototype.SlideThree = function() {
-
-   this.animation.create("three", [4, 5], 4, true);
-   this.animation.gotoAndPlay("three");
+   this.animation.create("idle", [0, 1], 1, true);
+   this.animation.gotoAndPlay("idle");
 };
