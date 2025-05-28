@@ -13,7 +13,7 @@
  * 
  * Game scene.
  */
-projektkurs2.scene.Controls = function () {
+projektkurs2.scene.Highscore = function () {
 
     //--------------------------------------------------------------------------
     // Super call
@@ -29,8 +29,8 @@ projektkurs2.scene.Controls = function () {
 // Inheritance
 //------------------------------------------------------------------------------
 
-projektkurs2.scene.Controls.prototype = Object.create(rune.scene.Scene.prototype);
-projektkurs2.scene.Controls.prototype.constructor = projektkurs2.scene.Controls;
+projektkurs2.scene.Highscore.prototype = Object.create(rune.scene.Scene.prototype);
+projektkurs2.scene.Highscore.prototype.constructor = projektkurs2.scene.Highscore;
 
 //------------------------------------------------------------------------------
 // Override public prototype methods (ENGINE)
@@ -42,7 +42,7 @@ projektkurs2.scene.Controls.prototype.constructor = projektkurs2.scene.Controls;
  *
  * @returns {undefined}
  */
-projektkurs2.scene.Controls.prototype.init = function () {
+projektkurs2.scene.Highscore.prototype.init = function () {
     rune.scene.Scene.prototype.init.call(this);
 
     var bgContainer = new rune.display.DisplayObjectContainer(0, 0, 400, 225);
@@ -52,9 +52,6 @@ projektkurs2.scene.Controls.prototype.init = function () {
     this.bg.autoSize = true;
     bgContainer.addChild(this.bg);
 
-    this.board = new rune.display.Graphic(260, 30, 130, 180, "image_controls_board");
-    this.board.autoSize = true;
-    bgContainer.addChild(this.board);
 
     this.text = new rune.text.BitmapField("CONTROLS", "image_alfafont");
 
@@ -70,11 +67,9 @@ projektkurs2.scene.Controls.prototype.init = function () {
 };
 
 
-projektkurs2.scene.Controls.prototype.initControls = function () {
+projektkurs2.scene.Highscore.prototype.initControls = function () {
 
-    this.control = new Controll();
 
-    this.stage.addChild(this.control);
 
     var desc = new rune.text.BitmapField("shoot", "image_font_testsmall");
     desc.y = 118;
@@ -127,7 +122,7 @@ projektkurs2.scene.Controls.prototype.initControls = function () {
  *
  * @returns {undefined}
  */
-projektkurs2.scene.Controls.prototype.update = function (step) {
+projektkurs2.scene.Highscore.prototype.update = function (step) {
 
     rune.scene.Scene.prototype.update.call(this, step);
 
@@ -149,6 +144,6 @@ projektkurs2.scene.Controls.prototype.update = function (step) {
  *
  * @returns {undefined}
  */
-projektkurs2.scene.Controls.prototype.dispose = function () {
+projektkurs2.scene.Highscore.prototype.dispose = function () {
     rune.scene.Scene.prototype.dispose.call(this);
 };
