@@ -794,7 +794,7 @@ pixiepower.scene.Game.prototype.update = function (step) {
                     this.stage.addChild(weed.emitter);
                     weed.emitter.emit(30);
                     this.weeds.removeMember(weed);
-                    this.score += 50;
+                    this.score += 1000;
                 }
 
                 var originalColor = rune.color.Color24.fromHex("4b692f");

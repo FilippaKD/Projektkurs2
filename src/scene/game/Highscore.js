@@ -13,12 +13,12 @@
  * 
  * Game scene.
  */
-projektkurs2.scene.Highscore = function () {
+pixiepower.scene.Highscore = function (highscores) {
 
     //--------------------------------------------------------------------------
     // Super call
     //--------------------------------------------------------------------------
-
+    this.highscores = highscores;
     /**
      * Calls the constructor method of the super class.
      */
@@ -29,8 +29,8 @@ projektkurs2.scene.Highscore = function () {
 // Inheritance
 //------------------------------------------------------------------------------
 
-projektkurs2.scene.Highscore.prototype = Object.create(rune.scene.Scene.prototype);
-projektkurs2.scene.Highscore.prototype.constructor = projektkurs2.scene.Highscore;
+pixiepower.scene.Highscore.prototype = Object.create(rune.scene.Scene.prototype);
+pixiepower.scene.Highscore.prototype.constructor = pixiepower.scene.Highscore;
 
 //------------------------------------------------------------------------------
 // Override public prototype methods (ENGINE)
@@ -42,7 +42,7 @@ projektkurs2.scene.Highscore.prototype.constructor = projektkurs2.scene.Highscor
  *
  * @returns {undefined}
  */
-projektkurs2.scene.Highscore.prototype.init = function () {
+pixiepower.scene.Highscore.prototype.init = function () {
     rune.scene.Scene.prototype.init.call(this);
 
     var bgContainer = new rune.display.DisplayObjectContainer(0, 0, 400, 225);
@@ -53,7 +53,7 @@ projektkurs2.scene.Highscore.prototype.init = function () {
     bgContainer.addChild(this.bg);
 
 
-    this.text = new rune.text.BitmapField("CONTROLS", "image_alfafont");
+    this.text = new rune.text.BitmapField("HIGHSCORE", "image_alfafont");
 
     this.text.autoSize = true;
     this.text.center = this.application.screen.center;
@@ -62,53 +62,24 @@ projektkurs2.scene.Highscore.prototype.init = function () {
     this.text.color = "#FFFFFF";
     this.stage.addChild(this.text);
 
-    this.initControls();
+    this.initHighscore();
 
 };
 
 
-projektkurs2.scene.Highscore.prototype.initControls = function () {
+pixiepower.scene.Highscore.prototype.initHighscore = function () {
 
+    for (let i = 0; i < 10; i++) {
+        var entry = this.highscores.get(i);
 
+        if (entry) {
+            let row = new rune.text.BitmapField(`${i + 1}. ${entry.name.toLowerCase()} ${entry.score}`, "image_font_testsmall");
+            row.y = 40 + i * 20;
+            row.x = 120;
+            this.stage.addChild(row);
+        }
+    }
 
-    var desc = new rune.text.BitmapField("shoot", "image_font_testsmall");
-    desc.y = 118;
-    desc.x = 202;
-    this.stage.addChild(desc);
-
-    
-    var drop = new rune.text.BitmapField("drop water", "image_font_testsmall");
-    drop.y = 76;
-    drop.x = 180;
-    this.stage.addChild(drop);
-
-    var stop = new rune.text.BitmapField("stand still", "image_font_testsmall");
-    stop.y = 76;
-    stop.x = 5;
-    stop.color = "#FFFFFF";
-    this.stage.addChild(stop);
-
-    var move = new rune.text.BitmapField("move/aim", "image_font_testsmall");
-    move.y = 114;
-    move.x = 5;
-    move.color = "#FFFFFF";
-    this.stage.addChild(move);
-
-
-    var avoid = new rune.text.BitmapField("AVOID SHOOT", "image_alfafont");
-    avoid.y = 65;
-    avoid.x = 281;
-    avoid.autoSize = true;
-    avoid.color = "#FFFFFF";
-    this.stage.addChild(avoid);
-
-
-    var collect = new rune.text.BitmapField("COLLECT", "image_alfafont");
-    collect.y = 135;
-    collect.x = 297;
-    collect.autoSize = true;
-    collect.color = "#FFFFFF";
-    this.stage.addChild(collect);
 
 };
 
@@ -122,18 +93,18 @@ projektkurs2.scene.Highscore.prototype.initControls = function () {
  *
  * @returns {undefined}
  */
-projektkurs2.scene.Highscore.prototype.update = function (step) {
+pixiepower.scene.Highscore.prototype.update = function (step) {
 
     rune.scene.Scene.prototype.update.call(this, step);
 
     var gamepad = this.gamepads.get(0);
 
     if (gamepad.justPressed(2)) {
-         this.application.scenes.load([
-            new projektkurs2.scene.Start()
+        this.application.scenes.load([
+            new pixiepower.scene.Start()
         ]);
     }
-    
+
 };
 
 /**
@@ -144,6 +115,6 @@ projektkurs2.scene.Highscore.prototype.update = function (step) {
  *
  * @returns {undefined}
  */
-projektkurs2.scene.Highscore.prototype.dispose = function () {
+pixiepower.scene.Highscore.prototype.dispose = function () {
     rune.scene.Scene.prototype.dispose.call(this);
 };

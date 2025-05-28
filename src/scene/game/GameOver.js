@@ -24,7 +24,7 @@ pixiepower.scene.GameOver = function (score, highscores) {
      */
     this.score = score;
     this.highscores = highscores;
-    
+
     rune.scene.Scene.call(this);
 };
 
@@ -59,7 +59,7 @@ pixiepower.scene.GameOver.prototype.init = function () {
     this.stage.addChild(text);
 
     this.initKeyboard();
-   console.log(this.score)
+
 
     /*var score = new rune.text.BitmapField(this.score.toString(), rune.text.BitmapFormat.FONT_MEDIUM);
     
@@ -78,7 +78,7 @@ pixiepower.scene.GameOver.prototype.initKeyboard = function () {
     this.selected = [];
     this.enteredLetters = [];
 
-    this.alphabet = ["A", "B", "C", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "OK"];
+    this.alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "OK"];
 
     var startX = 15;
 
@@ -169,13 +169,18 @@ pixiepower.scene.GameOver.prototype.update = function (step) {
 };
 
 
-pixiepower.scene.GameOver.prototype.pressOkButton = function() {
+pixiepower.scene.GameOver.prototype.pressOkButton = function () {
     var name = this.highscoreName.join("");
-    
+
 
     this.highscores.send(this.score, name);
-    console.log(this.score, name);
-    
+
+
+    this.application.scenes.load([
+        new pixiepower.scene.Highscore(this.highscores)
+    ]);
+
+
 
 };
 
