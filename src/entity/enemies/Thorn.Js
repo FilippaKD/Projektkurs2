@@ -22,7 +22,7 @@ Thorn.prototype.constructor = Thorn;
 
 Thorn.prototype.makeAnimations = function() {
 
-   this.animation.create("grow", [21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1], 6, false);
+   this.animation.create("grow", [23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1], 5, false);
    this.animation.gotoAndPlay("grow");
 
 };
@@ -47,7 +47,7 @@ Thorn.prototype.update = function(step) {
 
 Thorn.prototype.fairyStuck = function() {
 
-   this.animation.create("stuck", [22, 23, 24, 25, 26], 3, true);
+   this.animation.create("stuck", [24, 25, 26, 27, 28], 3, true);
    this.animation.gotoAndPlay("stuck");
 
 };
