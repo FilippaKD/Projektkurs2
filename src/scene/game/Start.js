@@ -125,7 +125,7 @@ projektkurs2.scene.Start.prototype.initChoices = function () {
 
     this.selected = [];
 
-    var texts = ["START", "CONTROLS", "CREDITS"];
+    var texts = ["1 PLAYER", "2 PLAYERS", "CONTROLS", "CREDITS"];
     var startY = 70;
 
     for (var i = 0; i < texts.length; i++) {
@@ -169,10 +169,15 @@ projektkurs2.scene.Start.prototype.startSelected = function () {
             break;
         case 1:
             this.application.scenes.load([
-                new projektkurs2.scene.Controls()
+                new projektkurs2.scene.ChoosePlayer()
             ]);
             break;
         case 2:
+            this.application.scenes.load([
+                new projektkurs2.scene.Controls()
+            ]);
+            break;
+        case 3:
             this.application.scenes.load([
                 new projektkurs2.scene.Credits()
             ]);

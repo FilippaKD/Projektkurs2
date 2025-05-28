@@ -256,12 +256,12 @@ projektkurs2.scene.ChoosePlayer.prototype.update = function (step) {
 
      if (gamepad1.justPressed(2)) {
             console.log("slay")
-           // var p1Character = this.characters[this.selectedByP1].image;
-/*
+        var p1Character = this.characters[this.selectedByP1].image;
+
          this.application.scenes.load([
            new projektkurs2.scene.GameOnePlayer(p1Character)
         ]);
-        */
+    
         }
     }
    
