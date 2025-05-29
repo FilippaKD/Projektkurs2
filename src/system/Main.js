@@ -25,7 +25,7 @@ pixiepower.system.Main = function() {
         developer: "com.example",
         app: "pixiepower",
         build: "1.0.0",
-        scene: pixiepower.scene.Game,
+        scene: pixiepower.scene.Start,
         resources: pixiepower.data.Requests,
         useGamepads:true,
         useKeyboard:true,
