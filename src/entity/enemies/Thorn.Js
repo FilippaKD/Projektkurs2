@@ -12,6 +12,21 @@ function Thorn() {
     this.makeAnimations();
 
     this.hitbox.set(5, 10, 9, 11);
+
+     this.emitY = this.y + this.height * 0.3;
+    this.emitter = new rune.particle.Emitter(this.centerX, this.emitY, 6, 8, {
+        particles: [Glitter],
+        capacity: 30,
+        accelerationY: 0.00005,
+        accelerationX: 0.00005,
+        maxRotation: 10,
+        dragY: 0.2,
+        maxVelocityX: 0.06,
+        minVelocityX: -0.06,
+        maxVelocityY: 0.15,
+        maxLifespan: 800
+    });
+    this.addChild(this.emitter);
     
 }
 
