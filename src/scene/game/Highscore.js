@@ -74,8 +74,8 @@ pixiepower.scene.Highscore.prototype.initHighscore = function () {
 
         if (entry) {
             let row = new rune.text.BitmapField(`${i + 1}. ${entry.name.toLowerCase()} ${entry.score}`, "image_font_testsmall");
-            row.y = 40 + i * 20;
-            row.x = 120;
+            row.y = 50 + i * 15;
+            row.x = 140;
             this.stage.addChild(row);
         }
     }
