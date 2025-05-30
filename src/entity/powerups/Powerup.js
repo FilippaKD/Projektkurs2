@@ -1,3 +1,9 @@
+/**
+ * The flower the fairies need to protect
+ * 
+ * @constructor
+ * @extends Entity
+ */
 function Powerup(picture) {
 
     this.screenWidth = this.application.screen.width;
@@ -21,6 +27,11 @@ function Powerup(picture) {
 Powerup.prototype = Object.create(Entity.prototype);
 Powerup.prototype.constructor = Powerup;
 
+/**
+ * Makes standrad animation for the powerups
+ *
+ * @returns {undefined}
+ */
 Powerup.prototype.makeAnimations = function () {
 
     this.animation.create("idle", [0, 1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1, 0], 6, true);
@@ -28,6 +39,14 @@ Powerup.prototype.makeAnimations = function () {
 
 };
 
+/**
+ * This method is automatically executed once per "tick". The method is used for 
+ * calculations such as application logic.
+ *
+ * @param {number} step Fixed time step.
+ *
+ * @returns {undefined}
+ */
 Powerup.prototype.update = function (step) {
     Entity.prototype.update.call(this, step);
 

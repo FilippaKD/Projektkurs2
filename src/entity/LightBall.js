@@ -1,3 +1,9 @@
+/**
+ * The flower the fairies need to protect
+ * 
+ * @constructor
+ * @extends Entity
+ */
 function LightBall (x, y, direction) {
     Entity.call(this, "image_game_lightball", x, y, 8, 8);
 
@@ -11,7 +17,14 @@ function LightBall (x, y, direction) {
 LightBall.prototype = Object.create(Entity.prototype);
 LightBall.prototype.constructor = LightBall;
 
-
+/**
+ * This method is automatically executed once per "tick". The method is used for 
+ * calculations such as application logic.
+ *
+ * @param {number} step Fixed time step.
+ *
+ * @returns {undefined}
+ */
 LightBall.prototype.update = function () {
 
     this.x += this.velocity.x;

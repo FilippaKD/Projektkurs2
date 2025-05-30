@@ -1,4 +1,9 @@
-
+/**
+ * Class for all the fairies
+ * 
+ * @constructor
+ * @extends Entity
+ */
 function Fairy(name, x, y) {
     Entity.call(this, name, x, y, 20, 20);
     
@@ -11,6 +16,11 @@ function Fairy(name, x, y) {
 Fairy.prototype = Object.create(Entity.prototype);
 Fairy.prototype.constructor = Fairy;
 
+/**
+ * Diffrent animations for fairies
+ *
+ * @returns {undefined}
+ */
 Fairy.prototype.makeAnimations = function() {
     this.animation.create("walk", [0, 1, 2, 3, 4, 3, 2, 1, 0], 6, true);
     this.animation.create("idle", [0, 1, 2, 3, 2, 1, 0], 6, true);

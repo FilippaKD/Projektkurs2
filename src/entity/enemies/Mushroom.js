@@ -1,4 +1,9 @@
-
+/**
+ * Mushroom enemy, makes the game harder if it runs into fairy
+ * 
+ * @constructor
+ * @extends Entity
+ */
 function Mushroom() {
     Entity.call(this, "image_game_mushroom", this.x, this.y, 15, 13);
 
@@ -9,6 +14,9 @@ function Mushroom() {
 
     this.hitbox.set(0, 1, 12, 12);
 
+    /**
+     * Emitter for glitter behind the entity
+     */
     this.emitY = this.y + this.height * 0.3;
     this.emitter = new rune.particle.Emitter(this.centerX, this.emitY, 6, 8, {
         particles: [Glitter],
@@ -26,7 +34,7 @@ function Mushroom() {
 
     var canvasWidth = 400;
     var canvasHeight = 225;
-      var spawnEdge = Math.floor(Math.random() * 4); 
+    var spawnEdge = Math.floor(Math.random() * 4); 
 
         switch (spawnEdge) {
             case 0: 
@@ -54,7 +62,14 @@ function Mushroom() {
 Mushroom.prototype = Object.create(Entity.prototype);
 Mushroom.prototype.constructor = Mushroom;
 
-
+/**
+ * This method is automatically executed once per "tick". The method is used for 
+ * calculations such as application logic.
+ *
+ * @param {number} step Fixed time step.
+ *
+ * @returns {undefined}
+ */
 Mushroom.prototype.update = function (step) {
     Entity.prototype.update.call(this, step);
 
@@ -70,6 +85,7 @@ Mushroom.prototype.update = function (step) {
         this.x += moveX;
         this.y += moveY;
 
+        // Determines animation based on it's movement
         if (moveY > moveX) {
             if (moveY < 0) {
                 this.animation.gotoAndPlay("jump");
@@ -88,6 +104,13 @@ Mushroom.prototype.update = function (step) {
 
 };
 
+/**
+ * Distance of the player
+ *
+ * @param {object} player The player.
+ *
+ * @returns {undefined}
+ */
 Mushroom.prototype.getDistanceOfPlayers = function (player) {
 
     this.player = player;

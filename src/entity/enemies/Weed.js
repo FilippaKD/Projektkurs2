@@ -1,9 +1,18 @@
+/**
+ * Standard weed enemy
+ * 
+ * @constructor
+ * @extends Entity
+ */
 function Weed(x, y) {
     var canvasWidth = 400;
     var canvasHeight = 225;
     this.hp = 2;
 
-  
+ 
+    /**
+     * If no cordinates a random location is set
+     */
     if (x === undefined || y === undefined) {
         var spawnEdge = Math.floor(Math.random() * 4); 
 
@@ -35,6 +44,9 @@ function Weed(x, y) {
 
     this.animation.create("walk", [0, 1, 2, 3, 4, 5], 6, true);
 
+    /**
+     * Emitter for glitter behind the entity
+     */
     this.emitY = this.y + this.height * 0.3;
     this.emitter = new rune.particle.Emitter(this.centerX, this.emitY, 6, 8, {
         particles: [Glitter],
@@ -57,7 +69,14 @@ function Weed(x, y) {
 Weed.prototype = Object.create(Entity.prototype);
 Weed.prototype.constructor = Weed;
 
-
+/**
+ * This method is automatically executed once per "tick". The method is used for 
+ * calculations such as application logic.
+ *
+ * @param {number} step Fixed time step.
+ *
+ * @returns {undefined}
+ */
 Weed.prototype.update = function (step) {
     Entity.prototype.update.call(this, step);
     this.emitter.x = this.centerX;

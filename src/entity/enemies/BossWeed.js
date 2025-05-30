@@ -1,4 +1,9 @@
-
+/**
+ * The boss enemy
+ * 
+ * @constructor
+ * @extends Entity
+ */
 function BossWeed() {
     this.x = 173 + Math.random() * (220 - 173);
     this.y = -32;
@@ -16,7 +21,14 @@ function BossWeed() {
 BossWeed.prototype = Object.create(Entity.prototype);
 BossWeed.prototype.constructor = BossWeed;
 
-
+/**
+ * This method is automatically executed once per "tick". The method is used for 
+ * calculations such as application logic.
+ *
+ * @param {number} step Fixed time step.
+ *
+ * @returns {undefined}
+ */
 BossWeed.prototype.update = function (step) {
     Entity.prototype.update.call(this, step);
 

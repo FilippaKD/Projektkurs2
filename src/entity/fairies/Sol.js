@@ -1,9 +1,19 @@
-
+/**
+ * Player two - Sol
+ * 
+ * 
+ * @constructor
+ * @extends Fairy
+ * @param {string} image - image for the choosen fairy
+ */
 function Sol(image) {
     Fairy.call(this, image, 120, 120);
     this.emitY = this.y + this.height * 0.3;
     this.elasticity = 10;
 
+    /**
+     * Emitter for glitter behind the entity
+     */
     this.emitter = new rune.particle.Emitter(this.centerX, this.emitY, 3, 5, {
         particles: [Glitter],
         capacity: 150,
@@ -17,6 +27,10 @@ function Sol(image) {
         maxLifespan: 1000
     });
 
+    /**
+    * Tracks collected waterdropplets
+    * @type {number}
+    */
     this.waterCollection = 0;
 }
 
@@ -24,10 +38,14 @@ Sol.prototype = Object.create(Fairy.prototype);
 Sol.prototype.constructor = Sol;
 
 
-
-
-// --------------Styrning med kontroll---------------------
-
+/**
+ * This method is automatically executed once per "tick". The method is used for 
+ * calculations such as application logic.
+ *
+ * @param {number} step Fixed time step.
+ *
+ * @returns {undefined}
+ */
 Sol.prototype.update = function (step) {
     Fairy.prototype.update.call(this, step);
     this.emitter.emit(2);
@@ -75,10 +93,14 @@ Sol.prototype.update = function (step) {
 };
 
 
-
+/**
+ * Fires shot in the last movements direction
+ *
+ * @returns {LightBall} - The shot
+ */
 Sol.prototype.shoot = function () {
 
-    let dir;
+    var dir;
 
     dir = new rune.geom.Vector2D(this.lastVX, this.lastVY).normalize();
 
@@ -91,8 +113,14 @@ Sol.prototype.shoot = function () {
     return ball;
 };
 
+
+/**
+ * Fires a powerup attack in 8 directions
+ *
+ * @returns {LightBall[]} Array with 8 lightballs
+ */
 Sol.prototype.shootPowerUp = function () {
-    let directions = [
+    var directions = [
         new rune.geom.Vector2D(1, 0),
         new rune.geom.Vector2D(1, 1),
         new rune.geom.Vector2D(0, 1),
@@ -103,12 +131,12 @@ Sol.prototype.shootPowerUp = function () {
         new rune.geom.Vector2D(1, -1)
     ];
 
-    let balls = [];
+    var balls = [];
 
-    for (let i = 0; i < directions.length; i++) {
-        let dir = directions[i].normalize();
+    for (var i = 0; i < directions.length; i++) {
+        var dir = directions[i].normalize();
 
-        let ball = new LightBall(
+        var ball = new LightBall(
             this.x + this.width / 2,
             this.y + this.height / 2,
             dir
@@ -121,9 +149,14 @@ Sol.prototype.shootPowerUp = function () {
     return balls;
 };
 
-
+/**
+ * Increases water collection counter
+ *
+ * @param {number} amount - Amount of water collected
+ * @returns {undefined}
+ */
 Sol.prototype.addDrop = function (amount) {
 
     this.waterCollection += amount;
- 
+
 }
