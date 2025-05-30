@@ -127,13 +127,14 @@ pixiepower.scene.Controls.prototype.initControls = function () {
  *
  * @returns {undefined}
  */
-pixiepower.scene.Credits.prototype.update = function (step) {
+pixiepower.scene.Controls.prototype.update = function (step) {
 
     rune.scene.Scene.prototype.update.call(this, step);
 
     var gamepad = this.gamepads.get(0);
 
-    if (gamepad.justPressed(2)) {
+    if (gamepad.justPressed(1)) {
+        console.log("sdfghj")
          this.application.scenes.load([
             new pixiepower.scene.Start()
         ]);
