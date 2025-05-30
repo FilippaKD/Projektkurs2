@@ -262,7 +262,7 @@ pixiepower.scene.GameOnePlayer.prototype.initWeeds = function () {
 
     this.weeds = new rune.display.DisplayGroup(this.stage);
 
-    this.spawnInterval = 3000;
+    this.spawnInterval = 5000;
 
     const startSpawnTimer = () => {
         if (this.spawnTimer) {
@@ -341,7 +341,7 @@ pixiepower.scene.GameOnePlayer.prototype.initThorns = function () {
     });
 
     this.timers.create({
-        duration: 8000,
+        duration: 10000,
         repeat: Infinity,
         onTick: function () {
             spawnInterval = Math.max(1000, spawnInterval - 200);

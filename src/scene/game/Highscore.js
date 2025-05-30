@@ -98,9 +98,10 @@ pixiepower.scene.Highscore.prototype.update = function (step) {
     rune.scene.Scene.prototype.update.call(this, step);
 
     var gamepad = this.gamepads.get(0);
-
-    if (gamepad.justPressed(2)) {
-        this.application.scenes.load([
+    
+    if (gamepad.justPressed(1)) {
+        console.log("sdfghj")
+         this.application.scenes.load([
             new pixiepower.scene.Start()
         ]);
     }
