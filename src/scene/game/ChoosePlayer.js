@@ -13,7 +13,7 @@
  * 
  * Game scene.
  */
-pixiepower.scene.ChoosePlayer = function () {
+pixiepower.scene.ChoosePlayer = function (highscores) {
 
     //--------------------------------------------------------------------------
     // Super call

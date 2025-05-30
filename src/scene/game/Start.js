@@ -183,7 +183,7 @@ pixiepower.scene.Start.prototype.startSelected = function () {
             break;
         case 1:
             this.application.scenes.load([
-                new pixiepower.scene.ChoosePlayer()
+                new pixiepower.scene.ChoosePlayer(this.highscores)
             ]);
             break;
         case 2:
