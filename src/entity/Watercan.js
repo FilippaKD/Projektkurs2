@@ -19,8 +19,6 @@ Watercan.prototype.makeAnimations = function() {
 
 
 Watercan.prototype.updatePicture = function(frame) {
-
-    var totalFrames = 4;
     
     this.animation.current.gotoAndStop(frame); 
     

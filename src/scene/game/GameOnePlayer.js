@@ -586,7 +586,7 @@ pixiepower.scene.GameOnePlayer.prototype.gameOver = function () {
 pixiepower.scene.GameOnePlayer.prototype.update = function (step) {
 
     rune.scene.Scene.prototype.update.call(this, step);
-    this.filippa.movement();
+    
 
     this.gameOver();
     this.displayCounter.text = "";

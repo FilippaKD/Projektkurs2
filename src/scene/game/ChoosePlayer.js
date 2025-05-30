@@ -210,7 +210,6 @@ pixiepower.scene.ChoosePlayer.prototype.update = function (step) {
      var gamepad = this.gamepads.get(0);
 
     if (gamepad.justPressed(1)) {
-        console.log("sdfghj")
          this.application.scenes.load([
             new pixiepower.scene.Start()
         ]);
@@ -255,7 +254,6 @@ pixiepower.scene.ChoosePlayer.prototype.update = function (step) {
         this.p1text.flicker.stop();
     }
 
-    console.log(this.gamepad2)
 
     if (this.p1text.flicker.active && !this.gamepad2.connected) {
 
@@ -267,7 +265,6 @@ pixiepower.scene.ChoosePlayer.prototype.update = function (step) {
 
 
      if (gamepad1.justPressed(2)) {
-            console.log("slay")
         var p1Character = this.characters[this.selectedByP1].image;
 
          this.application.scenes.load([

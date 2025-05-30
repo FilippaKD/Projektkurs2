@@ -23,61 +23,13 @@ function Sol(image) {
 Sol.prototype = Object.create(Fairy.prototype);
 Sol.prototype.constructor = Sol;
 
-/*
-// -----------Styrning med tangentbord--------------------
-Sol.prototype.movement = function () {
-
-    if (this.isStuck) {
-        this.velocity.x = 0;
-        this.velocity.y = 0;
-        return;
-    }
-
-    this.emitter.emit(2)
-
-    this.velocity.x = 0;
-    this.velocity.y = 0;
-
-    if (this.keyboard.pressed("LEFT")) {
-        this.velocity.x = -1;
-        this.flippedX = false;
-    }
-    if (this.keyboard.pressed("RIGHT")) {
-        this.velocity.x = 1;
-        this.flippedX = true;
-    }
-    if (this.keyboard.pressed("UP")) {
-        this.velocity.y = -1;
-    }
-    if (this.keyboard.pressed("DOWN")) {
-        this.velocity.y = 1;
-    }
-
-    this.x += this.velocity.x;
-    this.y += this.velocity.y;
-
-    this.emitter.x = this.centerX;
-    this.emitter.y = this.y + this.height * 0.3;
-
-    if (this.velocity.x !== 0 || this.velocity.y !== 0) {
-        this.animation.gotoAndPlay("walk");
-        this.lastVX = this.velocity.x;
-        this.lastVY = this.velocity.y;
-        if (this.velocity.y == -1) {
-            this.animation.gotoAndPlay("backwards");
-        }
-    } else {
-        this.animation.gotoAndPlay("idle");
-    }
-};
-
-*/
 
 
 
 // --------------Styrning med kontroll---------------------
 
-Sol.prototype.movement = function () {
+Sol.prototype.update = function (step) {
+    Fairy.prototype.update.call(this, step);
     this.emitter.emit(2);
 
     if (this.isStuck) {
@@ -173,7 +125,5 @@ Sol.prototype.shootPowerUp = function () {
 Sol.prototype.addDrop = function (amount) {
 
     this.waterCollection += amount;
-    console.log("Sol vatten" + this.waterCollection);
-
-   
+ 
 }

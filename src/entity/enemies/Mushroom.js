@@ -1,6 +1,8 @@
 
 function Mushroom() {
     Entity.call(this, "image_game_mushroom", this.x, this.y, 15, 13);
+
+
     this.animation.create("walk", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 6, true);
     this.animation.create("jump", [11, 12, 13, 14, 15, 16, 17, 18, 19, 20], 6, true);
     this.animation.create("jumpDown", [20, 19, 18, 17, 16, 15, 14, 13, 12, 11], 6, true);
@@ -80,23 +82,6 @@ Mushroom.prototype.update = function (step) {
 
         this.emitter.x = this.centerX;
         this.emitter.y = this.y + this.height * 0.3;
-
-        /*
-        if (moveX < 0) {
-            console.log("sdfg")
-            this.flippedX = true;
-        } else {
-            this.flippedX = false;
-        }
-
-        if (moveY < 0) {
-            console.log("upp")
-           this.animation.gotoAndPlay("jump");
-        } else {
-          this.animation.gotoAndPlay("jumpDown");
-        }
-*/
-
 
     }
 

@@ -14,9 +14,6 @@ function Filippa(image) {
         maxVelocityX: 0.06,
         minVelocityX: -0.06,
         maxVelocityY: 0.15,
-        //minVelocityX: -0.05, 
-        // maxVelocityX: 0.05, 
-        // maxVelocityY: 0.4,  
         maxLifespan: 800
     });
 
@@ -27,61 +24,12 @@ function Filippa(image) {
 Filippa.prototype = Object.create(Fairy.prototype);
 Filippa.prototype.constructor = Filippa;
 
-/*
-// --------------Styrning med tangentbord----------------
-Filippa.prototype.movement = function() {
 
-    if (this.isStuck) {
-        this.velocity.x = 0;
-        this.velocity.y = 0;
-        return;
-    }
-
-    this.emitter.emit(2);
-
-    this.velocity.x = 0;
-    this.velocity.y = 0;
-
-    if (this.keyboard.pressed("a")) {
-        this.velocity.x = -1;
-        this.flippedX = false;
-    }
-    if (this.keyboard.pressed("d")) {
-        this.velocity.x = 1;
-        this.flippedX = true;
-    }
-    if (this.keyboard.pressed("q")) {
-        this.velocity.y = -1;
-    }
-    if (this.keyboard.pressed("s")) {
-        this.velocity.y = 1;
-    }
-    
-    this.x += this.velocity.x;
-    this.y += this.velocity.y;
-
-    this.emitter.x = this.centerX;
-    this.emitter.y = this.y + this.height * 0.3;
-    
-    if (this.velocity.x !== 0 || this.velocity.y !== 0) {
-        this.animation.gotoAndPlay("walk");
-        this.lastVX = this.velocity.x;
-        this.lastVY = this.velocity.y;
-        if (this.velocity.y == -1) {
-            this.animation.gotoAndPlay("backwards");
-        }
-    } else {
-        this.animation.gotoAndPlay("idle");
-    }
-};
-
-
-
-*/
 
 // -------------Styrning med kontroll-----------
 
-Filippa.prototype.movement = function () {
+Filippa.prototype.update = function (step) {
+    Fairy.prototype.update.call(this, step);
     this.emitter.emit(2);
 
     if (this.isStuck) {
@@ -182,7 +130,5 @@ Filippa.prototype.shootPowerUp = function () {
 Filippa.prototype.addDrop = function (amount) {
 
     this.waterCollection += amount;
-    console.log("Filippa vatten" + this.waterCollection);
-
 
 }

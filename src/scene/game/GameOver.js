@@ -48,7 +48,6 @@ pixiepower.scene.GameOver.prototype.constructor = pixiepower.scene.GameOver;
 pixiepower.scene.GameOver.prototype.init = function () {
     rune.scene.Scene.prototype.init.call(this);
 
-    console.log("bytt scen")
     this.backgroundColor = "#000000";
 
     var bgContainer = new rune.display.DisplayObjectContainer(0, 0, 400, 225);
@@ -172,7 +171,6 @@ pixiepower.scene.GameOver.prototype.update = function (step) {
             var lastLetterGraphic = this.enteredLetters.pop();
             this.stage.removeChild(lastLetterGraphic);
 
-            console.log("letter deleted");
         }
     }
 };

@@ -134,7 +134,6 @@ pixiepower.scene.Controls.prototype.update = function (step) {
     var gamepad = this.gamepads.get(0);
 
     if (gamepad.justPressed(1)) {
-        console.log("sdfghj")
          this.application.scenes.load([
             new pixiepower.scene.Start()
         ]);
