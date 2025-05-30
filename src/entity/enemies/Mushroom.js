@@ -23,26 +23,28 @@ function Mushroom() {
     this.addChild(this.emitter);
 
     var canvasWidth = 400;
-    var spawnEdge = Math.floor(Math.random() * 4);
+    var canvasHeight = 225;
+      var spawnEdge = Math.floor(Math.random() * 4); 
 
-    switch (spawnEdge) {
-        case 0:
-            this.x = Math.random() * canvasWidth;
-            this.y = -16;
-            break;
-        case 1:
-            this.x = canvasWidth + 16;
-            this.y = Math.random() * 225;
-            break;
-        case 2:
-            this.x = Math.random() * canvasWidth;
-            this.y = 225 + 16;
-            break;
-        case 3:
-            this.x = -16;
-            this.y = Math.random() * 225;
-            break;
-    }
+        switch (spawnEdge) {
+            case 0: 
+                this.x = 173 + Math.random() * (220 - 173);
+                this.y = -16;
+                break;
+            case 1: 
+                this.x = canvasWidth + 16;
+                this.y = 75 + Math.random() * (canvasHeight - 75);
+                break;
+            case 2: 
+                this.x = Math.random() * canvasWidth;
+                this.y = canvasHeight + 16;
+                break;
+            case 3: 
+                this.x = -16;
+                this.y = 85 + Math.random() * (canvasHeight - 75);
+                break;
+        }
+    
 
 }
 

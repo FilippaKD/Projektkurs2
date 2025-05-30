@@ -9,12 +9,12 @@ function Weed(x, y) {
 
         switch (spawnEdge) {
             case 0: 
-                x = Math.random() * canvasWidth;
+                x = 173 + Math.random() * (220 - 173);
                 y = -16;
                 break;
             case 1: 
                 x = canvasWidth + 16;
-                y = Math.random() * canvasHeight;
+                y = 75 + Math.random() * (canvasHeight - 75);
                 break;
             case 2: 
                 x = Math.random() * canvasWidth;
@@ -22,7 +22,7 @@ function Weed(x, y) {
                 break;
             case 3: 
                 x = -16;
-                y = Math.random() * canvasHeight;
+                y = 85 + Math.random() * (canvasHeight - 75);
                 break;
         }
     }
