@@ -54,6 +54,8 @@ pixiepower.scene.Start.prototype.init = function () {
     bgContainer.addChild(this.bg);
     var title = new rune.text.BitmapField("PIXIE POWER", "image_pixie_latestfont");
 
+    this.highscores = new rune.data.Highscores("pixiepower", 10, 1);
+
 
     title.autoSize = true;
     title.y = 20;
@@ -88,10 +90,22 @@ pixiepower.scene.Start.prototype.init = function () {
     var tavla = new rune.display.Sprite(220, 65, 150, 200, "image_start_scoreboard");
     this.stage.addChild(tavla);
 
-    var highscore = new rune.text.BitmapField("HIGHSCORE");
-    highscore.y = 25;
-    highscore.x = 50;
+    var highscore = new rune.text.BitmapField("highscore", "image_font_testnew");
+    //highscore.autoSize = true;
+    highscore.y = 22;
+    highscore.x = 40;
     tavla.addChild(highscore);
+
+     for (let i = 0; i < 3; i++) {
+        var entry = this.highscores.get(i);
+
+        if (entry) {
+            let row = new rune.text.BitmapField(`${i + 1}. ${entry.name.toLowerCase()} ${entry.score}`, "image_font_testsmall");
+            row.y = 40 + i * 20;
+            row.x = 20;
+            tavla.addChild(row);
+        }
+    }
 
 };
 
@@ -164,7 +178,7 @@ pixiepower.scene.Start.prototype.startSelected = function () {
     switch (this.selectedI) {
         case 0:
             this.application.scenes.load([
-                new pixiepower.scene.ChoosePlayer()
+                new pixiepower.scene.ChoosePlayer(this.highscores)
             ]);
             break;
         case 1:

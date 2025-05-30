@@ -22,6 +22,7 @@ pixiepower.scene.ChoosePlayer = function () {
     /**
      * Calls the constructor method of the super class.
      */
+    this.highscores = highscores;
     rune.scene.Scene.call(this);
 };
 
@@ -179,7 +180,7 @@ pixiepower.scene.ChoosePlayer.prototype.twoPlayers = function () {
             var p2Character = this.characters[this.selectedByP2].image;
 
          this.application.scenes.load([
-           new pixiepower.scene.Game(p1Character, p2Character)
+           new pixiepower.scene.Game(p1Character, p2Character, this.highscores)
         ]);
         }
         
