@@ -13,7 +13,7 @@
  * 
  * Game scene.
  */
-pixiepower.scene.Game = function (p1Character, p2Character) {
+pixiepower.scene.Game = function (p1Character, p2Character, highscores) {
 
     //--------------------------------------------------------------------------
     // Super call
@@ -25,6 +25,7 @@ pixiepower.scene.Game = function (p1Character, p2Character) {
     rune.scene.Scene.call(this);
     this.p1choosen = p1Character;
     this.p2choosen = p2Character;
+    this.highscores = highscores;
 };
 
 //------------------------------------------------------------------------------
@@ -132,7 +133,7 @@ pixiepower.scene.Game.prototype.init = function () {
     this.bgm.play();
     this.bgm.fade(0.5, 2000);
 
-    this.highscores = new rune.data.Highscores("pixiepower", 10, 1);
+   
 
 
 
