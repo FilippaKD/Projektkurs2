@@ -1,8 +1,7 @@
 
 function BossWeed() {
-    var canvasWidth = 400;
-    this.x = Math.random() * canvasWidth;
-    this.y = -Math.random() * 50;
+    this.x = 173 + Math.random() * (220 - 173);
+    this.y = -32;
     this.hp = 5;
 
     Entity.call(this, "image_game_bigweed", this.x, this.y, 32, 32);

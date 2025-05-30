@@ -3,10 +3,13 @@ function Waterdroplet() {
     this.screenWidth = this.application.screen.width;
     this.screenHeight = this.application.screen.height;
 
+    var x;
+    var y;
 
-    var x = Math.floor(Math.random() * (this.screenWidth - 20));
-    var y = Math.floor(Math.random() * (this.screenHeight - 40)) + 20;
-    console.log(this.screenHeight)
+    do {
+        x = Math.random() * this.screenWidth;
+        y = Math.random() * this.screenHeight;
+    } while (y < 20 || x >= 170 && x <= 220 && y >= 78 && y <= 132);
 
 
     Entity.call(this, "image_game_waterdroplet", x, y, 20, 20);

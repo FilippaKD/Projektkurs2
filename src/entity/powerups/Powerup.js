@@ -3,9 +3,12 @@ function Powerup(picture) {
     this.screenWidth = this.application.screen.width;
     this.screenHeight = this.application.screen.height;
 
-
-    var x = Math.floor(Math.random() * (this.screenWidth - 20));
-    var y = Math.floor(Math.random() * (this.screenHeight - 30)) + 20;
+var x;
+var y;
+    do {
+        x = Math.random() * this.screenWidth;
+        y = Math.random() * this.screenHeight;
+    } while (y < 20 || x >= 170 && x <= 220 && y >= 78 && y <= 132);
 
 
     Entity.call(this, picture, x, y, 20, 20);
