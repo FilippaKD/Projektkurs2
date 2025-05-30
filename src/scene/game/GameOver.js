@@ -51,11 +51,20 @@ pixiepower.scene.GameOver.prototype.init = function () {
     console.log("bytt scen")
     this.backgroundColor = "#000000";
 
-    var text = new rune.text.BitmapField("GAME OVER", rune.text.BitmapFormat.FONT_MEDIUM);
+    var bgContainer = new rune.display.DisplayObjectContainer(0, 0, 400, 225);
+    this.stage.addChild(bgContainer);
+
+    this.bg = new rune.display.Graphic(0, 0, 400, 225, "image_controls_background");
+    this.bg.autoSize = true;
+    bgContainer.addChild(this.bg);
+
+
+    var text = new rune.text.BitmapField("HIGHSCORE", "image_alfafont");
 
     text.autoSize = true;
     text.center = this.application.screen.center;
     text.color = "#FFFFFF";
+    text.y = 40;
     this.stage.addChild(text);
 
     this.initKeyboard();
@@ -80,12 +89,12 @@ pixiepower.scene.GameOver.prototype.initKeyboard = function () {
 
     this.alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", " OK"];
 
-    var startX = 15;
+    var startX = 50;
 
     for (var i = 0; i < this.alphabet.length; i++) {
         var letter = new rune.text.BitmapField(this.alphabet[i], "image_alfafont");
         letter.y = 150;
-        letter.x = startX + i * 11;
+        letter.x = startX + i * 10;
         letter.autoSize = true;
         this.stage.addChild(letter);
         this.selected.push(letter);
@@ -107,7 +116,7 @@ pixiepower.scene.GameOver.prototype.updateHighlight = function () {
 };
 
 pixiepower.scene.GameOver.prototype.addLetterGraphic = function (letter) {
-    var startX = 30;
+    var startX = 140;
     var letterGraphic = new rune.text.BitmapField(letter, "image_alfafont");
     letterGraphic.y = 100;
     letterGraphic.x = startX + (this.enteredLetters.length * 10);

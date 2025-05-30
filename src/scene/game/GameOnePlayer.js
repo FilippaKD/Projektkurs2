@@ -495,6 +495,9 @@ pixiepower.scene.GameOnePlayer.prototype.gameOver = function () {
         this.mushrooms.forEachMember(function (mushroom) {
             mushroom.dispose()
         })
+        this.waterdroplets.forEachMember(function (droplet) {
+            droplet.dispose()
+        })
 
         this.flower.dyingFlower();
         this.filippa.isStuck = true;
@@ -509,6 +512,20 @@ pixiepower.scene.GameOnePlayer.prototype.gameOver = function () {
         //cam.centerY = this.flower.y + this.flower.height / 2;
 
         var score = this.score;
+
+        var gameOverText = new rune.text.BitmapField("GAME OVER", "image_alfafont");
+
+        gameOverText.autoSize = true;
+        gameOverText.center = this.application.screen.center;
+        gameOverText.y = 50;
+        this.stage.addChild(gameOverText);
+
+        var reason = new rune.text.BitmapField("the flower died", "image_font_testnew");
+
+        reason.autoSize = true;
+        reason.center = this.application.screen.center;
+        reason.y = 70;
+        this.stage.addChild(reason);
 
 
         this.timers.create({
@@ -527,8 +544,20 @@ pixiepower.scene.GameOnePlayer.prototype.gameOver = function () {
     if (this.filippa.isStuck && !this.gameOverStart) {
 
         var score = this.score;
-        this.sound_ohno.volume = 0.9;
-        this.sound_ohno.play();
+
+        var gameOverText = new rune.text.BitmapField("GAME OVER", "image_alfafont");
+
+        gameOverText.autoSize = true;
+        gameOverText.center = this.application.screen.center;
+        gameOverText.y = 50;
+        this.stage.addChild(gameOverText);
+
+        var reason = new rune.text.BitmapField("you got stuck", "image_font_testnew");
+
+        reason.autoSize = true;
+        reason.center = this.application.screen.center;
+        reason.y = 70;
+        this.stage.addChild(reason);
 
         this.timers.create({
             duration: 2500,
