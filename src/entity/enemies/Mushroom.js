@@ -7,7 +7,7 @@ function Mushroom() {
 
     this.hitbox.set(0, 1, 12, 12);
 
-     this.emitY = this.y + this.height * 0.3;
+    this.emitY = this.y + this.height * 0.3;
     this.emitter = new rune.particle.Emitter(this.centerX, this.emitY, 6, 8, {
         particles: [Glitter],
         capacity: 30,
@@ -26,15 +26,15 @@ function Mushroom() {
     var spawnEdge = Math.floor(Math.random() * 4);
 
     switch (spawnEdge) {
-        case 0: 
+        case 0:
             this.x = Math.random() * canvasWidth;
             this.y = -16;
             break;
-        case 1: 
+        case 1:
             this.x = canvasWidth + 16;
             this.y = Math.random() * 225;
             break;
-        case 2: 
+        case 2:
             this.x = Math.random() * canvasWidth;
             this.y = 225 + 16;
             break;
@@ -53,7 +53,7 @@ Mushroom.prototype.constructor = Mushroom;
 
 Mushroom.prototype.update = function (step) {
     Entity.prototype.update.call(this, step);
-    
+
     const dx = this.player.x - this.x;
     const dy = this.player.y - this.y;
 
@@ -68,13 +68,16 @@ Mushroom.prototype.update = function (step) {
 
         if (moveY > moveX) {
             if (moveY < 0) {
-                 this.animation.gotoAndPlay("jump");
+                this.animation.gotoAndPlay("jump");
             } else {
                 this.animation.gotoAndPlay("jumpDown");
             }
         } else {
             this.animation.gotoAndPlay("walk");
         }
+
+        this.emitter.x = this.centerX;
+        this.emitter.y = this.y + this.height * 0.3;
 
         /*
         if (moveX < 0) {
@@ -91,14 +94,14 @@ Mushroom.prototype.update = function (step) {
           this.animation.gotoAndPlay("jumpDown");
         }
 */
-         
+
 
     }
 
 
 };
 
-Mushroom.prototype.getDistanceOfPlayers = function (player) { 
+Mushroom.prototype.getDistanceOfPlayers = function (player) {
 
     this.player = player;
 

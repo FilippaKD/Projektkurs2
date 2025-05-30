@@ -78,14 +78,14 @@ pixiepower.scene.GameOver.prototype.initKeyboard = function () {
     this.selected = [];
     this.enteredLetters = [];
 
-    this.alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "OK"];
+    this.alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", " OK"];
 
     var startX = 15;
 
     for (var i = 0; i < this.alphabet.length; i++) {
         var letter = new rune.text.BitmapField(this.alphabet[i], "image_alfafont");
         letter.y = 150;
-        letter.x = startX + i * 15;
+        letter.x = startX + i * 11;
         letter.autoSize = true;
         this.stage.addChild(letter);
         this.selected.push(letter);

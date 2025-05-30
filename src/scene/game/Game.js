@@ -667,7 +667,6 @@ pixiepower.scene.Game.prototype.update = function (step) {
         mushroom.getDistanceOfPlayers(nearestPlayer);
 
         if (mushroom.hitTestGroup(this.fairies)) {
-
             this.stage.removeChild(mushroom);
             this.mushrooms.removeMember(mushroom);
             cam.wavy = true;
@@ -820,6 +819,7 @@ pixiepower.scene.Game.prototype.update = function (step) {
         this.mushrooms.forEachMember(function (mushroom) {
             rune.physics.Space.separate(this.flower, mushroom);
             if (ball.hitTestObject(mushroom)) {
+                mushroom.emitter.emit(30);
                 this.mushrooms.removeMember(mushroom);
                 this.lightballs.removeMember(ball);
                 this.score += 25;

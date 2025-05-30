@@ -13,7 +13,7 @@
  * 
  * Game scene.
  */
-pixiepower.scene.ChoosePlayer = function () {
+pixiepower.scene.ChoosePlayer = function (highscores) {
 
     //--------------------------------------------------------------------------
     // Super call
@@ -271,7 +271,7 @@ pixiepower.scene.ChoosePlayer.prototype.update = function (step) {
         var p1Character = this.characters[this.selectedByP1].image;
 
          this.application.scenes.load([
-           new pixiepower.scene.GameOnePlayer(p1Character)
+           new pixiepower.scene.GameOnePlayer(p1Character, this.highscores)
         ]);
     
         }
