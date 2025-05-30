@@ -7,6 +7,21 @@ function Mushroom() {
 
     this.hitbox.set(0, 1, 12, 12);
 
+     this.emitY = this.y + this.height * 0.3;
+    this.emitter = new rune.particle.Emitter(this.centerX, this.emitY, 6, 8, {
+        particles: [Glitter],
+        capacity: 30,
+        accelerationY: 0.00005,
+        accelerationX: 0.00005,
+        maxRotation: 10,
+        dragY: 0.2,
+        maxVelocityX: 0.06,
+        minVelocityX: -0.06,
+        maxVelocityY: 0.15,
+        maxLifespan: 800
+    });
+    this.addChild(this.emitter);
+
     var canvasWidth = 400;
     var spawnEdge = Math.floor(Math.random() * 4);
 
@@ -28,6 +43,7 @@ function Mushroom() {
             this.y = Math.random() * 225;
             break;
     }
+
 }
 
 

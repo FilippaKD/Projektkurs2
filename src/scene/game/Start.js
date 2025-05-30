@@ -139,14 +139,14 @@ pixiepower.scene.Start.prototype.initChoices = function () {
 
     this.selected = [];
 
-    var texts = ["1 PLAYER", "2 PLAYERS", "CONTROLS", "CREDITS"];
+    var texts = ["1 PLAYER", "2 PLAYERS", "HIGHSCORES", "CONTROLS", "CREDITS"];
     var startY = 70;
 
     for (var i = 0; i < texts.length; i++) {
 
         var text = new rune.text.BitmapField(texts[i], "image_alfafont");
-        text.x = 20;
-        text.y = startY + i * 30;
+        text.x = 10;
+        text.y = startY + i * 20;
         text.color = "#FFFFFF";
         text.autoSize = true;
         this.stage.addChild(text);
@@ -183,10 +183,20 @@ pixiepower.scene.Start.prototype.startSelected = function () {
             break;
         case 1:
             this.application.scenes.load([
-                new pixiepower.scene.Controls()
+                new pixiepower.scene.ChoosePlayer()
             ]);
             break;
         case 2:
+            this.application.scenes.load([
+                new pixiepower.scene.Highscore()
+            ]);
+            break;
+        case 3:
+            this.application.scenes.load([
+                new pixiepower.scene.Controls()
+            ]);
+            break;
+        case 4:
             this.application.scenes.load([
                 new pixiepower.scene.Credits()
             ]);

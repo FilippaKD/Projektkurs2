@@ -268,7 +268,7 @@ pixiepower.scene.Game.prototype.initPowerups = function () {
         duration: 9000,
         repeat: Infinity,
         onTick: function () {
-            if (Math.random() < 0.25 && !this.jesusPowerup) {
+            if (Math.random() < 0.10 && !this.jesusPowerup) {
                 this.jesusPowerup = new Powerup("image_game_powerup_jesus");
                 this.stage.addChild(this.jesusPowerup);
             }
@@ -280,7 +280,7 @@ pixiepower.scene.Game.prototype.initPowerups = function () {
         duration: 9000,
         repeat: Infinity,
         onTick: function () {
-            if (Math.random() < 0.25 && !this.bombPowerup) {
+            if (Math.random() < 0.10 && !this.bombPowerup) {
                 this.bombPowerup = new Powerup("image_game_powerup_bomb");
                 this.stage.addChild(this.bombPowerup);
             }
@@ -520,6 +520,7 @@ pixiepower.scene.Game.prototype.handlePowerups = function () {
             });
 
             this.stage.removeChild(this.jesusPowerup);
+            this.jesusPowerup = null;
         }
     }.bind(this))
 
@@ -535,6 +536,7 @@ pixiepower.scene.Game.prototype.handlePowerups = function () {
                 }
             });
             this.stage.removeChild(this.bombPowerup);
+            this.bombPowerup = null;
         }
     }.bind(this))
 
@@ -767,6 +769,8 @@ pixiepower.scene.Game.prototype.update = function (step) {
         // Såhär gör man om man använder display group för att at bort går inte med vanlig array
         this.allThorns.forEachMember(function (thorn) {
             if (ball.hitTestObject(thorn)) {
+                this.stage.addChild(thorn.emitter);
+                thorn.emitter.emit(30);
                 this.allThorns.removeMember(thorn);
                 this.lightballs.removeMember(ball);
                 this.fairies.forEachMember(function (fairy) {

@@ -100,9 +100,9 @@ pixiepower.scene.Controls.prototype.initControls = function () {
     this.stage.addChild(move);
 
 
-    var avoid = new rune.text.BitmapField("AVOID SHOOT", "image_alfafont");
+    var avoid = new rune.text.BitmapField("AVOID & SHOOT", "image_alfafont");
     avoid.y = 65;
-    avoid.x = 281;
+    avoid.x = 273;
     avoid.autoSize = true;
     avoid.color = "#FFFFFF";
     this.stage.addChild(avoid);
