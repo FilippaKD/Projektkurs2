@@ -130,6 +130,9 @@ pixiepower.scene.GameOnePlayer.prototype.init = function () {
     this.bgm.play();
     this.bgm.fade(0.5, 2000);
 
+    this.selected = [];
+    this.selectedI = 0;
+
 
 };
 
@@ -578,14 +581,35 @@ pixiepower.scene.GameOnePlayer.prototype.gameOver = function () {
                 }.bind(this)
             });
         } else {
-        console.log("try again") // Här ska de va gameover på samma scen och fler knappar
+        var texts = ["PLAY AGAIN", "MENU"];
+            var startY = 70;
+
+            for (var i = 0; i < texts.length; i++) {
+                var text = new rune.text.BitmapField(texts[i], "image_alfafont");
+                text.x = 10;
+                text.y = startY + i * 20;
+                text.autoSize = true;
+                this.stage.addChild(text);
+                this.selected.push(text);
+            }
+
+
+            this.updateHighlight();
     }
 }
 
 
     if (this.filippa.isStuck && !this.gameOverStart) {
 
-
+        this.weeds.forEachMember(function (weed) {
+            weed.dispose()
+        })
+        this.mushrooms.forEachMember(function (mushroom) {
+            mushroom.dispose()
+        })
+        this.waterdroplets.forEachMember(function (droplet) {
+            droplet.dispose()
+        })
 
         var gameOverText = new rune.text.BitmapField("GAME OVER", "image_alfafont");
 
@@ -613,11 +637,42 @@ pixiepower.scene.GameOnePlayer.prototype.gameOver = function () {
                     ]);
                 }.bind(this)
             });
-        } else { console.log("try again") }
+        } else { 
+            var texts = ["PLAY AGAIN", "MENU"];
+            var startY = 70;
+
+            for (var i = 0; i < texts.length; i++) {
+                var text = new rune.text.BitmapField(texts[i], "image_alfafont");
+                text.x = 10;
+                text.y = startY + i * 20;
+                text.autoSize = true;
+                this.stage.addChild(text);
+                this.selected.push(text);
+            }
+
+
+            this.updateHighlight();
+         }
 
     }
 };
 
+/**
+ * Updates the highligt of the selected choice when lever is moved
+ *
+ * @returns {undefined}
+ */
+pixiepower.scene.GameOnePlayer.prototype.updateHighlight = function () {
+
+    for (var i = 0; i < this.selected.length; i++) {
+        if (i == this.selectedI) {
+            this.selected[i].backgroundColor = "#FFC0CB";
+        } else {
+            this.selected[i].backgroundColor = "";
+        }
+    }
+
+};
 
 
 
@@ -633,6 +688,36 @@ pixiepower.scene.GameOnePlayer.prototype.update = function (step) {
 
     rune.scene.Scene.prototype.update.call(this, step);
 
+    var gamepad = this.gamepads.get(0);
+
+    if (gamepad.stickLeftJustRight) {
+        this.selectedI++;
+        if (this.selectedI >= this.selected.length) {
+            this.selectedI = 0;
+        }
+        this.updateHighlight();
+    } else if (gamepad.stickLeftJustLeft) {
+        this.selectedI--;
+        if (this.selectedI < 0) {
+            this.selectedI = this.selected.length - 1;
+        }
+        this.updateHighlight();
+    }
+
+    if (gamepad.justPressed(0)) { 
+        switch (this.selectedI) {
+            case 0:
+                this.application.scenes.load([
+                    new pixiepower.scene.ChoosePlayer(this.highscores)
+                ]);
+                break;
+            case 1:
+                this.application.scenes.load([
+                    new pixiepower.scene.Start(this.highscores)
+                ]);
+                break;
+        }
+    }
 
     this.gameOver();
     this.displayCounter.text = "";
