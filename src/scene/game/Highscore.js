@@ -65,12 +65,12 @@ pixiepower.scene.Highscore.prototype.init = function () {
  */
 pixiepower.scene.Highscore.prototype.initHighscore = function () {
   
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i < 8; i++) {
         var entry = this.highscores.get(i, 0);
 
         if (entry) {
             var row = new rune.text.BitmapField(`${i + 1}. ${entry.name} ${entry.score}`, "image_alfafont");
-            row.y = 50 + i * 12;
+            row.y = 50 + i * 15;
             row.x = 50;
             row.autoSize = true;
             this.stage.addChild(row);
@@ -78,12 +78,12 @@ pixiepower.scene.Highscore.prototype.initHighscore = function () {
     }
 
 
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i < 8; i++) {
         var entry = this.highscores.get(i, 1);
 
         if (entry) {
             var row = new rune.text.BitmapField(`${i + 1}. ${entry.name} ${entry.score}`, "image_alfafont");
-            row.y = 50 + i * 12;
+            row.y = 50 + i * 15;
             row.x = 205;
             row.autoSize = true;
             this.stage.addChild(row);
