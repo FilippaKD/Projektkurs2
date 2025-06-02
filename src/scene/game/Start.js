@@ -54,7 +54,7 @@ pixiepower.scene.Start.prototype.init = function () {
     bgContainer.addChild(this.bg);
     var title = new rune.text.BitmapField("PIXIE POWER", "image_pixie_latestfont");
 
-    this.highscores = new rune.data.Highscores("pixiepower", 10, 1);
+    this.highscores = new rune.data.Highscores("pixiepower", 10, 2);
 
 
     title.autoSize = true;
@@ -97,7 +97,7 @@ pixiepower.scene.Start.prototype.init = function () {
     tavla.addChild(highscore);
 
      for (let i = 0; i < 3; i++) {
-        var entry = this.highscores.get(i);
+        var entry = this.highscores.get(i, 0);
 
         if (entry) {
             let row = new rune.text.BitmapField(`${i + 1}. ${entry.name.toLowerCase()} ${entry.score}`, "image_font_testsmall");

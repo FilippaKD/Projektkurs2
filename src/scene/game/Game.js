@@ -575,8 +575,8 @@ pixiepower.scene.Game.prototype.gameOver = function () {
         //cam.centerX = this.flower.x + this.flower.width / 2;
         //cam.centerY = this.flower.y + this.flower.height / 2;
 
-     
-        var highscoreTest = this.highscores.test(this.score);
+   var highscoreTest = this.highscores.test(this.score, 1); 
+        
         console.log(highscoreTest)
         console.log(this.highscores)
 
