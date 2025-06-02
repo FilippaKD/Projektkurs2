@@ -191,8 +191,10 @@ pixiepower.scene.GameOver.prototype.update = function (step) {
 pixiepower.scene.GameOver.prototype.pressOkButton = function () {
     var name = this.highscoreName.join("");
 
+    if (this.gamepads.numGamepads == 1) { console.log(this.highscores); this.highscores.send(this.score, name, 0); } else if (this.gamepads.numGamepads == 2) { this.highscores.send(this.score, name, 1); }
 
-    this.highscores.send(this.score, name);
+
+
 
 
     this.application.scenes.load([

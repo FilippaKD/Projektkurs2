@@ -53,11 +53,11 @@ pixiepower.scene.Highscore.prototype.init = function () {
     bgContainer.addChild(this.bg);
 
 
-    this.text = new rune.text.BitmapField("HIGHSCORE", "image_alfafont");
+    this.text = new rune.text.BitmapField("HIGHSCORES", "image_alfafont");
 
     this.text.autoSize = true;
     this.text.center = this.application.screen.center;
-    this.text.y = 20;
+    this.text.y = 15;
 
     this.text.color = "#FFFFFF";
     this.stage.addChild(this.text);
@@ -68,14 +68,35 @@ pixiepower.scene.Highscore.prototype.init = function () {
 
 
 pixiepower.scene.Highscore.prototype.initHighscore = function () {
-
+    var onePlayerHeader = new rune.text.BitmapField("1 PLAYER", "image_alfafont");
+    onePlayerHeader.autoSize = true;
+    onePlayerHeader.y = 35;
+    onePlayerHeader.x = 70;
+    this.stage.addChild(onePlayerHeader);
     for (let i = 0; i < 10; i++) {
-        var entry = this.highscores.get(i);
+        var entry = this.highscores.get(i, 0);
 
         if (entry) {
-            let row = new rune.text.BitmapField(`${i + 1}. ${entry.name.toLowerCase()} ${entry.score}`, "image_font_testsmall");
-            row.y = 50 + i * 15;
-            row.x = 140;
+            var row = new rune.text.BitmapField(`${i + 1}. ${entry.name.toLowerCase()} ${entry.score}`, "image_font_testsmall");
+            row.y = 60 + i * 15;
+            row.x = 60;
+            this.stage.addChild(row);
+        }
+    }
+
+    var twoPlayerHeader = new rune.text.BitmapField("2 PLAYER", "image_alfafont");
+    twoPlayerHeader.autoSize = true;
+    twoPlayerHeader.y = 35;
+    twoPlayerHeader.x = 250;
+    this.stage.addChild(twoPlayerHeader);
+
+    for (let i = 0; i < 10; i++) {
+        var entry = this.highscores.get(i, 1);
+
+        if (entry) {
+            var row = new rune.text.BitmapField(`${i + 1}. ${entry.name.toLowerCase()} ${entry.score}`, "image_font_testsmall");
+            row.y = 60 + i * 15;
+            row.x = 240;
             this.stage.addChild(row);
         }
     }
@@ -98,9 +119,9 @@ pixiepower.scene.Highscore.prototype.update = function (step) {
     rune.scene.Scene.prototype.update.call(this, step);
 
     var gamepad = this.gamepads.get(0);
-    
+
     if (gamepad.justPressed(1)) {
-         this.application.scenes.load([
+        this.application.scenes.load([
             new pixiepower.scene.Start()
         ]);
     }

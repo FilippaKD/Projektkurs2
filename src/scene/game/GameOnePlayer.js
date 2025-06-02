@@ -25,6 +25,7 @@ pixiepower.scene.GameOnePlayer = function (p1Character, highscores) {
     rune.scene.Scene.call(this);
     this.p1choosen = p1Character;
     this.highscores = highscores;
+
 };
 
 //------------------------------------------------------------------------------
@@ -114,7 +115,7 @@ pixiepower.scene.GameOnePlayer.prototype.init = function () {
     this.sound_isThatJesus = this.application.sounds.sound.get("sound_isthatjesus");
     this.sound_powerup = this.application.sounds.sound.get("sound_powerup");
     this.sound_ohno = this.application.sounds.sound.get("sound_ohno");
-    this.sound_dramabush = this.application.sounds.sound.get("sound_dramabush");
+    this.sound_dramabush = this.application.sounds.sound.get("sound_deadbush");
     this.sound_teamwork = this.application.sounds.sound.get("sound_teamwork");
 
     this.application.sounds.master.get("sound_startsong").fade(0, 2000);
@@ -174,7 +175,7 @@ pixiepower.scene.GameOnePlayer.prototype.initMushrooms = function () {
         }.bind(this)
     });
 
-  
+
 }
 
 
@@ -511,7 +512,6 @@ pixiepower.scene.GameOnePlayer.prototype.gameOver = function () {
         //cam.centerX = this.flower.x + this.flower.width / 2;
         //cam.centerY = this.flower.y + this.flower.height / 2;
 
-        var score = this.score;
 
         var gameOverText = new rune.text.BitmapField("GAME OVER", "image_alfafont");
 
@@ -527,23 +527,28 @@ pixiepower.scene.GameOnePlayer.prototype.gameOver = function () {
         reason.y = 70;
         this.stage.addChild(reason);
 
+        var highscoreTest = this.highscores.test(this.score, 0);
 
-        this.timers.create({
-            duration: 2500,
-            repeat: 1,
-            onComplete: function () {
-                this.application.scenes.load([
-                    new pixiepower.scene.GameOver(score, this.highscores)
-                ]);
-            }.bind(this)
-        });
+        if (highscoreTest !== -1) {
+            this.timers.create({
+                duration: 2500,
+                repeat: 1,
+                onComplete: function () {
+                    this.application.scenes.load([
+                        new pixiepower.scene.GameOver(this.score, this.highscores)
+                    ]);
+                }.bind(this)
+            });
 
+        }
+    } else {
+        console.log("try again") // Här ska de va gameover på samma scen och fler knappar
     }
 
 
     if (this.filippa.isStuck && !this.gameOverStart) {
 
-        var score = this.score;
+
 
         var gameOverText = new rune.text.BitmapField("GAME OVER", "image_alfafont");
 
@@ -559,15 +564,17 @@ pixiepower.scene.GameOnePlayer.prototype.gameOver = function () {
         reason.y = 70;
         this.stage.addChild(reason);
 
-        this.timers.create({
-            duration: 2500,
-            repeat: 1,
-            onComplete: function () {
-                this.application.scenes.load([
-                    new pixiepower.scene.GameOver(score)
-                ]);
-            }.bind(this)
-        });
+        if (highscoreTest !== -1) {
+            this.timers.create({
+                duration: 2500,
+                repeat: 1,
+                onComplete: function () {
+                    this.application.scenes.load([
+                        new pixiepower.scene.GameOver(this.score, this.highscores)
+                    ]);
+                }.bind(this)
+            });
+        } else { console.log("try again") }
 
     }
 };
@@ -586,7 +593,7 @@ pixiepower.scene.GameOnePlayer.prototype.gameOver = function () {
 pixiepower.scene.GameOnePlayer.prototype.update = function (step) {
 
     rune.scene.Scene.prototype.update.call(this, step);
-    
+
 
     this.gameOver();
     this.displayCounter.text = "";
