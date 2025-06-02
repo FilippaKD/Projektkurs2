@@ -11,7 +11,7 @@
  * @class
  * @classdesc
  * 
- * Game scene.
+ * Scene for the highscore board
  */
 pixiepower.scene.Highscore = function (highscores) {
 
@@ -58,9 +58,14 @@ pixiepower.scene.Highscore.prototype.init = function () {
 };
 
 
+/**
+ * Initializes all the highscores and names
+ *
+ * @returns {undefined}
+ */
 pixiepower.scene.Highscore.prototype.initHighscore = function () {
   
-    for (let i = 0; i < 10; i++) {
+    for (var i = 0; i < 10; i++) {
         var entry = this.highscores.get(i, 0);
 
         if (entry) {
@@ -73,7 +78,7 @@ pixiepower.scene.Highscore.prototype.initHighscore = function () {
     }
 
 
-    for (let i = 0; i < 10; i++) {
+    for (var i = 0; i < 10; i++) {
         var entry = this.highscores.get(i, 1);
 
         if (entry) {
