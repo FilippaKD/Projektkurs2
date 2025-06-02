@@ -22,7 +22,7 @@ pixiepower.system.Main = function() {
      * Extend (Rune) Application.
      */
     rune.system.Application.call(this, {
-        developer: "com.example",
+        developer: "se.lnu",
         app: "pixiepower",
         build: "1.0.0",
         scene: pixiepower.scene.Start,

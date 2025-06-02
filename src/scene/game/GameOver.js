@@ -157,7 +157,7 @@ pixiepower.scene.GameOver.prototype.update = function (step) {
             this.pressOkButton();
         } else {
             var chosenLetter = this.alphabet[this.selectedI];
-            if (this.highscoreName.length < 13) {
+            if (this.highscoreName.length < 10) {
                 this.highscoreName.push(chosenLetter);
                 this.addLetterGraphic(chosenLetter);
             }
