@@ -133,7 +133,7 @@ pixiepower.scene.Game.prototype.init = function () {
     this.bgm.play();
     this.bgm.fade(0.5, 2000);
 
-   
+
 
 
 
@@ -546,6 +546,20 @@ pixiepower.scene.Game.prototype.handlePowerups = function () {
 pixiepower.scene.Game.prototype.gameOver = function () {
 
     if (this.flower.flowerLifeBar == 0) {
+
+         var gameOverText = new rune.text.BitmapField("GAME OVER", "image_alfafont");
+
+        gameOverText.autoSize = true;
+        gameOverText.center = this.application.screen.center;
+        gameOverText.y = 50;
+        this.stage.addChild(gameOverText);
+
+        var reason = new rune.text.BitmapField("the flower died", "image_font_testnew");
+
+        reason.autoSize = true;
+        reason.center = this.application.screen.center;
+        reason.y = 70;
+        this.stage.addChild(reason);
         //  console.log("gameover");
 
         var cam = this.cameras.getCameraAt(0);
@@ -575,8 +589,8 @@ pixiepower.scene.Game.prototype.gameOver = function () {
         //cam.centerX = this.flower.x + this.flower.width / 2;
         //cam.centerY = this.flower.y + this.flower.height / 2;
 
-   var highscoreTest = this.highscores.test(this.score, 1); 
-        
+        var highscoreTest = this.highscores.test(this.score, 1);
+
         console.log(highscoreTest)
         console.log(this.highscores)
 
@@ -601,6 +615,20 @@ pixiepower.scene.Game.prototype.gameOver = function () {
 
 
     if (this.sol.isStuck && this.filippa.isStuck && !this.gameOverStart) {
+
+        var gameOverText = new rune.text.BitmapField("GAME OVER", "image_alfafont");
+
+        gameOverText.autoSize = true;
+        gameOverText.center = this.application.screen.center;
+        gameOverText.y = 50;
+        this.stage.addChild(gameOverText);
+
+        var reason = new rune.text.BitmapField("you got stuck", "image_font_testnew");
+
+        reason.autoSize = true;
+        reason.center = this.application.screen.center;
+        reason.y = 70;
+        this.stage.addChild(reason);
 
 
         if (highscoreTest !== -1) {
@@ -796,7 +824,7 @@ pixiepower.scene.Game.prototype.update = function (step) {
                     this.stage.addChild(weed.emitter);
                     weed.emitter.emit(30);
                     this.weeds.removeMember(weed);
-                    this.score += 1000;
+                    this.score += 50;
                 }
 
                 var originalColor = rune.color.Color24.fromHex("4b692f");
