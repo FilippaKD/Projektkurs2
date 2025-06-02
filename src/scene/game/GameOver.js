@@ -7,11 +7,13 @@
  *
  * @constructor
  * @extends rune.scene.Scene
+ * @param {number} score - The highscores
+ * @param {object} highscores - Object with all the names and highscores
  *
  * @class
  * @classdesc
  * 
- * Game scene.
+ * Scene that starts when highscore is reached
  */
 pixiepower.scene.GameOver = function (score, highscores) {
 
@@ -69,19 +71,13 @@ pixiepower.scene.GameOver.prototype.init = function () {
     this.initKeyboard();
 
 
-    /*var score = new rune.text.BitmapField(this.score.toString(), rune.text.BitmapFormat.FONT_MEDIUM);
-    
-    score.autoSize = true;
-    score.center = this.application.screen.center;
-    score.y = 120;
-    score.color = "#FFFFFF"; 
-    this.stage.addChild(score);
-*/
-
-
 };
 
-
+/**
+ * Initializes the keyboard for name for the highscore
+ *
+ * @returns {undefined}
+ */
 pixiepower.scene.GameOver.prototype.initKeyboard = function () {
     this.selected = [];
     this.enteredLetters = [];
@@ -104,6 +100,11 @@ pixiepower.scene.GameOver.prototype.initKeyboard = function () {
     this.updateHighlight();
 };
 
+/**
+ * Updates the highligt of the selected choice when lever is moved
+ *
+ * @returns {undefined}
+ */
 pixiepower.scene.GameOver.prototype.updateHighlight = function () {
     for (var i = 0; i < this.selected.length; i++) {
         if (i == this.selectedI) {
@@ -114,6 +115,12 @@ pixiepower.scene.GameOver.prototype.updateHighlight = function () {
     }
 };
 
+/**
+ * Handles input for selecting letters to add, delete and comfirm the name
+ *
+ * @param {string} letter - The choosen letter
+ * @returns {undefined}
+ */
 pixiepower.scene.GameOver.prototype.addLetterGraphic = function (letter) {
     var startX = 140;
     var letterGraphic = new rune.text.BitmapField(letter, "image_alfafont");
@@ -176,6 +183,11 @@ pixiepower.scene.GameOver.prototype.update = function (step) {
 };
 
 
+/**
+ * Loads the highscore board when ok is pressed
+ *
+ * @returns {undefined}
+ */
 pixiepower.scene.GameOver.prototype.pressOkButton = function () {
     var name = this.highscoreName.join("");
 

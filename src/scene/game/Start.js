@@ -7,11 +7,12 @@
  *
  * @constructor
  * @extends rune.scene.Scene
+ * @param {number} score - The highscores 
  *
  * @class
  * @classdesc
  * 
- * Game scene.
+ * Start scene and menu for the game
  */
 pixiepower.scene.Start = function (score) {
 
@@ -54,7 +55,10 @@ pixiepower.scene.Start.prototype.init = function () {
     bgContainer.addChild(this.bg);
     var title = new rune.text.BitmapField("PIXIE POWER", "image_pixie_latestfont");
 
-    this.highscores = new rune.data.Highscores("pixiepower", 10, 2);
+    /**
+     * The highscores
+     */
+    this.highscores = new rune.data.Highscores("pixiepower", 10, 1);
 
 
     title.autoSize = true;
@@ -65,6 +69,9 @@ pixiepower.scene.Start.prototype.init = function () {
     this.stage.addChild(title);
 
 
+    /**
+     * Theme song
+     */
     var sound = this.application.sounds.master.get("sound_startsong");
     sound.volume = 0.4;
     sound.loop = true;
@@ -80,27 +87,26 @@ pixiepower.scene.Start.prototype.init = function () {
     });
 
 
-    //this.bg.animation.create("idle", [0, 1, 2, 1, 0], 6, true);
-    //this.bg.animation.gotoAndPlay("idle");
-
     this.initElderflowers();
     this.initChoices();
 
-    // testa tavla 
+   
+    /**
+     * Highscore board
+     */
     var tavla = new rune.display.Sprite(220, 65, 150, 200, "image_start_scoreboard");
     this.stage.addChild(tavla);
 
     var highscore = new rune.text.BitmapField("highscore", "image_font_testnew");
-    //highscore.autoSize = true;
     highscore.y = 22;
     highscore.x = 40;
     tavla.addChild(highscore);
 
-     for (let i = 0; i < 3; i++) {
-        var entry = this.highscores.get(i, 0);
+     for (var i = 0; i < 3; i++) {
+        var entry = this.highscores.get(i);
 
         if (entry) {
-            let row = new rune.text.BitmapField(`${i + 1}. ${entry.name.toLowerCase()} ${entry.score}`, "image_font_testsmall");
+            var row = new rune.text.BitmapField(`${i + 1}. ${entry.name.toLowerCase()} ${entry.score}`, "image_font_testsmall");
             row.y = 40 + i * 20;
             row.x = 20;
             tavla.addChild(row);
@@ -109,6 +115,11 @@ pixiepower.scene.Start.prototype.init = function () {
 
 };
 
+/**
+ * Initializes particles for the start page
+ *
+ * @returns {undefined}
+ */
 pixiepower.scene.Start.prototype.initElderflowers = function () {
 
     this.emitter = new rune.particle.Emitter(400, 0, 2, 190, {
@@ -120,9 +131,6 @@ pixiepower.scene.Start.prototype.initElderflowers = function () {
         minVelocityX: -0.004,
         maxVelocityX: -0.004,
         maxVelocityY: -0.015,
-        //minVelocityX: -0.05, 
-        // maxVelocityX: 0.05, 
-        // maxVelocityY: 0.4,  
         maxLifespan: 50000
     });
 
@@ -134,6 +142,12 @@ pixiepower.scene.Start.prototype.initElderflowers = function () {
 
 };
 
+
+/**
+ * Highlight the selected choice of the options in the menu
+ *
+ * @returns {undefined}
+ */
 pixiepower.scene.Start.prototype.initChoices = function () {
 
 
@@ -160,6 +174,11 @@ pixiepower.scene.Start.prototype.initChoices = function () {
 };
 
 
+/**
+ * Updates the highligt of the selected choice when lever is moved
+ *
+ * @returns {undefined}
+ */
 pixiepower.scene.Start.prototype.updateHighlight = function () {
 
     for (var i = 0; i < this.selected.length; i++) {
@@ -172,7 +191,11 @@ pixiepower.scene.Start.prototype.updateHighlight = function () {
 
 };
 
-
+/**
+ * Starts the selected choice
+ *
+ * @returns {undefined}
+ */
 pixiepower.scene.Start.prototype.startSelected = function () {
 
     switch (this.selectedI) {
@@ -205,8 +228,6 @@ pixiepower.scene.Start.prototype.startSelected = function () {
 
 
 };
-
-
 
 
 /**

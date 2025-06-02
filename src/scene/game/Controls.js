@@ -6,14 +6,14 @@
  * Creates a new object.
  *
  * @constructor
- * @extends rune.scene.Scene
+ * @extends rune.scene.Scene 
  *
  * @class
  * @classdesc
  * 
- * Game scene.
+ * The rules and directions for the controll
  */
-pixiepower.scene.Controls = function (score) {
+pixiepower.scene.Controls = function () {
 
     //--------------------------------------------------------------------------
     // Super call
@@ -52,6 +52,9 @@ pixiepower.scene.Controls.prototype.init = function () {
     this.bg.autoSize = true;
     bgContainer.addChild(this.bg);
 
+    /**
+     * Board that displays rules 
+     */
     this.board = new rune.display.Graphic(260, 30, 130, 180, "image_controls_board");
     this.board.autoSize = true;
     bgContainer.addChild(this.board);
@@ -70,8 +73,16 @@ pixiepower.scene.Controls.prototype.init = function () {
 };
 
 
+/**
+ * Displays control instructions
+ *
+ * @returns {undefined}
+ */
 pixiepower.scene.Controls.prototype.initControls = function () {
 
+    /**
+     * Graphic for the controll
+     */
     this.control = new Controll();
 
     this.stage.addChild(this.control);

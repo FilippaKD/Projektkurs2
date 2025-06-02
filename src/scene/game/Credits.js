@@ -11,9 +11,9 @@
  * @class
  * @classdesc
  * 
- * Game scene.
+ * The credits scene
  */
-pixiepower.scene.Credits = function (score) {
+pixiepower.scene.Credits = function () {
 
     //--------------------------------------------------------------------------
     // Super call
@@ -22,7 +22,6 @@ pixiepower.scene.Credits = function (score) {
     /**
      * Calls the constructor method of the super class.
      */
-    this.score = score;
     rune.scene.Scene.call(this);
 };
 
@@ -68,6 +67,11 @@ pixiepower.scene.Credits.prototype.init = function () {
 };
 
 
+/**
+ * Initializes our fairies and our names
+ *
+ * @returns {undefined}
+ */
 pixiepower.scene.Credits.prototype.initFairies = function () {
     
 
@@ -80,6 +84,9 @@ pixiepower.scene.Credits.prototype.initFairies = function () {
 
 
 
+    /**
+     * Standard animation for the credits fairies
+     */
     this.fairies.forEachMember(function (fairy) {
         fairy.animation.create("idle", [0, 1, 2, 3, 2, 1, 0], 6, true);
         fairy.animation.gotoAndPlay("idle");
