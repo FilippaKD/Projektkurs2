@@ -58,7 +58,7 @@ pixiepower.scene.Start.prototype.init = function () {
     /**
      * The highscores
      */
-    this.highscores = new rune.data.Highscores("pixiepower", 10, 1);
+    this.highscores = new rune.data.Highscores("pixiepower", 10, 2);
 
 
     title.autoSize = true;
