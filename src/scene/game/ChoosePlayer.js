@@ -75,7 +75,7 @@ pixiepower.scene.ChoosePlayer.prototype.init = function () {
     this.gamepad2 = this.gamepads.get(1);
     if (this.gamepad2.connected) {
     this.selectedByP2 = 1;
-    this.p2text = new rune.text.BitmapField("Player2");
+    this.p2text = new rune.text.BitmapField("Player2", "image_font_testsmall");
     this.p2text.autoSize = true;
     this.stage.addChild(this.p2text);
     } else {

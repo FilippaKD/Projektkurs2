@@ -10,8 +10,10 @@
  *
  * @class
  * @classdesc
+ * @param {string} p1Character - The choosen fairy for player one
+ * @param {object} highscores - Object with highscore information
  * 
- * Game scene.
+ * Game scene for one player
  */
 pixiepower.scene.GameOnePlayer = function (p1Character, highscores) {
 
@@ -89,6 +91,9 @@ pixiepower.scene.GameOnePlayer.prototype.init = function () {
     this.initBossWeeds();
     this.initPowerups();
 
+    /**
+     * Zone where it's possible for a player to water the flower
+     */
     this.waterZone = new rune.display.Graphic(
         this.flower.x,
         this.flower.y,
@@ -124,21 +129,29 @@ pixiepower.scene.GameOnePlayer.prototype.init = function () {
     this.bgm.play();
     this.bgm.fade(0.5, 2000);
 
+    this.selected = [];
+    this.selectedI = 0;
 
 
 };
 
 
-
-
 /**
+ * Makes a new camera for effects
  * @inheritDoc
+ * @param {number} step Fixed time step.
  */
 pixiepower.scene.GameOnePlayer.prototype.m_initCamera = function (step) {
     this.camera = new Camera();
     this.cameras.addCamera(this.camera);
 };
 
+
+/**
+ * Initializes the game HUD
+ *
+ * @returns {undefined}
+ */
 pixiepower.scene.GameOnePlayer.prototype.initHud = function () {
 
     this.score = 0;
@@ -160,6 +173,11 @@ pixiepower.scene.GameOnePlayer.prototype.initHud = function () {
 };
 
 
+/**
+ * Initializes the mushroom enemy
+ *
+ * @returns {undefined}
+ */
 pixiepower.scene.GameOnePlayer.prototype.initMushrooms = function () {
 
     this.mushrooms = new rune.display.DisplayGroup(this.stage);
@@ -178,6 +196,11 @@ pixiepower.scene.GameOnePlayer.prototype.initMushrooms = function () {
 }
 
 
+/**
+ * Initializes waterdroplets and starts a flicker for it to be removed after a certain time
+ *
+ * @returns {undefined}
+ */
 pixiepower.scene.GameOnePlayer.prototype.initWaterdroplet = function () {
 
     this.waterdroplets = new rune.display.DisplayGroup(this.stage);
@@ -186,11 +209,8 @@ pixiepower.scene.GameOnePlayer.prototype.initWaterdroplet = function () {
         duration: 2500,
         repeat: Infinity,
         onTick: function () {
-
             this.waterdroplet = new Waterdroplet();
             this.waterdroplets.addMember(this.waterdroplet);
-
-
         }.bind(this)
     });
 
@@ -212,6 +232,11 @@ pixiepower.scene.GameOnePlayer.prototype.initWaterdroplet = function () {
 };
 
 
+/**
+ * Removes a waterdroplet
+ * @param {object} toBeRemoved - The waterdroplet that is going to be removed
+ * @returns {undefined}
+ */
 pixiepower.scene.GameOnePlayer.prototype.removeWaterdrop = function (toBeRemoved) {
 
     this.timers.create({
@@ -226,6 +251,11 @@ pixiepower.scene.GameOnePlayer.prototype.removeWaterdrop = function (toBeRemoved
 
 }
 
+/**
+ * Initializes the powerups with an 10% chance of spawn every nine seconds and if it's not already spawned
+ *
+ * @returns {undefined}
+ */
 pixiepower.scene.GameOnePlayer.prototype.initPowerups = function () {
 
 
@@ -257,14 +287,21 @@ pixiepower.scene.GameOnePlayer.prototype.initPowerups = function () {
 };
 
 
-
+/**
+ * Initializes the weed enemy
+ *
+ * @returns {undefined}
+ */
 pixiepower.scene.GameOnePlayer.prototype.initWeeds = function () {
 
     this.weeds = new rune.display.DisplayGroup(this.stage);
 
     this.spawnInterval = 5000;
 
-    const startSpawnTimer = () => {
+    /**
+     * Increases the spawning amount over time
+     */
+    var startSpawnTimer = function () {
         if (this.spawnTimer) {
             this.spawnTimer.stop();
         }
@@ -272,38 +309,44 @@ pixiepower.scene.GameOnePlayer.prototype.initWeeds = function () {
         this.spawnTimer = this.timers.create({
             duration: this.spawnInterval,
             repeat: Infinity,
-            onTick: () => {
-                for (let i = 0; i < 2; i++) {
+            onTick: function () {
+                for (var i = 0; i < 2; i++) {
                     var weed = new Weed();
                     this.weeds.addMember(weed);
                     this.stage.addChildAt(weed, 1);
 
                 }
 
-            }
+            }.bind(this)
         });
-    };
+    }.bind(this);
 
     startSpawnTimer();
 
     this.timers.create({
         duration: 10000,
         repeat: 12,
-        onTick: () => {
+        onTick: function () {
             if (this.spawnInterval > 500) {
                 this.spawnInterval -= 200;
                 startSpawnTimer();
             }
-        }
+        }.bind(this)
     });
 
 
 }
 
+
+/**
+ * Initializes the boss weed
+ *
+ * @returns {undefined}
+ */
 pixiepower.scene.GameOnePlayer.prototype.initBossWeeds = function () {
     this.bossWeeds = new rune.display.DisplayGroup(this.stage);
 
-    var spawnInterval = 45000;
+    var spawnInterval = 40000;
 
     this.timers.create({
         duration: spawnInterval,
@@ -315,16 +358,14 @@ pixiepower.scene.GameOnePlayer.prototype.initBossWeeds = function () {
     });
 
 
-    this.timers.create({
-        duration: 8000,
-        repeat: Infinity,
-        onTick: function () {
-            spawnInterval = Math.max(1000, spawnInterval - 200);
-        }
-    });
 }
 
-// Taggbuskar initiering
+
+/**
+ * Initializes the thorn enemy
+ *
+ * @returns {undefined}
+ */
 pixiepower.scene.GameOnePlayer.prototype.initThorns = function () {
 
     this.allThorns = new rune.display.DisplayGroup(this.stage);
@@ -340,22 +381,18 @@ pixiepower.scene.GameOnePlayer.prototype.initThorns = function () {
         }
     });
 
-    this.timers.create({
-        duration: 10000,
-        repeat: Infinity,
-        onTick: function () {
-            spawnInterval = Math.max(1000, spawnInterval - 200);
-        }
-    });
 
 };
 
-
+/**
+ * Initializes the flower that needs protection and watering. Takes damage every 8th second
+ *
+ * @returns {undefined}
+ */
 pixiepower.scene.GameOnePlayer.prototype.initFlower = function () {
 
     this.flower = new Flower();
     this.stage.addChild(this.flower);
-
 
     this.timers.create({
         duration: 8000,
@@ -368,6 +405,12 @@ pixiepower.scene.GameOnePlayer.prototype.initFlower = function () {
 
 };
 
+
+/**
+ * Check if a fairy has touched a thorn and if so they get stuck
+ *
+ * @returns {undefined}
+ */
 pixiepower.scene.GameOnePlayer.prototype.handleThorns = function () {
 
     this.fairies.forEachMember(function (fairy) {
@@ -388,7 +431,11 @@ pixiepower.scene.GameOnePlayer.prototype.handleThorns = function () {
 
 
 
-
+/**
+ * Controls the water pick up level and if the drops are placed inside the flowers waterzone
+ *
+ * @returns {undefined}
+ */
 pixiepower.scene.GameOnePlayer.prototype.handleWaterdroplets = function () {
 
     this.waterdroplets.forEachMember(function (droplet) {
@@ -422,8 +469,6 @@ pixiepower.scene.GameOnePlayer.prototype.handleWaterdroplets = function () {
         }.bind(this));
         this.filippa.waterCollection = 0;
 
-
-
     }
 
 
@@ -431,13 +476,17 @@ pixiepower.scene.GameOnePlayer.prototype.handleWaterdroplets = function () {
 };
 
 
+/**
+ * Checks if a fairy has collected a powerup and starts features depending on which powerup was picked up
+ *
+ * @returns {undefined}
+ */
 pixiepower.scene.GameOnePlayer.prototype.handlePowerups = function () {
 
     this.fairies.forEachMember(function (fairy) {
         if (fairy.hitTestObject(this.jesusPowerup)) {
 
             this.jesus = new Jesus();
-            // jesusljud
             this.sound_isThatJesus.volume = 0.9;
             this.sound_isThatJesus.play();
 
@@ -477,14 +526,16 @@ pixiepower.scene.GameOnePlayer.prototype.handlePowerups = function () {
 }
 
 
+/**
+ * Checks if it's game over
+ *
+ * @returns {undefined}
+ */
 pixiepower.scene.GameOnePlayer.prototype.gameOver = function () {
 
     if (this.flower.flowerLifeBar == 0) {
-        //  console.log("gameover");
 
-        var cam = this.cameras.getCameraAt(0);
-
-        this.gameOverStart = true;
+      this.gameOverStart = true;
 
         this.weeds.forEachMember(function (weed) {
             weed.dispose()
@@ -502,17 +553,6 @@ pixiepower.scene.GameOnePlayer.prototype.gameOver = function () {
         this.flower.dyingFlower();
         this.filippa.isStuck = true;
 
-        //cam.target = this.flower;
-        //  console.log(cam.target);
-
-        //cam.center = this.application.screen.center;
-        //cam.viewport.zoom = 2.0;
-
-        //cam.centerX = this.flower.x + this.flower.width / 2;
-        //cam.centerY = this.flower.y + this.flower.height / 2;
-
-        var score = this.score;
-
         var gameOverText = new rune.text.BitmapField("GAME OVER", "image_alfafont");
 
         gameOverText.autoSize = true;
@@ -520,30 +560,55 @@ pixiepower.scene.GameOnePlayer.prototype.gameOver = function () {
         gameOverText.y = 50;
         this.stage.addChild(gameOverText);
 
-        var reason = new rune.text.BitmapField("the flower died", "image_font_testnew");
+        this.reason = new rune.text.BitmapField("the flower died", "image_font_testnew");
 
-        reason.autoSize = true;
-        reason.center = this.application.screen.center;
-        reason.y = 70;
-        this.stage.addChild(reason);
+        this.reason.autoSize = true;
+        this.reason.center = this.application.screen.center;
+        this.reason.y = 70;
+        this.stage.addChild(this.reason);
+
+        var highscoreTest = this.highscores.test(this.score, 0);
+
+        if (highscoreTest !== -1) {
+            this.timers.create({
+                duration: 2500,
+                repeat: 1,
+                onComplete: function () {
+                    this.application.scenes.load([
+                        new pixiepower.scene.GameOver(this.score, this.highscores)
+                    ]);
+                }.bind(this)
+            });
+        } else {
+        var texts = ["PLAY AGAIN", "MENU"];
+            var startY = 70;
+
+            for (var i = 0; i < texts.length; i++) {
+                var text = new rune.text.BitmapField(texts[i], "image_alfafont");
+                text.x = 10;
+                text.y = startY + i * 20;
+                text.autoSize = true;
+                this.stage.addChild(text);
+                this.selected.push(text);
+            }
 
 
-        this.timers.create({
-            duration: 2500,
-            repeat: 1,
-            onComplete: function () {
-                this.application.scenes.load([
-                    new pixiepower.scene.GameOver(score, this.highscores)
-                ]);
-            }.bind(this)
-        });
-
+            this.updateHighlight();
     }
+}
 
 
     if (this.filippa.isStuck && !this.gameOverStart) {
 
-        var score = this.score;
+        this.weeds.forEachMember(function (weed) {
+            weed.dispose()
+        })
+        this.mushrooms.forEachMember(function (mushroom) {
+            mushroom.dispose()
+        })
+        this.waterdroplets.forEachMember(function (droplet) {
+            droplet.dispose()
+        })
 
         var gameOverText = new rune.text.BitmapField("GAME OVER", "image_alfafont");
 
@@ -552,26 +617,61 @@ pixiepower.scene.GameOnePlayer.prototype.gameOver = function () {
         gameOverText.y = 50;
         this.stage.addChild(gameOverText);
 
-        var reason = new rune.text.BitmapField("you got stuck", "image_font_testnew");
+        this.reason = new rune.text.BitmapField("you got stuck", "image_font_testnew");
 
-        reason.autoSize = true;
-        reason.center = this.application.screen.center;
-        reason.y = 70;
-        this.stage.addChild(reason);
+        this.reason.autoSize = true;
+        this.reason.center = this.application.screen.center;
+        this.reason.y = 70;
+        this.stage.addChild(this.reason);
 
-        this.timers.create({
-            duration: 2500,
-            repeat: 1,
-            onComplete: function () {
-                this.application.scenes.load([
-                    new pixiepower.scene.GameOver(score)
-                ]);
-            }.bind(this)
-        });
+        var highscoreTest = this.highscores.test(this.score, 0);
+
+        if (highscoreTest !== -1) {
+            this.timers.create({
+                duration: 2500,
+                repeat: 1,
+                onComplete: function () {
+                    this.application.scenes.load([
+                        new pixiepower.scene.GameOver(this.score, this.highscores)
+                    ]);
+                }.bind(this)
+            });
+        } else { 
+            var texts = ["PLAY AGAIN", "MENU"];
+            var startY = 70;
+
+            for (var i = 0; i < texts.length; i++) {
+                var text = new rune.text.BitmapField(texts[i], "image_alfafont");
+                text.x = 10;
+                text.y = startY + i * 20;
+                text.autoSize = true;
+                this.stage.addChild(text);
+                this.selected.push(text);
+            }
+
+
+            this.updateHighlight();
+         }
 
     }
 };
 
+/**
+ * Updates the highligt of the selected choice when lever is moved
+ *
+ * @returns {undefined}
+ */
+pixiepower.scene.GameOnePlayer.prototype.updateHighlight = function () {
+
+    for (var i = 0; i < this.selected.length; i++) {
+        if (i == this.selectedI) {
+            this.selected[i].backgroundColor = "#FFC0CB";
+        } else {
+            this.selected[i].backgroundColor = "";
+        }
+    }
+
+};
 
 
 
@@ -586,7 +686,37 @@ pixiepower.scene.GameOnePlayer.prototype.gameOver = function () {
 pixiepower.scene.GameOnePlayer.prototype.update = function (step) {
 
     rune.scene.Scene.prototype.update.call(this, step);
-    
+
+    var gamepad = this.gamepads.get(0);
+
+    if (gamepad.stickLeftJustRight) {
+        this.selectedI++;
+        if (this.selectedI >= this.selected.length) {
+            this.selectedI = 0;
+        }
+        this.updateHighlight();
+    } else if (gamepad.stickLeftJustLeft) {
+        this.selectedI--;
+        if (this.selectedI < 0) {
+            this.selectedI = this.selected.length - 1;
+        }
+        this.updateHighlight();
+    }
+
+    if (gamepad.justPressed(0)) { 
+        switch (this.selectedI) {
+            case 0:
+                this.application.scenes.load([
+                    new pixiepower.scene.ChoosePlayer(this.highscores)
+                ]);
+                break;
+            case 1:
+                this.application.scenes.load([
+                    new pixiepower.scene.Start(this.highscores)
+                ]);
+                break;
+        }
+    }
 
     this.gameOver();
     this.displayCounter.text = "";
@@ -597,18 +727,19 @@ pixiepower.scene.GameOnePlayer.prototype.update = function (step) {
     this.displayPlayer1text = "Player 1 " + this.filippa.waterCollection.toString() + "/3";
     this.watercan1.updatePicture(this.filippa.waterCollection);
 
-    console.log("HÄR ÄR HP PÅ BLOMMAN" + this.flower.flowerLifeBar)
 
-    // HEJ GOOPh
     var cam = this.cameras.getCameraAt(0);
+
     this.mushrooms.forEachMember(function (mushroom) {
         rune.physics.Space.separate(this.flower, mushroom);
-        var filippaDistance = this.filippa.distance(mushroom);
 
         var nearestPlayer = this.filippa;
 
         mushroom.getDistanceOfPlayers(nearestPlayer);
 
+        /**
+        * Wavy and colorful effect on camera when stepping on a mushroom enemy
+        */
         if (mushroom.hitTestGroup(this.fairies)) {
 
             this.stage.removeChild(mushroom);
@@ -619,8 +750,7 @@ pixiepower.scene.GameOnePlayer.prototype.update = function (step) {
             cam.tint.color = new rune.color.Color24();
             cam.tint.opacity = 0.4;
 
-            // Färger för svampeffekten
-            let colors = [
+            var colors = [
                 { r: 255, g: 105, b: 180 },
                 { r: 255, g: 0, b: 0 },
                 { r: 255, g: 128, b: 0 },
@@ -629,14 +759,13 @@ pixiepower.scene.GameOnePlayer.prototype.update = function (step) {
                 { r: 128, g: 0, b: 255 }
             ];
 
-            let index = 0;
+            var index = 0;
 
-            // Fadetimer för färgerna på svampeffekten
-            let fadeTimer = this.timers.create({
+            var fadeTimer = this.timers.create({
                 duration: 250,
                 repeat: 24,
-                onTick: () => {
-                    let c = colors[index];
+                onTick: function () {
+                    var c = colors[index];
                     cam.tint.color.setRGB(c.r, c.g, c.b);
                     index++;
                     if (index >= colors.length) {
@@ -644,7 +773,7 @@ pixiepower.scene.GameOnePlayer.prototype.update = function (step) {
                     }
                 }
             });
-            // are we tripping-ljud
+
             this.timers.create({
                 duration: 1000,
                 onTick: function () {
@@ -654,7 +783,6 @@ pixiepower.scene.GameOnePlayer.prototype.update = function (step) {
             });
 
 
-            // Svamptimer hur länge den ska hålla på
             this.timers.create({
                 duration: 7000,
                 onComplete: function () {
@@ -681,18 +809,15 @@ pixiepower.scene.GameOnePlayer.prototype.update = function (step) {
             })
         }
 
-        //HÄR LIGGER DET
         this.fairies.forEachMember(function (fairy) {
-
             rune.physics.Space.separate(fairy, weed);
-
-
-
         }.bind(this))
     }.bind(this));
 
 
-    // borders
+    /**
+     * Separates fairies from borders so they can't fly outside the cameraview
+     */
     this.fairies.forEachMember(function (fairy) {
 
         rune.physics.Space.separate(fairy, this.borderBottom);
@@ -709,7 +834,6 @@ pixiepower.scene.GameOnePlayer.prototype.update = function (step) {
             this.lightballs.removeMember(ball);
         }
 
-        // Såhär gör man om man använder display group för att at bort går inte med vanlig array
         this.allThorns.forEachMember(function (thorn) {
             if (ball.hitTestObject(thorn)) {
                 this.stage.addChild(thorn.emitter);
@@ -725,7 +849,7 @@ pixiepower.scene.GameOnePlayer.prototype.update = function (step) {
                 });
 
 
-                return false;
+               // return false;
             }
         }.bind(this));
 
@@ -734,7 +858,6 @@ pixiepower.scene.GameOnePlayer.prototype.update = function (step) {
             if (ball.hitTestObject(weed)) {
                 weed.hp--;
 
-                // Glitter när ett ogräs dör
                 if (weed.hp == 0) {
                     this.sound_dramabush.volume = 0.9;
                     this.sound_dramabush.play();
@@ -745,6 +868,9 @@ pixiepower.scene.GameOnePlayer.prototype.update = function (step) {
                     this.score += 50;
                 }
 
+                /**
+                 * Changes weeds color to red when shot
+                 */
                 var originalColor = rune.color.Color24.fromHex("4b692f");
                 var hitColor = rune.color.Color24.fromHex("ac2828");
                 weed.texture.replaceColor(originalColor, hitColor);
@@ -755,10 +881,11 @@ pixiepower.scene.GameOnePlayer.prototype.update = function (step) {
                     }
                 });
                 this.lightballs.removeMember(ball);
-                // console.log(this.score);
             }
 
         }.bind(this));
+
+
 
         this.mushrooms.forEachMember(function (mushroom) {
             rune.physics.Space.separate(this.flower, mushroom);
@@ -772,9 +899,9 @@ pixiepower.scene.GameOnePlayer.prototype.update = function (step) {
             }
         }.bind(this));
 
-        // bigboss
+
+
         this.bossWeeds.forEachMember(function (bossWeed) {
-            //  console.log("bossWeed");
 
             if (this.flower.hitTestObject(bossWeed) && bossWeed.canHit) {
                 this.flower.flowerDamage(10);
@@ -788,15 +915,15 @@ pixiepower.scene.GameOnePlayer.prototype.update = function (step) {
                 })
             }
 
-
-
-
             if (ball.hitTestObject(bossWeed)) {
 
                 this.lightballs.removeMember(ball);
                 bossWeed.hp--;
                 this.camera.shake.start(300, 1, 1);
 
+                /**
+                 * Changes bossweeds color to red when shot
+                 */
                 var originalColor = rune.color.Color24.fromHex("4b692f");
                 var hitColor = rune.color.Color24.fromHex("ac2828");
                 bossWeed.texture.replaceColor(originalColor, hitColor);
@@ -808,6 +935,9 @@ pixiepower.scene.GameOnePlayer.prototype.update = function (step) {
                 });
             }
 
+            /**
+             * Spawns two new weed enemies when bossweed is dead
+             */
             if (bossWeed.hp == 0) {
                 var weed1 = new Weed(bossWeed.x, bossWeed.y);
                 var weed2 = new Weed(bossWeed.x + 10, bossWeed.y + 10);
@@ -832,21 +962,11 @@ pixiepower.scene.GameOnePlayer.prototype.update = function (step) {
         rune.physics.Space.separate(this.flower, bossWeed);
     }.bind(this));
 
-    this.waterdroplets.forEachMember(function (droplet) {
-        droplet.hitTestAndSeparate(this.flower);
-    }.bind(this));
+  
 
-
-    // denna funkar ej
-    this.allThorns.forEachMember(function (thorn) {
-        // rune.physics.Space.separate(this.flower, thorn);
-        this.flower.hitTestAndSeparate(thorn);
-    }.bind(this));
-
-    // console.log(this.lightballs.numMembers)
-
-
-    // Skottlogik (tilläggning på scen)
+    /**
+     * Shooting logic
+     */
     if (this.gamepads.get(0).justPressed(2)) {
         if (this.filippa.isStuck == false) {
             this.sound_blub.volume = 0.9;
@@ -857,7 +977,7 @@ pixiepower.scene.GameOnePlayer.prototype.update = function (step) {
                 var balls = this.filippa.shootPowerUp();
 
 
-                for (let i = 0; i < balls.length; i++) {
+                for (var i = 0; i < balls.length; i++) {
                     this.lightballs.addMember(balls[i]);
                 }
             } else {
@@ -870,17 +990,10 @@ pixiepower.scene.GameOnePlayer.prototype.update = function (step) {
     }
 
 
-
     this.handleThorns();
     this.handleWaterdroplets();
     this.handlePowerups();
 
-
-    this.fairies.forEachMember(function (fairy) {
-
-
-
-    }.bind(this))
 
 
 };
