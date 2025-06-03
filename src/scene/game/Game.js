@@ -272,7 +272,7 @@ pixiepower.scene.Game.prototype.removeWaterdrop = function (toBeRemoved) {
 pixiepower.scene.Game.prototype.initPowerups = function () {
 
     this.timers.create({
-        duration: 20000,
+        duration: 15000,
         repeat: Infinity,
         onTick: function () {
             if (Math.random() < 0.10 && !this.jesusPowerup) {
@@ -283,7 +283,7 @@ pixiepower.scene.Game.prototype.initPowerups = function () {
     });
 
     this.timers.create({
-        duration: 9000,
+        duration: 15000,
         repeat: Infinity,
         onTick: function () {
             if (Math.random() < 0.10 && !this.bombPowerup) {
@@ -593,6 +593,9 @@ pixiepower.scene.Game.prototype.gameOver = function () {
         })
         this.bossWeeds.forEachMember(function (boss) {
             boss.dispose()
+        })
+        this.waterdroplets.forEachMember(function (droplet) {
+            droplet.dispose()
         })
 
         this.flower.dyingFlower();

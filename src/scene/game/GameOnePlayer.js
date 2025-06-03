@@ -266,7 +266,7 @@ pixiepower.scene.GameOnePlayer.prototype.initPowerups = function () {
 
 
     this.timers.create({
-        duration: 20000,
+        duration: 15000,
         repeat: Infinity,
         onTick: function () {
             if (Math.random() < 0.10 && !this.jesusPowerup) {
@@ -278,7 +278,7 @@ pixiepower.scene.GameOnePlayer.prototype.initPowerups = function () {
     });
 
     this.timers.create({
-        duration: 9000,
+        duration: 15000,
         repeat: Infinity,
         onTick: function () {
             if (Math.random() < 0.10 && !this.bombPowerup) {
@@ -557,6 +557,9 @@ pixiepower.scene.GameOnePlayer.prototype.gameOver = function () {
         })
         this.bossWeeds.forEachMember(function (boss) {
             boss.dispose()
+        })
+        this.waterdroplets.forEachMember(function (droplet) {
+            droplet.dispose()
         })
 
         this.flower.dyingFlower();
