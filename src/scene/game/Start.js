@@ -70,7 +70,8 @@ pixiepower.scene.Start.prototype.init = function () {
 
 
     /**
-     * Theme song
+     * Music from #Uppbeat (free for Creators!): https://uppbeat.io/t/danijel-zambo/bards-tale 
+     * License code: HZAZDBTHYUCV5AEW
      */
     var sound = this.application.sounds.master.get("sound_startsong");
     sound.volume = 0.4;

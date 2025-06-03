@@ -123,6 +123,11 @@ pixiepower.scene.GameOnePlayer.prototype.init = function () {
     this.sound_teamwork = this.application.sounds.sound.get("sound_teamwork");
 
     this.application.sounds.master.get("sound_startsong").fade(0, 2000);
+
+    /**
+     * Music from #Uppbeat (free for Creators!): https://uppbeat.io/t/giulio-fazio/8bit-canon
+     * License code: Z9JLRP3JRDB7WPJD
+     */
     this.bgm = this.application.sounds.music.get("themesong");
     this.bgm.volume = 0;
     this.bgm.loop = true;
