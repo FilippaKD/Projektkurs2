@@ -101,7 +101,7 @@ pixiepower.scene.ChoosePlayer.prototype.initFairies = function () {
     ]
 
     for (var i = 0; i < this.characters.length; i++) {
-    var fairy = new Fairy(this.characters[i].image, 100 + i * 50, 100);
+    var fairy = new Fairy(this.characters[i].image, 50 + i * 70, 100);
     this.characters[i].fairy = fairy;
     this.fairies.addMember(fairy);
     }
