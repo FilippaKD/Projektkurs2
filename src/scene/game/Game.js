@@ -594,6 +594,9 @@ pixiepower.scene.Game.prototype.gameOver = function () {
         this.bossWeeds.forEachMember(function (boss) {
             boss.dispose()
         })
+        this.waterdroplets.forEachMember(function (droplet) {
+            droplet.dispose()
+        })
 
         this.flower.dyingFlower();
         this.filippa.gameOverStop = true;
