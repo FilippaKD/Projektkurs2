@@ -9,6 +9,7 @@ function Fairy(name, x, y) {
     
     this.hitbox.set(5, 5, 10, 10);
     this.isStuck = false;
+    this.gameOverStop = false;
     this.makeAnimations(); 
    
 }

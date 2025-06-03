@@ -56,7 +56,12 @@ Sol.prototype.update = function (step) {
         return;
     }
 
-    // Dosa 2
+     if (this.gameOverStop) {
+        this.velocity.x = 0;
+        this.velocity.y = 0;
+        return;
+    }
+    
     var gamepad = this.gamepads.get(1);
     var stick = gamepad.stickLeft;
 

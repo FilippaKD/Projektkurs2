@@ -56,6 +56,12 @@ Filippa.prototype.update = function (step) {
         return;
     }
 
+    if (this.gameOverStop) {
+        this.velocity.x = 0;
+        this.velocity.y = 0;
+        return;
+    }
+
 
     var gamepad = this.gamepads.get(0);
     var stick = gamepad.stickLeft;

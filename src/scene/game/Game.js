@@ -586,10 +586,13 @@ pixiepower.scene.Game.prototype.gameOver = function () {
         this.mushrooms.forEachMember(function (mushroom) {
             mushroom.dispose()
         })
+        this.bossWeeds.forEachMember(function (boss) {
+            boss.dispose()
+        })
 
         this.flower.dyingFlower();
-        this.sol.isStuck = true;
-        this.filippa.isStuck = true;
+        this.filippa.gameOverStop = true;
+        this.sol.gameOverStop = true;
 
         var highscoreTest = this.highscores.test(this.score, 1);
 
@@ -617,7 +620,7 @@ pixiepower.scene.Game.prototype.gameOver = function () {
                 for (var i = 0; i < texts.length; i++) {
                     var text = new rune.text.BitmapField(texts[i], "image_alfafont");
                     text.x = 130 + i * 100;
-                    text.y = 100;
+                    text.y = 160;
                     text.autoSize = true;
                     this.stage.addChild(text);
                     this.selected.push(text);
@@ -632,9 +635,27 @@ pixiepower.scene.Game.prototype.gameOver = function () {
     }
 
 
-    if (this.sol.isStuck && this.filippa.isStuck && !this.gameOverStart) {
+    if (this.sol.isStuck && this.filippa.isStuck) {
 
         this.gameOverStart = true;
+
+        this.weeds.forEachMember(function (weed) {
+            weed.dispose()
+        })
+        this.allThorns.forEachMember(function (thorn) {
+            thorn.dispose()
+        })
+        this.mushrooms.forEachMember(function (mushroom) {
+            mushroom.dispose()
+        })
+        this.waterdroplets.forEachMember(function (droplet) {
+            droplet.dispose()
+        })
+        this.bossWeeds.forEachMember(function (boss) {
+            boss.dispose()
+        })
+
+
         var highscoreTest = this.highscores.test(this.score, 1);
 
         var gameOverText = new rune.text.BitmapField("GAME OVER", "image_alfafont");
@@ -670,7 +691,7 @@ pixiepower.scene.Game.prototype.gameOver = function () {
                 for (var i = 0; i < texts.length; i++) {
                     var text = new rune.text.BitmapField(texts[i], "image_alfafont");
                     text.x = 130 + i * 100;
-                    text.y = 100;
+                    text.y = 160;
                     text.autoSize = true;
                     this.stage.addChild(text);
                     this.selected.push(text);
