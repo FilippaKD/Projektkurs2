@@ -647,9 +647,6 @@ pixiepower.scene.Game.prototype.gameOver = function () {
         this.weeds.forEachMember(function (weed) {
             weed.dispose()
         })
-        this.allThorns.forEachMember(function (thorn) {
-            thorn.dispose()
-        })
         this.mushrooms.forEachMember(function (mushroom) {
             mushroom.dispose()
         })
