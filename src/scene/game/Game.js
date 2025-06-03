@@ -628,6 +628,8 @@ pixiepower.scene.Game.prototype.gameOver = function () {
 
 
     if (this.sol.isStuck && this.filippa.isStuck && !this.gameOverStart) {
+
+        this.gameOverStart = true;
         var highscoreTest = this.highscores.test(this.score, 1);
 
         var gameOverText = new rune.text.BitmapField("GAME OVER", "image_alfafont");
@@ -692,19 +694,13 @@ pixiepower.scene.Game.prototype.updateHighlight = function () {
 
 };
 
-
 /**
- * This method is automatically executed once per "tick". The method is used for 
- * calculations such as application logic.
- *
- * @param {number} step Fixed time step.
- *
+ * Checks if the player is controlling the gameover menu
  * @returns {undefined}
  */
-pixiepower.scene.Game.prototype.update = function (step) {
+pixiepower.scene.Game.prototype.updateGameOver = function () {
 
-    rune.scene.Scene.prototype.update.call(this, step);
-
+    this.updateHighlight();
     var gamepad = this.gamepads.get(0);
 
     if (gamepad.stickLeftJustRight) {
@@ -735,6 +731,26 @@ pixiepower.scene.Game.prototype.update = function (step) {
                 break;
         }
     }
+
+};
+
+
+
+/**
+ * This method is automatically executed once per "tick". The method is used for 
+ * calculations such as application logic.
+ *
+ * @param {number} step Fixed time step.
+ *
+ * @returns {undefined}
+ */
+pixiepower.scene.Game.prototype.update = function (step) {
+
+    rune.scene.Scene.prototype.update.call(this, step);
+
+    if (this.gameOverStart) {
+        this.updateGameOver();
+    };
 
     this.gameOver();
     this.displayCounter.text = "";

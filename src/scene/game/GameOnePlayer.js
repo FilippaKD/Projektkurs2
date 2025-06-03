@@ -192,7 +192,7 @@ pixiepower.scene.GameOnePlayer.prototype.initMushrooms = function () {
         }.bind(this)
     });
 
-  
+
 }
 
 
@@ -535,7 +535,7 @@ pixiepower.scene.GameOnePlayer.prototype.gameOver = function () {
 
     if (this.flower.flowerLifeBar == 0) {
 
-      this.gameOverStart = true;
+        this.gameOverStart = true;
 
         this.weeds.forEachMember(function (weed) {
             weed.dispose()
@@ -580,8 +580,8 @@ pixiepower.scene.GameOnePlayer.prototype.gameOver = function () {
                 }.bind(this)
             });
         } else {
-        var texts = ["PLAY AGAIN", "MENU"];
-           
+            var texts = ["PLAY AGAIN", "MENU"];
+
 
             for (var i = 0; i < texts.length; i++) {
                 var text = new rune.text.BitmapField(texts[i], "image_alfafont");
@@ -594,11 +594,13 @@ pixiepower.scene.GameOnePlayer.prototype.gameOver = function () {
 
 
             this.updateHighlight();
+        }
     }
-}
 
 
     if (this.filippa.isStuck && !this.gameOverStart) {
+
+        this.gameOverStart = true;
 
         this.weeds.forEachMember(function (weed) {
             weed.dispose()
@@ -636,12 +638,12 @@ pixiepower.scene.GameOnePlayer.prototype.gameOver = function () {
                     ]);
                 }.bind(this)
             });
-        } else { 
+        } else {
             var texts = ["PLAY AGAIN", "MENU"];
 
             for (var i = 0; i < texts.length; i++) {
                 var text = new rune.text.BitmapField(texts[i], "image_alfafont");
-                  text.x = 130 + i * 100;
+                text.x = 130 + i * 100;
                 text.y = 100;
                 text.autoSize = true;
                 this.stage.addChild(text);
@@ -650,7 +652,7 @@ pixiepower.scene.GameOnePlayer.prototype.gameOver = function () {
 
 
             this.updateHighlight();
-         }
+        }
 
     }
 };
@@ -672,20 +674,13 @@ pixiepower.scene.GameOnePlayer.prototype.updateHighlight = function () {
 
 };
 
-
-
 /**
- * This method is automatically executed once per "tick". The method is used for 
- * calculations such as application logic.
- *
- * @param {number} step Fixed time step.
- *
+ * Checks if the player is controlling the gameover menu
  * @returns {undefined}
  */
-pixiepower.scene.GameOnePlayer.prototype.update = function (step) {
+pixiepower.scene.GameOnePlayer.prototype.updateGameOver = function () {
 
-    rune.scene.Scene.prototype.update.call(this, step);
-
+    this.updateHighlight();
     var gamepad = this.gamepads.get(0);
 
     if (gamepad.stickLeftJustRight) {
@@ -702,7 +697,7 @@ pixiepower.scene.GameOnePlayer.prototype.update = function (step) {
         this.updateHighlight();
     }
 
-    if (gamepad.justPressed(0)) { 
+    if (gamepad.justPressed(0)) {
         switch (this.selectedI) {
             case 0:
                 this.application.scenes.load([
@@ -716,6 +711,24 @@ pixiepower.scene.GameOnePlayer.prototype.update = function (step) {
                 break;
         }
     }
+
+};
+
+/**
+ * This method is automatically executed once per "tick". The method is used for 
+ * calculations such as application logic.
+ *
+ * @param {number} step Fixed time step.
+ *
+ * @returns {undefined}
+ */
+pixiepower.scene.GameOnePlayer.prototype.update = function (step) {
+
+    rune.scene.Scene.prototype.update.call(this, step);
+
+    if (this.gameOverStart) {
+        this.updateGameOver();
+    };
 
     this.gameOver();
     this.displayCounter.text = "";
@@ -848,7 +861,7 @@ pixiepower.scene.GameOnePlayer.prototype.update = function (step) {
                 });
 
 
-               // return false;
+                // return false;
             }
         }.bind(this));
 
@@ -961,7 +974,7 @@ pixiepower.scene.GameOnePlayer.prototype.update = function (step) {
         rune.physics.Space.separate(this.flower, bossWeed);
     }.bind(this));
 
-  
+
 
     /**
      * Shooting logic
