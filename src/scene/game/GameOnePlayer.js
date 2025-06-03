@@ -581,12 +581,12 @@ pixiepower.scene.GameOnePlayer.prototype.gameOver = function () {
             });
         } else {
         var texts = ["PLAY AGAIN", "MENU"];
-            var startY = 70;
+           
 
             for (var i = 0; i < texts.length; i++) {
                 var text = new rune.text.BitmapField(texts[i], "image_alfafont");
-                text.x = 10;
-                text.y = startY + i * 20;
+                text.x = 130 + i * 100;
+                text.y = 100;
                 text.autoSize = true;
                 this.stage.addChild(text);
                 this.selected.push(text);
@@ -638,12 +638,11 @@ pixiepower.scene.GameOnePlayer.prototype.gameOver = function () {
             });
         } else { 
             var texts = ["PLAY AGAIN", "MENU"];
-            var startY = 70;
 
             for (var i = 0; i < texts.length; i++) {
                 var text = new rune.text.BitmapField(texts[i], "image_alfafont");
-                text.x = 10;
-                text.y = startY + i * 20;
+                  text.x = 130 + i * 100;
+                text.y = 100;
                 text.autoSize = true;
                 this.stage.addChild(text);
                 this.selected.push(text);
