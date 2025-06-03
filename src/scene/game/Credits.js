@@ -55,7 +55,7 @@ pixiepower.scene.Credits.prototype.init = function () {
 
     this.initFairies();
 
-    this.text = new rune.text.BitmapField("THIS GAME WAS MADE BY", "image_alfafont");
+    this.text = new rune.text.BitmapField("this game was made by", "image_font_testnew");
 
     this.text.autoSize = true;
     this.text.center = this.application.screen.center;
@@ -63,6 +63,15 @@ pixiepower.scene.Credits.prototype.init = function () {
 
     this.text.color = "#FFFFFF";
     this.stage.addChild(this.text);
+
+    this.copyright = new rune.text.BitmapField("copyright elevenlabs pixabay soundsnap uppbeat", "image_font_testsmall");
+
+    this.copyright.autoSize = true;
+    this.copyright.center = this.application.screen.center;
+    this.copyright.y = 215;
+
+    this.copyright.color = "#FFFFFF";
+    this.stage.addChild(this.copyright);
 
 };
 
@@ -92,18 +101,20 @@ pixiepower.scene.Credits.prototype.initFairies = function () {
         fairy.animation.gotoAndPlay("idle");
     })
 
-    var filippaText = new rune.text.BitmapField("filippa dagerhed", "image_font_testsmall");
+    var filippaText = new rune.text.BitmapField("FILIPPA DAGERHED", "image_alfafont");
 
     filippaText.color = "#FFFFFF";
     filippaText.x = this.filippa.x + (this.filippa.width - filippaText.width) / 2;
-    filippaText.y = this.filippa.y + this.filippa.height + 5;
+    filippaText.y = this.filippa.y + this.filippa.height;
+    filippaText.autoSize = true;
     this.stage.addChild(filippaText);
 
-    var solText = new rune.text.BitmapField("sol olsen", "image_font_testsmall");
+    var solText = new rune.text.BitmapField("SOL OLSEN", "image_alfafont");
 
     solText.color = "#FFFFFF";
     solText.x = this.sol.x + (this.sol.width - solText.width) / 18;
-    solText.y = this.sol.y + this.sol.height + 5;
+    solText.y = this.sol.y + this.sol.height;
+    solText.autoSize = true;
     this.stage.addChild(solText);
     
 
