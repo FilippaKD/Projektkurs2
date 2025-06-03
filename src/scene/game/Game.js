@@ -609,15 +609,19 @@ pixiepower.scene.Game.prototype.gameOver = function () {
                 }.bind(this)
             });
         } else {
-            var texts = ["PLAY AGAIN", "MENU"];
+            if (!this.createdText) {
+                var texts = ["PLAY AGAIN", "MENU"];
 
-            for (var i = 0; i < texts.length; i++) {
-                var text = new rune.text.BitmapField(texts[i], "image_alfafont");
-                text.x = 130 + i * 100;
-                text.y = 100;
-                text.autoSize = true;
-                this.stage.addChild(text);
-                this.selected.push(text);
+
+                for (var i = 0; i < texts.length; i++) {
+                    var text = new rune.text.BitmapField(texts[i], "image_alfafont");
+                    text.x = 130 + i * 100;
+                    text.y = 100;
+                    text.autoSize = true;
+                    this.stage.addChild(text);
+                    this.selected.push(text);
+                }
+                this.createdText = true;
             }
 
 
@@ -658,15 +662,19 @@ pixiepower.scene.Game.prototype.gameOver = function () {
                 }.bind(this)
             });
         } else {
-            var texts = ["PLAY AGAIN", "MENU"];
+            if (!this.createdText) {
+                var texts = ["PLAY AGAIN", "MENU"];
 
-            for (var i = 0; i < texts.length; i++) {
-                var text = new rune.text.BitmapField(texts[i], "image_alfafont");
-                text.x = 130 + i * 100;
-                text.y = 100;
-                text.autoSize = true;
-                this.stage.addChild(text);
-                this.selected.push(text);
+
+                for (var i = 0; i < texts.length; i++) {
+                    var text = new rune.text.BitmapField(texts[i], "image_alfafont");
+                    text.x = 130 + i * 100;
+                    text.y = 100;
+                    text.autoSize = true;
+                    this.stage.addChild(text);
+                    this.selected.push(text);
+                }
+                this.createdText = true;
             }
 
 
