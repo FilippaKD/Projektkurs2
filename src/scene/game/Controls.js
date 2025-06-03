@@ -160,6 +160,6 @@ pixiepower.scene.Controls.prototype.update = function (step) {
  *
  * @returns {undefined}
  */
-pixiepower.scene.Credits.prototype.dispose = function () {
+pixiepower.scene.Controls.prototype.dispose = function () {
     rune.scene.Scene.prototype.dispose.call(this);
 };
