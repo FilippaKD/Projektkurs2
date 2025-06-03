@@ -132,7 +132,7 @@ pixiepower.scene.Game.prototype.init = function () {
     this.sound_teamwork = this.application.sounds.sound.get("sound_teamwork");
 
     this.application.sounds.master.get("sound_startsong").fade(0, 2000);
-    
+
     /**
      * Music from #Uppbeat (free for Creators!): https://uppbeat.io/t/giulio-fazio/8bit-canon
      * License code: Z9JLRP3JRDB7WPJD
@@ -272,7 +272,7 @@ pixiepower.scene.Game.prototype.removeWaterdrop = function (toBeRemoved) {
 pixiepower.scene.Game.prototype.initPowerups = function () {
 
     this.timers.create({
-        duration: 9000,
+        duration: 20000,
         repeat: Infinity,
         onTick: function () {
             if (Math.random() < 0.10 && !this.jesusPowerup) {
@@ -793,11 +793,11 @@ pixiepower.scene.Game.prototype.update = function (step) {
 
 
     this.displayPlayer1.text = "";
-    this.displayPlayer1.text = "Player 1 " + this.filippa.waterCollection.toString() + "/3";
+    this.displayPlayer1.text = "Player 1 " + this.filippa.waterCollection.toString() + "/3", "image_font_testsmall";
     this.watercan1.updatePicture(this.filippa.waterCollection);
 
     this.displayPlayer2.text = "";
-    this.displayPlayer2.text = "Player 2 " + this.sol.waterCollection.toString() + "/3";
+    this.displayPlayer2.text = "Player 2 " + this.sol.waterCollection.toString() + "/3", "image_font_testsmall";
     this.watercan2.updatePicture(this.sol.waterCollection);
 
 
@@ -971,6 +971,7 @@ pixiepower.scene.Game.prototype.update = function (step) {
         this.mushrooms.forEachMember(function (mushroom) {
             rune.physics.Space.separate(this.flower, mushroom);
             if (ball.hitTestObject(mushroom)) {
+                this.stage.addChild(mushroom.emitter);
                 mushroom.emitter.emit(30);
                 this.mushrooms.removeMember(mushroom);
                 this.lightballs.removeMember(ball);

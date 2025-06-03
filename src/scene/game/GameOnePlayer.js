@@ -266,7 +266,7 @@ pixiepower.scene.GameOnePlayer.prototype.initPowerups = function () {
 
 
     this.timers.create({
-        duration: 9000,
+        duration: 20000,
         repeat: Infinity,
         onTick: function () {
             if (Math.random() < 0.10 && !this.jesusPowerup) {
