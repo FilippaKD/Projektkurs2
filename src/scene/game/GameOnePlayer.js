@@ -166,7 +166,8 @@ pixiepower.scene.GameOnePlayer.prototype.initHud = function () {
     this.displayPlayer1 = new rune.text.BitmapField();
     this.displayPlayer1.color = "#FFFFFF";
     this.stage.addChild(this.displayPlayer1);
-    this.watercan1 = new Watercan;
+    this.displayPlayer1.x = 10;
+    this.watercan1 = new Watercan(85, 0);
     this.stage.addChild(this.watercan1);
 
 
@@ -549,9 +550,12 @@ pixiepower.scene.GameOnePlayer.prototype.gameOver = function () {
         this.waterdroplets.forEachMember(function (droplet) {
             droplet.dispose()
         })
+        this.bossWeeds.forEachMember(function (boss) {
+            boss.dispose()
+        })
 
         this.flower.dyingFlower();
-        this.filippa.isStuck = true;
+        this.filippa.gameOverStop = true;
 
         var gameOverText = new rune.text.BitmapField("GAME OVER", "image_alfafont");
 
@@ -587,7 +591,7 @@ pixiepower.scene.GameOnePlayer.prototype.gameOver = function () {
                 for (var i = 0; i < texts.length; i++) {
                     var text = new rune.text.BitmapField(texts[i], "image_alfafont");
                     text.x = 130 + i * 100;
-                    text.y = 100;
+                    text.y = 160;
                     text.autoSize = true;
                     this.stage.addChild(text);
                     this.selected.push(text);
@@ -600,9 +604,8 @@ pixiepower.scene.GameOnePlayer.prototype.gameOver = function () {
     }
 
 
-    if (this.filippa.isStuck && !this.gameOverStart) {
+    if (this.filippa.isStuck) {
 
-        this.gameOverStart = true;
 
         this.weeds.forEachMember(function (weed) {
             weed.dispose()
@@ -612,6 +615,9 @@ pixiepower.scene.GameOnePlayer.prototype.gameOver = function () {
         })
         this.waterdroplets.forEachMember(function (droplet) {
             droplet.dispose()
+        })
+        this.bossWeeds.forEachMember(function (boss) {
+            boss.dispose()
         })
 
         var gameOverText = new rune.text.BitmapField("GAME OVER", "image_alfafont");
@@ -629,6 +635,7 @@ pixiepower.scene.GameOnePlayer.prototype.gameOver = function () {
         this.stage.addChild(this.reason);
 
         var highscoreTest = this.highscores.test(this.score, 0);
+        this.gameOverStart = true;
 
         if (highscoreTest !== -1) {
             this.timers.create({
@@ -648,7 +655,7 @@ pixiepower.scene.GameOnePlayer.prototype.gameOver = function () {
                 for (var i = 0; i < texts.length; i++) {
                     var text = new rune.text.BitmapField(texts[i], "image_alfafont");
                     text.x = 130 + i * 100;
-                    text.y = 100;
+                    text.y = 160;
                     text.autoSize = true;
                     this.stage.addChild(text);
                     this.selected.push(text);
@@ -738,9 +745,8 @@ pixiepower.scene.GameOnePlayer.prototype.update = function (step) {
     this.displayCounter.text = "";
     this.displayCounter.text = this.score.toString();
 
-
     this.displayPlayer1.text = "";
-    this.displayPlayer1text = "Player 1 " + this.filippa.waterCollection.toString() + "/3";
+    this.displayPlayer1.text = "Player 1 " + this.filippa.waterCollection.toString() + "/3";
     this.watercan1.updatePicture(this.filippa.waterCollection);
 
 
