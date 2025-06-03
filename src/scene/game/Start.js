@@ -77,14 +77,23 @@ pixiepower.scene.Start.prototype.init = function () {
     sound.loop = true;
     sound.play();
 
+
+    /**
+     * A global object to make sure the story sound is only played once even if you go back to start from another scene
+     */
+    this.application.data = this.application.data || {};
+
+    if (!this.application.data.storyMissionPlayed) {
     this.timers.create({
         duration: 1000,
         onTick: function () {
             var protectSound = this.application.sounds.sound.get("sound_storymission");
             protectSound.volume = 1;
             protectSound.play();
+            this.application.data.storyMissionPlayed = true;
         }.bind(this)
     });
+}
 
 
     this.initElderflowers();
