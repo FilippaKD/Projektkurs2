@@ -104,13 +104,13 @@ pixiepower.scene.Start.prototype.init = function () {
     /**
      * Highscore board
      */
-    var tavla = new rune.display.Sprite(220, 65, 150, 200, "image_start_scoreboard");
-    this.stage.addChild(tavla);
+    var highscoreBoard = new rune.display.Sprite(220, 65, 150, 200, "image_start_scoreboard");
+    this.stage.addChild(highscoreBoard);
 
-    var highscore = new rune.text.BitmapField("highscore", "image_font_testnew");
+    var highscore = new rune.text.BitmapField("1 player best", "image_font_testsmall");
     highscore.y = 22;
-    highscore.x = 40;
-    tavla.addChild(highscore);
+    highscore.x = 25;
+    highscoreBoard.addChild(highscore);
 
      for (var i = 0; i < 3; i++) {
         var entry = this.highscores.get(i);
@@ -118,8 +118,8 @@ pixiepower.scene.Start.prototype.init = function () {
         if (entry) {
             var row = new rune.text.BitmapField(`${i + 1}. ${entry.name.toLowerCase()} ${entry.score}`, "image_font_testsmall");
             row.y = 40 + i * 20;
-            row.x = 20;
-            tavla.addChild(row);
+            row.x = 15;
+            highscoreBoard.addChild(row);
         }
     }
 
