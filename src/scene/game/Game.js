@@ -173,7 +173,7 @@ pixiepower.scene.Game.prototype.initHud = function () {
     this.displayPlayer1 = new rune.text.BitmapField();
     this.displayPlayer1.color = "#FFFFFF";
     this.stage.addChild(this.displayPlayer1);
-    this.watercan1 = new Watercan;
+    this.watercan1 = new Watercan(100, 0);
     this.stage.addChild(this.watercan1);
 
     this.displayPlayer2 = new rune.text.BitmapField();
@@ -744,12 +744,12 @@ pixiepower.scene.Game.prototype.update = function (step) {
 
 
     this.displayPlayer1.text = "";
-    this.displayPlayer1.text = "Player 1 " + this.sol.waterCollection.toString() + "/3";
-    this.watercan1.updatePicture(this.sol.waterCollection);
+    this.displayPlayer1.text = "Player 1 " + this.filippa.waterCollection.toString() + "/3";
+    this.watercan1.updatePicture(this.filippa.waterCollection);
 
     this.displayPlayer2.text = "";
-    this.displayPlayer2.text = "Player 2 " + this.filippa.waterCollection.toString() + "/3";
-    this.watercan2.updatePicture(this.filippa.waterCollection);
+    this.displayPlayer2.text = "Player 2 " + this.sol.waterCollection.toString() + "/3";
+    this.watercan2.updatePicture(this.sol.waterCollection);
 
 
     var cam = this.cameras.getCameraAt(0);
