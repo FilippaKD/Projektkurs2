@@ -175,16 +175,18 @@ pixiepower.scene.Game.prototype.initHud = function () {
     this.displayCounter.color = "#FFFFFF";
     this.stage.addChild(this.displayCounter);
 
-    this.displayPlayer1 = new rune.text.BitmapField();
+    this.displayPlayer1 = new rune.text.BitmapField("", "image_alfafont");
     this.displayPlayer1.color = "#FFFFFF";
+    this.displayPlayer1.autoSize = true;
     this.stage.addChild(this.displayPlayer1);
     this.displayPlayer1.x = 10;
     this.watercan1 = new Watercan(85, 0);
     this.stage.addChild(this.watercan1);
 
-    this.displayPlayer2 = new rune.text.BitmapField();
+    this.displayPlayer2 = new rune.text.BitmapField("", "image_alfafont");
     this.displayPlayer2.color = "#FFFFFF";
     this.displayPlayer2.x = 300;
+    this.displayPlayer1.autoSize = true;
     this.stage.addChild(this.displayPlayer2);
     this.watercan2 = new Watercan(375, 0);
     this.stage.addChild(this.watercan2);
@@ -793,11 +795,11 @@ pixiepower.scene.Game.prototype.update = function (step) {
 
 
     this.displayPlayer1.text = "";
-    this.displayPlayer1.text = "Player 1 " + this.filippa.waterCollection.toString() + "/3", "image_font_testsmall";
+    this.displayPlayer1.text = "PLAYER 1 " + this.filippa.waterCollection.toString() + "/3";
     this.watercan1.updatePicture(this.filippa.waterCollection);
 
     this.displayPlayer2.text = "";
-    this.displayPlayer2.text = "Player 2 " + this.sol.waterCollection.toString() + "/3", "image_font_testsmall";
+    this.displayPlayer2.text = "PLAYER 2 " + this.sol.waterCollection.toString() + "/3";
     this.watercan2.updatePicture(this.sol.waterCollection);
 
 
