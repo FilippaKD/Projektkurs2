@@ -162,7 +162,7 @@ pixiepower.scene.GameOnePlayer.prototype.initHud = function () {
     this.score = 0;
     this.displayCounter = new rune.text.BitmapField("", "image_alfafont");
     this.displayCounter.autoSize = true;
-    this.displayCounter.center = this.application.screen.center;
+    this.displayCounter.x = 185;
     this.displayCounter.y = 5;
     this.displayCounter.backgroundColor = "#000000"
     this.stage.addChild(this.displayCounter);
