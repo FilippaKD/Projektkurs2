@@ -113,7 +113,7 @@ pixiepower.scene.Start.prototype.init = function () {
     highscoreBoard.addChild(highscore);
 
      for (var i = 0; i < 3; i++) {
-        var entry = this.highscores.get(i);
+        var entry = this.highscores.get(i, 0);
 
         if (entry) {
             var row = new rune.text.BitmapField(`${i + 1}. ${entry.name.toLowerCase()} ${entry.score}`, "image_font_testsmall");
@@ -167,11 +167,9 @@ pixiepower.scene.Start.prototype.initChoices = function () {
     var startY = 70;
 
     for (var i = 0; i < texts.length; i++) {
-
         var text = new rune.text.BitmapField(texts[i], "image_alfafont");
         text.x = 10;
         text.y = startY + i * 20;
-        text.color = "#FFFFFF";
         text.autoSize = true;
         this.stage.addChild(text);
         this.selected.push(text);

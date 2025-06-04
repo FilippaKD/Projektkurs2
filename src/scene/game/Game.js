@@ -167,16 +167,14 @@ pixiepower.scene.Game.prototype.m_initCamera = function (step) {
 pixiepower.scene.Game.prototype.initHud = function () {
 
     this.score = 0;
-    this.displayCounter = new rune.text.BitmapField();
+    this.displayCounter = new rune.text.BitmapField("", "image_alfafont");
     this.displayCounter.autoSize = true;
     this.displayCounter.center = this.application.screen.center;
     this.displayCounter.y = 5;
     this.displayCounter.backgroundColor = "#000000"
-    this.displayCounter.color = "#FFFFFF";
     this.stage.addChild(this.displayCounter);
 
     this.displayPlayer1 = new rune.text.BitmapField("", "image_alfafont");
-    this.displayPlayer1.color = "#FFFFFF";
     this.displayPlayer1.autoSize = true;
     this.stage.addChild(this.displayPlayer1);
     this.displayPlayer1.x = 10;
@@ -184,7 +182,6 @@ pixiepower.scene.Game.prototype.initHud = function () {
     this.stage.addChild(this.watercan1);
 
     this.displayPlayer2 = new rune.text.BitmapField("", "image_alfafont");
-    this.displayPlayer2.color = "#FFFFFF";
     this.displayPlayer2.x = 300;
     this.displayPlayer1.autoSize = true;
     this.stage.addChild(this.displayPlayer2);
