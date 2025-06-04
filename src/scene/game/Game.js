@@ -603,9 +603,6 @@ pixiepower.scene.Game.prototype.gameOver = function () {
 
         var highscoreTest = this.highscores.test(this.score, 1);
 
-        console.log(highscoreTest)
-        console.log(this.highscores)
-
 
         if (highscoreTest !== -1) {
             this.timers.create({

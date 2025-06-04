@@ -85,7 +85,9 @@ Mushroom.prototype.update = function (step) {
         this.x += moveX;
         this.y += moveY;
 
-        // Determines animation based on it's movement
+        /**
+         * Determines animation based on it's movement
+         */ 
         if (moveY > moveX) {
             if (moveY < 0) {
                 this.animation.gotoAndPlay("jump");
