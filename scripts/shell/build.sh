@@ -30,6 +30,7 @@ npx google-closure-compiler \
 --js ./../../src/entity/Watercan.js \
 --js ./../../src/scene/game/ChoosePlayer.js \
 --js ./../../src/scene/game/Highscore.js \
+--js ./../../src/entity/Controll.js \
 --js ./../../src/scene/game/Controls.js \
 --js ./../../src/scene/game/Credits.js \
 --js ./../../src/scene/game/GameOnePlayer.js \
