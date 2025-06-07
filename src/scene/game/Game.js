@@ -51,6 +51,14 @@ pixiepower.scene.Game.prototype.constructor = pixiepower.scene.Game;
 pixiepower.scene.Game.prototype.init = function () {
     rune.scene.Scene.prototype.init.call(this);
 
+    /**
+    * Camera fade in to the scene
+    */
+    var cam = this.cameras.getCameraAt(0);
+    cam.fade.color = new rune.color.Color24(0, 0, 0);
+    cam.fade.opacity = 1;
+    cam.fade.in(250);
+
     var bgContainer = new rune.display.DisplayObjectContainer(0, 0, 400, 225);
     this.stage.addChild(bgContainer);
 

@@ -44,6 +44,13 @@ pixiepower.scene.Controls.prototype.constructor = pixiepower.scene.Controls;
  */
 pixiepower.scene.Controls.prototype.init = function () {
     rune.scene.Scene.prototype.init.call(this);
+    /**
+    * Camera fade in to the scene
+    */
+    var cam = this.cameras.getCameraAt(0);
+    cam.fade.color = new rune.color.Color24(0, 0, 0);
+    cam.fade.opacity = 1;
+    cam.fade.in(250);
 
     var bgContainer = new rune.display.DisplayObjectContainer(0, 0, 400, 225);
     this.stage.addChild(bgContainer);
@@ -92,7 +99,7 @@ pixiepower.scene.Controls.prototype.initControls = function () {
     desc.x = 202;
     this.stage.addChild(desc);
 
-    
+
     var drop = new rune.text.BitmapField("drop water", "image_font_testsmall");
     drop.y = 76;
     drop.x = 180;
@@ -145,11 +152,14 @@ pixiepower.scene.Controls.prototype.update = function (step) {
     var gamepad = this.gamepads.get(0);
 
     if (gamepad.justPressed(1)) {
-         this.application.scenes.load([
-            new pixiepower.scene.Start()
-        ]);
+        this.cameras.getCameraAt(0).fade.out(250, function () {
+            this.application.scenes.load([
+                new pixiepower.scene.Start()
+            ]);
+        }, this);
+
     }
-    
+
 };
 
 /**

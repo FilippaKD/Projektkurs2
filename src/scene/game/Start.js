@@ -85,22 +85,22 @@ pixiepower.scene.Start.prototype.init = function () {
     this.application.data = this.application.data || {};
 
     if (!this.application.data.storyMissionPlayed) {
-    this.timers.create({
-        duration: 1000,
-        onTick: function () {
-            var protectSound = this.application.sounds.sound.get("sound_storymission");
-            protectSound.volume = 1;
-            protectSound.play();
-            this.application.data.storyMissionPlayed = true;
-        }.bind(this)
-    });
-}
+        this.timers.create({
+            duration: 1000,
+            onTick: function () {
+                var protectSound = this.application.sounds.sound.get("sound_storymission");
+                protectSound.volume = 1;
+                protectSound.play();
+                this.application.data.storyMissionPlayed = true;
+            }.bind(this)
+        });
+    }
 
 
     this.initElderflowers();
     this.initChoices();
 
-   
+
     /**
      * Highscore board
      */
@@ -112,7 +112,7 @@ pixiepower.scene.Start.prototype.init = function () {
     highscore.x = 25;
     highscoreBoard.addChild(highscore);
 
-     for (var i = 0; i < 3; i++) {
+    for (var i = 0; i < 3; i++) {
         var entry = this.highscores.get(i, 0);
 
         if (entry) {
@@ -208,33 +208,41 @@ pixiepower.scene.Start.prototype.startSelected = function () {
 
     switch (this.selectedI) {
         case 0:
-            this.application.scenes.load([
-                new pixiepower.scene.ChoosePlayer(this.highscores)
-            ]);
+            this.cameras.getCameraAt(0).fade.out(250, function () {
+                this.application.scenes.load([
+                    new pixiepower.scene.ChoosePlayer(this.highscores)
+                ]);
+            }, this);
             break;
         case 1:
-            this.application.scenes.load([
-                new pixiepower.scene.ChoosePlayer(this.highscores)
-            ]);
+            this.cameras.getCameraAt(0).fade.out(250, function () {
+                this.application.scenes.load([
+                    new pixiepower.scene.ChoosePlayer(this.highscores)
+                ]);
+            }, this);
             break;
         case 2:
-            this.application.scenes.load([
-                new pixiepower.scene.Highscore(this.highscores)
-            ]);
+            this.cameras.getCameraAt(0).fade.out(250, function () {
+                this.application.scenes.load([
+                    new pixiepower.scene.Highscore(this.highscores)
+                ]);
+            }, this);
             break;
         case 3:
-            this.application.scenes.load([
-                new pixiepower.scene.Controls()
-            ]);
+            this.cameras.getCameraAt(0).fade.out(250, function () {
+                this.application.scenes.load([
+                    new pixiepower.scene.Controls()
+                ]);
+            }, this);
             break;
         case 4:
-            this.application.scenes.load([
-                new pixiepower.scene.Credits()
-            ]);
+            this.cameras.getCameraAt(0).fade.out(250, function () {
+                this.application.scenes.load([
+                    new pixiepower.scene.Credits()
+                ]);
+            }, this);
             break;
     }
-
-
 };
 
 
@@ -271,10 +279,10 @@ pixiepower.scene.Start.prototype.update = function (step) {
     }
 
     this.emitCounter++;
-if (this.emitCounter >= this.emitInterval) {
-    this.emitter.emit(1); 
-    this.emitCounter = 0;
-}
+    if (this.emitCounter >= this.emitInterval) {
+        this.emitter.emit(1);
+        this.emitCounter = 0;
+    }
 
 };
 

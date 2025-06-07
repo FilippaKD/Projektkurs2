@@ -50,7 +50,13 @@ pixiepower.scene.GameOver.prototype.constructor = pixiepower.scene.GameOver;
 pixiepower.scene.GameOver.prototype.init = function () {
     rune.scene.Scene.prototype.init.call(this);
 
-    this.backgroundColor = "#000000";
+     /**
+     * Camera fade in to the scene
+     */
+    var cam = this.cameras.getCameraAt(0);
+    cam.fade.color = new rune.color.Color24(0, 0, 0);
+    cam.fade.opacity = 1;
+    cam.fade.in(250);
 
     var bgContainer = new rune.display.DisplayObjectContainer(0, 0, 400, 225);
     this.stage.addChild(bgContainer);
@@ -197,9 +203,12 @@ pixiepower.scene.GameOver.prototype.pressOkButton = function () {
 
 
 
-    this.application.scenes.load([
-        new pixiepower.scene.Highscore(this.highscores)
-    ]);
+    this.cameras.getCameraAt(0).fade.out(250, function () {
+                this.application.scenes.load([
+                    new pixiepower.scene.Highscore(this.highscores)
+                ]);
+            }, this);
+            
 
 
 

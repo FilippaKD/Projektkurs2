@@ -45,6 +45,14 @@ pixiepower.scene.Highscore.prototype.constructor = pixiepower.scene.Highscore;
 pixiepower.scene.Highscore.prototype.init = function () {
     rune.scene.Scene.prototype.init.call(this);
 
+     /**
+     * Camera fade in to the scene
+     */
+    var cam = this.cameras.getCameraAt(0);
+    cam.fade.color = new rune.color.Color24(0, 0, 0);
+    cam.fade.opacity = 1;
+    cam.fade.in(250);
+
     var bgContainer = new rune.display.DisplayObjectContainer(0, 0, 400, 225);
     this.stage.addChild(bgContainer);
 
@@ -110,9 +118,12 @@ pixiepower.scene.Highscore.prototype.update = function (step) {
     var gamepad = this.gamepads.get(0);
 
     if (gamepad.justPressed(1)) {
-        this.application.scenes.load([
-            new pixiepower.scene.Start()
-        ]);
+        this.cameras.getCameraAt(0).fade.out(250, function () {
+                this.application.scenes.load([
+                    new pixiepower.scene.Start()
+                ]);
+            }, this);
+            
     }
 
 };

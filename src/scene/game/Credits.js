@@ -45,6 +45,14 @@ pixiepower.scene.Credits.prototype.constructor = pixiepower.scene.Credits;
 pixiepower.scene.Credits.prototype.init = function () {
     rune.scene.Scene.prototype.init.call(this);
 
+    /**
+     * Camera fade in to the scene
+     */
+    var cam = this.cameras.getCameraAt(0);
+    cam.fade.color = new rune.color.Color24(0, 0, 0);
+    cam.fade.opacity = 1;
+    cam.fade.in(250);
+
     var bgContainer = new rune.display.DisplayObjectContainer(0, 0, 400, 225);
     this.stage.addChild(bgContainer);
 
@@ -82,7 +90,7 @@ pixiepower.scene.Credits.prototype.init = function () {
  * @returns {undefined}
  */
 pixiepower.scene.Credits.prototype.initFairies = function () {
-    
+
 
     this.sol = new Entity("image_credits_sol", 230, 120, 45, 70);
     this.filippa = new Entity("image_credits_filippa", 120, 120, 45, 70);
@@ -116,7 +124,7 @@ pixiepower.scene.Credits.prototype.initFairies = function () {
     solText.y = this.sol.y + this.sol.height;
     solText.autoSize = true;
     this.stage.addChild(solText);
-    
+
 
 };
 
@@ -134,15 +142,18 @@ pixiepower.scene.Credits.prototype.update = function (step) {
 
     rune.scene.Scene.prototype.update.call(this, step);
 
-     var gamepad = this.gamepads.get(0);
+    var gamepad = this.gamepads.get(0);
 
     if (gamepad.justPressed(1)) {
-         this.application.scenes.load([
-            new pixiepower.scene.Start()
-        ]);
+        this.cameras.getCameraAt(0).fade.out(250, function () {
+            this.application.scenes.load([
+                new pixiepower.scene.Start()
+            ]);
+        }, this);
+
     }
-    
-    
+
+
 };
 
 /**

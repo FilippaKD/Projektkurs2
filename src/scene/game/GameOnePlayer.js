@@ -49,6 +49,14 @@ pixiepower.scene.GameOnePlayer.prototype.constructor = pixiepower.scene.GameOneP
 pixiepower.scene.GameOnePlayer.prototype.init = function () {
     rune.scene.Scene.prototype.init.call(this);
 
+    /**
+    * Camera fade in to the scene
+    */
+    var cam = this.cameras.getCameraAt(0);
+    cam.fade.color = new rune.color.Color24(0, 0, 0);
+    cam.fade.opacity = 1;
+    cam.fade.in(250);
+
     var bgContainer = new rune.display.DisplayObjectContainer(0, 0, 400, 225);
     this.stage.addChild(bgContainer);
 
@@ -585,9 +593,11 @@ pixiepower.scene.GameOnePlayer.prototype.gameOver = function () {
                 duration: 2500,
                 repeat: 1,
                 onComplete: function () {
-                    this.application.scenes.load([
-                        new pixiepower.scene.GameOver(this.score, this.highscores)
-                    ]);
+                    this.cameras.getCameraAt(0).fade.out(250, function () {
+                        this.application.scenes.load([
+                            new pixiepower.scene.GameOver(this.score, this.highscores)
+                        ]);
+                    }, this);
                 }.bind(this)
             });
         } else {
@@ -718,14 +728,18 @@ pixiepower.scene.GameOnePlayer.prototype.updateGameOver = function () {
     if (gamepad.justPressed(0)) {
         switch (this.selectedI) {
             case 0:
-                this.application.scenes.load([
-                    new pixiepower.scene.ChoosePlayer(this.highscores)
-                ]);
+                this.cameras.getCameraAt(0).fade.out(250, function () {
+                    this.application.scenes.load([
+                        new pixiepower.scene.ChoosePlayer(this.highscores)
+                    ]);
+                }, this);
                 break;
             case 1:
-                this.application.scenes.load([
-                    new pixiepower.scene.Start(this.highscores)
-                ]);
+                this.cameras.getCameraAt(0).fade.out(250, function () {
+                    this.application.scenes.load([
+                        new pixiepower.scene.Start(this.highscores)
+                    ]);
+                }, this);
                 break;
         }
     }
