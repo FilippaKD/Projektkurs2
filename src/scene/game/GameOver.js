@@ -66,7 +66,7 @@ pixiepower.scene.GameOver.prototype.init = function () {
     bgContainer.addChild(this.bg);
 
 
-    var text = new rune.text.BitmapField("HIGHSCORE", "image_alfafont");
+    var text = new rune.text.BitmapField("HIGHSCORE", "image_font_highscore");
 
     text.autoSize = true;
     text.center = this.application.screen.center;
