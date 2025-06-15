@@ -53,7 +53,7 @@ pixiepower.scene.Start.prototype.init = function () {
     this.bg = new rune.display.Graphic(0, 0, 400, 225, "image_menu_background");
     this.bg.autoSize = true;
     bgContainer.addChild(this.bg);
-    var title = new rune.text.BitmapField("PIXIE POWER", "image_pixie_latestfont");
+    var title = new rune.text.BitmapField("PIXIE POWER", "image_pixie_startflowerfont");
 
     /**
      * The highscores
